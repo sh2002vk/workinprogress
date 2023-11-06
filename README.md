@@ -1,22 +1,22 @@
 # Project Structure
 
-This project is organized into several directories, each with a specific role in the application's architecture: \\
+This project is organized into several directories, each with a specific role in the application's architecture: \
 
-project/ \\
-|-- models/ (handles all interaction with sql -- use ORMs instead of raw SQL) \\
-|   |-- student.js \\
-|   |-- recruiter.js \\
-|   `-- application.js \\ 
-|-- routes/ (api logic) \\
-|   |-- studentRoutes.js \\
-|   |-- recruiterRoutes.js \\
-|   `-- applicationRoutes.js \\
-|-- controllers/ \\ 
-|   |-- studentController.js \\ 
-|   |-- recruiterController.js \\
-|   `-- applicationController.js \\
--- server.js \\
--- db_creation.js (used for creating tables in the DB, run with "node db_creation.js") \\
+Project \
+|-- models/ (handles all interaction with sql -- use ORMs instead of raw SQL) \
+|   &#x3000;-- student.js \
+|   &#x3000;-- recruiter.js \
+|   &#x3000;-- application.js    
+|-- routes/ (api logic) \
+|   &#x3000;-- studentRoutes.js \
+|   &#x3000;-- recruiterRoutes.js \
+|   &#x3000;-- applicationRoutes.js \
+|-- controllers/ \
+|   &#x3000;-- studentController.js \
+|   &#x3000;-- recruiterController.js \
+|   &#x3000;-- applicationController.js \
+-- server.js \
+-- db_creation.js (used for creating tables in the DB, run with "node db_creation.js") 
 
 # API Response Flow
 
