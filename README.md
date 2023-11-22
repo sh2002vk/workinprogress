@@ -6,14 +6,15 @@ Project \
 |-- models/ (handles all interaction with sql -- use ORMs instead of raw SQL) \
 |   &#x3000;-- student.js \
 |   &#x3000;-- recruiter.js \
-|   &#x3000;-- application.js    
+|   &#x3000;-- application.js \
+|   &#x3000;-- job.js \
+|   &#x3000;-- company.js \
+|   &#x3000;-- index.js (admin file) \
 |-- routes/ (api logic) \
-|   &#x3000;-- studentRoutes.js \
-|   &#x3000;-- recruiterRoutes.js \
+|   &#x3000;-- accountRoutes.js \
 |   &#x3000;-- applicationRoutes.js \
 |-- controllers/ \
-|   &#x3000;-- studentController.js \
-|   &#x3000;-- recruiterController.js \
+|   &#x3000;-- accountController.js \
 |   &#x3000;-- applicationController.js \
 -- server.js \
 -- db_creation.js (used for creating tables in the DB, run with "node db_creation.js") 

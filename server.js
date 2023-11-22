@@ -5,29 +5,14 @@ delete require.cache[require.resolve('dotenv/config')];
 const db = require('./models');
 require('dotenv').config();
 
-const studentRoutes = require('./routes/studentRoutes');
-const recruiterRoutes = require('./routes/recruiterRoutes');
+const accountRoutes = require('./routes/accountRoutes');
 const applicationRoutes = require('./routes/applicationRoutes');
 
 const app = express();
 
 app.use(bodyParser.json());
 
-// const connection = mysql.createConnection({
-//     host: process.env.DB_HOST,
-//     user: process.env.DB_USER,
-//     password: process.env.DB_PASSWORD,
-//     database: process.env.DB_NAME
-// });
-
-// connection.connect((err) => {
-//     if (err) throw err;
-//     console.log('Connected to MySQL Server!');
-// });
-
-
-app.use('/students', studentRoutes);
-app.use('/recruiters', recruiterRoutes);
+app.use('/accounts', accountRoutes);
 app.use('/applications', applicationRoutes);
 
 
