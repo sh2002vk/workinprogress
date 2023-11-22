@@ -19,6 +19,8 @@ Project \
 -- server.js \
 -- db_creation.js (used for creating tables in the DB, run with "node db_creation.js") 
 
+.
+
 # API Response Flow
 
 The flow of a request through the API is as follows:
