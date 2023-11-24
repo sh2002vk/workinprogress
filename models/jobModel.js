@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../database');
 
-const Job = sequelize.define('job', {
+const Job = sequelize.define('jobModel', {
   JobID: {
     type: Sequelize.INTEGER,
     autoIncrement: true,

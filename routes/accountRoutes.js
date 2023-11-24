@@ -12,7 +12,4 @@ router.post('/student', accountController.createStudent);
 router.put('/student/:id', accountController.updateStudent);
 router.delete('/student/:id', accountController.deleteStudent);
 
-
-localhost:3000.post(f"applications/recruiter/{metadata}")
-
 module.exports = router;

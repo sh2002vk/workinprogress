@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../database');
 
-const Recruiter = sequelize.define('recruiter', {
+const Recruiter = sequelize.define('recruiterModel', {
   RecruiterID: {
     type: Sequelize.INTEGER,
     autoIncrement: true,

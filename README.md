@@ -18,6 +18,7 @@ Project \
 |   &#x3000;-- applicationController.js \
 -- server.js \
 -- db_creation.js (used for creating tables in the DB, run with "node db_creation.js") 
+-- database.js
 
 .
 

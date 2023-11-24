@@ -1,9 +1,9 @@
 const sequelize = require('../database'); // The sequelize instance
-const Company = require('./COMPANY');
-const Job = require('./JOB');
-const Student = require('./STUDENT');
-const Recruiter = require('./RECRUITER');
-const Application = require('./APPLICATION');
+const Company = require('./companyModel');
+const Job = require('./jobModel');
+const Student = require('./studentModel');
+const Recruiter = require('./recruiterModel');
+const Application = require('./applicationModel');
 
 // A Company has many Jobs
 Company.hasMany(Job, { foreignKey: 'CompanyID' });

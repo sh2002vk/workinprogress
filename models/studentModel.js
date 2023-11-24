@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../database');
 
-const Student = sequelize.define('student', {
+const Student = sequelize.define('studentModel', {
   StudentID: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
@@ -49,7 +49,7 @@ const Student = sequelize.define('student', {
   },
   Experience: {
     type: Sequelize.FLOAT,
-    allowNull: false
+    allowNull: true
   }
 }, {
   timestamps: false,
