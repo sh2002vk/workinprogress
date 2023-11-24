@@ -33,6 +33,7 @@ exports.updateStudent = async (req, res) => {
         const studentID = req.params.studentID //Need to be able to get studentID
         const updatedData = req.body;
 
+        // TODO: Specify which fields to be updated
         const [updated] = await Account.Student.update(updatedData, {
             where: {id: studentID}
         });
@@ -96,6 +97,7 @@ exports.updateRecruiter = async (req, res) => {
         const recruiterID = req.params.recruiterID //Need to be able to get recruiterID
         const updatedData = req.body;
 
+        // TODO: update which fields to be updated
         const [updated] = await Account.Recruiter.update(updatedData, {
             where: {id: recruiterID}
         });
