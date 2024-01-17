@@ -31,13 +31,3 @@ The flow of a request through the API is as follows:
 3. **Controller to Model**: After authentication, the controller passes the request to the model.
 4. **Model**: The model handles SQL interactions and implements the business logic, then returns the response back through the controller and server to the client.
 
-# Local SQL Database Setup
-
-1. Install MySQL on your machine.
-2. Create a new database called "wipTest".
-3. Set up your config vars in the ` .env ` file.
-4. Run ` node db_creation.js ` to create the tables in the database.
-5. OPTIONAL: use ```mysql -u root -p ``` to access the database and run ```show tables;``` to see the tables.
-6. Run ` node server.js ` to start the server (``` npm start ``` also works)
-7. Test the API using Postman or another API testing tool.
-
