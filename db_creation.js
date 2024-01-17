@@ -46,7 +46,7 @@ connection.connect(err => {
             EmailID VARCHAR(255) NOT NULL UNIQUE,
             AcademicYear INT NOT NULL,
             Age INT,
-            ResumeLink TEXTR,
+            ResumeLink TEXT NOT NULL,
             AcademicMajor VARCHAR(100) NOT NULL,
             GPA DECIMAL(3, 2),
             WorkExperience TEXT NOT NULL,
