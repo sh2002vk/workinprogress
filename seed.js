@@ -74,7 +74,8 @@ const sampleApplications = [
 
 (async () => {
     try {
-        await sequelize.sync({ force: true }); // Reset the database and recreate tables
+        await sequelize.sync({ force: false }); // Reset the database and recreate tables
+        // console.log("table cleared");
         await Company.bulkCreate(sampleCompanies);
         await Job.bulkCreate(sampleJobs);
         await Student.bulkCreate(sampleStudents);
