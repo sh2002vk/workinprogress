@@ -33,7 +33,7 @@ exports.updateStudent = async (req, res) => {
 
         // TODO: Update the parsing
         const [updated] = await Student.update(updatedData, {
-            where: { id: studentID }
+            where: { StudentID: studentID }
         });
 
         if (updated) {

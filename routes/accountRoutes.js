@@ -9,7 +9,7 @@ router.delete('/recruiter/:id', accountController.deleteRecruiter);
 
 // Student routes
 router.post('/student', accountController.createStudent);
-router.put('/student/:id', accountController.updateStudent);
+router.put('/student/:studentID', accountController.updateStudent);
 router.delete('/student/:id', accountController.deleteStudent);
 
 module.exports = router;

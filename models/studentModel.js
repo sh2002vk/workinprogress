@@ -32,7 +32,7 @@ const Student = sequelize.define('studentModel', {
   Age: Sequelize.INTEGER,
   ResumeLink: {
     type: Sequelize.TEXT,
-    allowNull: false
+    allowNull: true
   },
   AcademicMajor: {
     type: Sequelize.STRING,
