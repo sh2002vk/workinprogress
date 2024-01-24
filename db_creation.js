@@ -23,7 +23,7 @@ connection.connect(err => {
             CompanyID INT AUTO_INCREMENT PRIMARY KEY,
             Name VARCHAR(255) NOT NULL,
             Industry VARCHAR(255) NOT NULL,
-            ContactEmail VARCHAR(255)
+            ContactEmail VARCHAR(255) UNIQUE
         );`;
 
     const createJobTable = `
