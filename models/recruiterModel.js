@@ -22,7 +22,8 @@ const Recruiter = sequelize.define('recruiterModel', {
     references: {
       model: 'company',
       key: 'CompanyID',
-    }
+    },
+    onDelete: 'CASCADE'
   },
   EmailID: {
     type: Sequelize.STRING,
@@ -37,7 +38,10 @@ const Recruiter = sequelize.define('recruiterModel', {
     type: Sequelize.TEXT,
     allowNull: false
   },
-  Locations: Sequelize.TEXT
+  Locations: {
+    type: Sequelize.TEXT,
+    allowNull: true
+  }
 }, {
   timestamps: false,
   tableName: 'RECRUITER'

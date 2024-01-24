@@ -14,7 +14,8 @@ const Job = sequelize.define('jobModel', {
     references: {
       model: 'company', // This is a reference to another model
       key: 'CompanyID', // This is the column name of the referenced model
-    }
+    },
+    onDelete: 'CASCADE'
   },
   Role: {
     type: Sequelize.STRING,

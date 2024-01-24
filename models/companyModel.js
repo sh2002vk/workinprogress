@@ -16,7 +16,10 @@ const Company = sequelize.define('companyModel', {
     type: Sequelize.STRING,
     allowNull: false
   },
-  ContactEmail: Sequelize.STRING
+  ContactEmail: {
+    type: Sequelize.STRING,
+    unique: true
+  }
 }, {
   timestamps: false,
   tableName: 'COMPANY'

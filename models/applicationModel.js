@@ -9,6 +9,7 @@ const Application = sequelize.define('applicationModel', {
       model: 'job',
       key: 'JobID',
     },
+    onDelete: 'CASCADE',
     primaryKey: true
   },
   StudentID: {
@@ -18,6 +19,7 @@ const Application = sequelize.define('applicationModel', {
       model: 'student',
       key: 'StudentID',
     },
+    onDelete: 'CASCADE',
     primaryKey: true
   },
   RecruiterID: {
@@ -25,7 +27,8 @@ const Application = sequelize.define('applicationModel', {
     references: {
       model: 'recruiter',
       key: 'RecruiterID',
-    }
+    },
+    onDelete: 'SET NULL',
   },
   ApplicationTime: {
     type: Sequelize.DATE,
