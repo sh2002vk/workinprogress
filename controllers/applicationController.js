@@ -19,21 +19,21 @@ exports.createApplication = async (req, res) => {
     }
 };
 
-exports.applyToApplication = (req, res) => {
-    // Logic for a student to apply to an application
-};
-
-exports.getApplicants = (req, res) => {
-    // Logic to get applicants for an application
-};
+// exports.applyToApplication = (req, res) => {
+//     // Logic for a student to apply to an application
+// };
+//
+// exports.getApplicants = (req, res) => {
+//     // Logic to get applicants for an application
+// };
 
 exports.deleteApplication = async (req, res) => {
     // Logic to delete an application
     try {
-        const deleteID = req.params.jobID;
+        const deleteID = req.params.applicationID;
 
         const deleted = await Application.destroy({
-            where: {id: deleteID}
+            where: {ApplicationID: deleteID}
         });
 
         if (deleted) {
@@ -42,6 +42,6 @@ exports.deleteApplication = async (req, res) => {
             res.status(404).send({message: "Application not found"})
         }
     } catch (error) {
-        res.status(400).send({message: "Error deleting recruiter", error: error.message});
+        res.status(400).send({message: "Error deleting application", error: error.message});
     }
 };

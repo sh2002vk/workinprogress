@@ -2,6 +2,12 @@ const Sequelize = require('sequelize');
 const sequelize = require('../database');
 
 const Application = sequelize.define('applicationModel', {
+  ApplicationID : {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true
+  },
   JobID: {
     type: Sequelize.INTEGER,
     allowNull: false,
@@ -10,8 +16,8 @@ const Application = sequelize.define('applicationModel', {
       key: 'JobID',
     },
     onDelete: 'CASCADE',
-    primaryKey: true
-  },
+    //primaryKey: true
+  } ,
   StudentID: {
     type: Sequelize.INTEGER,
     allowNull: false,
@@ -20,7 +26,7 @@ const Application = sequelize.define('applicationModel', {
       key: 'StudentID',
     },
     onDelete: 'CASCADE',
-    primaryKey: true
+    //primaryKey: true
   },
   RecruiterID: {
     type: Sequelize.INTEGER,

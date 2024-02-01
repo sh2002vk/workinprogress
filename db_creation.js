@@ -69,12 +69,13 @@ connection.connect(err => {
 
     const createApplicationTable = `
         CREATE TABLE IF NOT EXISTS APPLICATION (
+            ApplicationID INT AUTO_INCREMENT PRIMARY KEY, 
             JobID INT NOT NULL,
             StudentID INT NOT NULL,
             RecruiterID INT,
             ApplicationTime DATETIME NOT NULL,
             Status ENUM('APPLIED', 'REVIEW', 'INTERVIEW', 'ACCEPT', 'REJECT') NOT NULL, 
-            PRIMARY KEY (JobID, StudentID),
+--             PRIMARY KEY (JobID, StudentID),
             FOREIGN KEY (JobID) REFERENCES JOB(JobID) ON DELETE CASCADE,
             FOREIGN KEY (StudentID) REFERENCES STUDENT(StudentID) ON DELETE CASCADE,
             FOREIGN KEY (RecruiterID) REFERENCES RECRUITER(RecruiterID) ON DELETE SET NULL

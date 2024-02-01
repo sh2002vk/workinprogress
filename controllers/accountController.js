@@ -3,7 +3,7 @@ const Recruiter = require('../models/recruiterModel');
 
 exports.createStudent = async (req, res) => {
     try {
-        const { FirstName, LastName, School, EmailID, AcademicYear, Age, AcademicMajor, GPA, WorkExperience, PersonalStatement, Experience } = req.body;
+        const { FirstName, LastName, School, EmailID, AcademicYear, Age, ResumeLink, AcademicMajor, GPA, WorkExperience, PersonalStatement, Experience } = req.body;
 
         const newStudent = await Student.create({
             FirstName,
@@ -12,6 +12,7 @@ exports.createStudent = async (req, res) => {
             EmailID,
             AcademicYear,
             Age,
+            ResumeLink,
             AcademicMajor,
             GPA,
             WorkExperience,
@@ -52,7 +53,7 @@ exports.deleteStudent = async (req, res) => {
         const deleteID = req.params.studentID;
 
         const deleted = await Student.destroy({
-            where: { id: deleteID }
+            where: { studentID: deleteID }
         });
 
         if (deleted) {
@@ -93,7 +94,7 @@ exports.updateRecruiter = async (req, res) => {
         const updatedData = req.body;
 
         const [updated] = await Recruiter.update(updatedData, {
-            where: { id: recruiterID }
+            where: { RecruiterID: recruiterID }
         });
 
         if (updated) {
@@ -112,7 +113,7 @@ exports.deleteRecruiter = async (req, res) => {
         const deleteID = req.params.recruiterID;
 
         const deleted = await Recruiter.destroy({
-            where: { id: deleteID }
+            where: { RecruiterID: deleteID }
         });
 
         if (deleted) {

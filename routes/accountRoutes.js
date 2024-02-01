@@ -4,12 +4,12 @@ const accountController = require('../controllers/accountController');
 
 // Recruiter routes
 router.post('/recruiter', accountController.createRecruiter);
-router.put('/recruiter/:id', accountController.updateRecruiter);
-router.delete('/recruiter/:id', accountController.deleteRecruiter);
+router.put('/recruiter/:recruiterID', accountController.updateRecruiter);
+router.delete('/recruiter/:recruiterID', accountController.deleteRecruiter);
 
 // Student routes
 router.post('/student', accountController.createStudent);
 router.put('/student/:studentID', accountController.updateStudent);
-router.delete('/student/:id', accountController.deleteStudent);
+router.delete('/student/:studentID', accountController.deleteStudent);
 
 module.exports = router;
