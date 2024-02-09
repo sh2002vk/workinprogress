@@ -19,8 +19,8 @@ Project \
 |   &#x3000;-- recruiterController.js \
 |   &#x3000;-- studentController.js \
 -- server.js \
--- db_creation.js (used for creating tables in the DB, run with "node db_creation.js") 
--- seed.js (used for creating sample data in the DB, run with "node seed.js")
+-- db_creation.js (used for creating tables in the DB, run with "node db_creation.js") \
+-- seed.js (used for creating sample data in the DB, run with "node seed.js") \
 -- database.js
 
 .
