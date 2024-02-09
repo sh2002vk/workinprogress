@@ -1,10 +1,12 @@
+
+
 // Import required models
 const Application = require('../models/applicationModel');
 
 exports.createApplication = async (req, res) => {
-    // Logic to create a new application
+    // Logic to apply to a job
     try {
-        const {JobID, StudentID, RecruiterID, ApplicationTime, Status} = req.body;
+        const {JobID, StudentID, RecruiterID, Status, ApplicationTime} = req.body;
         const newApplication = await Application.create({
             JobID,
             StudentID,
@@ -19,16 +21,8 @@ exports.createApplication = async (req, res) => {
     }
 };
 
-// exports.applyToApplication = (req, res) => {
-//     // Logic for a student to apply to an application
-// };
-//
-// exports.getApplicants = (req, res) => {
-//     // Logic to get applicants for an application
-// };
-
 exports.deleteApplication = async (req, res) => {
-    // Logic to delete an application
+    // Logic to delete a current job application
     try {
         const deleteID = req.params.applicationID;
 

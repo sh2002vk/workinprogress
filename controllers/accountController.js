@@ -1,5 +1,6 @@
 const Student = require('../models/studentModel');
 const Recruiter = require('../models/recruiterModel');
+const Company = require("../models/companyModel");
 
 exports.createStudent = async (req, res) => {
     try {
@@ -125,3 +126,39 @@ exports.deleteRecruiter = async (req, res) => {
         res.status(400).send({ message: "Error deleting recruiter", error: error.message });
     }
 };
+
+exports.createCompany = async (req, res) => {
+    try {
+        const {Name, Industry, ContactEmail} = req.body;
+
+        const newCompany = await Company.create({
+            Name,
+            Industry,
+            ContactEmail
+        });
+
+        res.status(201).send(newCompany);
+
+    } catch (error) {
+        res.status(400).send({message: "Error creating new company", error: error.message});
+    }
+}
+
+exports.deleteCompany = async (req, res) => {
+    try {
+        const deleteId = req.params.companyID;
+
+        const deleted = await Company.destroy({
+            where: {CompanyID: deleteId}
+        });
+
+        if (deleted) {
+            res.status(201).send("Successfully deleted company");
+        } else {
+            res.status(404).send("Company not found");
+        }
+
+    } catch (error) {
+        res.status(400).send("Error deleting company");
+    }
+}

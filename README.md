@@ -12,10 +12,10 @@ Project \
 |   &#x3000;-- index.js (admin file) \
 |-- routes/ (api logic) \
 |   &#x3000;-- accountRoutes.js \
-|   &#x3000;-- applicationRoutes.js \
+|   &#x3000;-- recruiterRoutes.js \
 |-- controllers/ \
 |   &#x3000;-- accountController.js \
-|   &#x3000;-- applicationController.js \
+|   &#x3000;-- recruiterController.js \
 -- server.js \
 -- db_creation.js (used for creating tables in the DB, run with "node db_creation.js") 
 -- database.js

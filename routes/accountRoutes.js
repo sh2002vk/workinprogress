@@ -12,4 +12,8 @@ router.post('/student', accountController.createStudent);
 router.put('/student/:studentID', accountController.updateStudent);
 router.delete('/student/:studentID', accountController.deleteStudent);
 
+// Company routes
+router.post('/company', accountController.createCompany);
+router.delete('/company/:companyID', accountController.deleteCompany);
+
 module.exports = router;
