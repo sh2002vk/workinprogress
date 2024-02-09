@@ -4,20 +4,23 @@ This project is organized into several directories, each with a specific role in
 
 Project \
 |-- models/ (handles all interaction with sql -- use ORMs instead of raw SQL) \
-|   &#x3000;-- student.js \
-|   &#x3000;-- recruiter.js \
-|   &#x3000;-- application.js \
-|   &#x3000;-- job.js \
-|   &#x3000;-- company.js \
+|   &#x3000;-- studentModel.js \
+|   &#x3000;-- recruiterModel.js \
+|   &#x3000;-- applicationModel.js \
+|   &#x3000;-- jobModel.js \
+|   &#x3000;-- companyModel.js \
 |   &#x3000;-- index.js (admin file) \
 |-- routes/ (api logic) \
 |   &#x3000;-- accountRoutes.js \
 |   &#x3000;-- recruiterRoutes.js \
+|   &#x3000;-- studentRoutes.js \
 |-- controllers/ \
 |   &#x3000;-- accountController.js \
 |   &#x3000;-- recruiterController.js \
+|   &#x3000;-- studentController.js \
 -- server.js \
 -- db_creation.js (used for creating tables in the DB, run with "node db_creation.js") 
+-- seed.js (used for creating sample data in the DB, run with "node seed.js")
 -- database.js
 
 .
