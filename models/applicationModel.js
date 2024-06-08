@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../database');
 
-const Application = sequelize.define('applicationModel', {
-  ApplicationID : {
+const Application = sequelize.define('Application', {
+  ApplicationID: {
     type: Sequelize.INTEGER,
     allowNull: false,
     autoIncrement: true,
@@ -12,29 +12,27 @@ const Application = sequelize.define('applicationModel', {
     type: Sequelize.INTEGER,
     allowNull: false,
     references: {
-      model: 'job',
+      model: 'Job',
       key: 'JobID',
     },
-    onDelete: 'CASCADE',
-    //primaryKey: true
-  } ,
+    onDelete: 'CASCADE'
+  },
   StudentID: {
     type: Sequelize.INTEGER,
     allowNull: false,
     references: {
-      model: 'student',
+      model: 'Student',
       key: 'StudentID',
     },
-    onDelete: 'CASCADE',
-    //primaryKey: true
+    onDelete: 'CASCADE'
   },
   RecruiterID: {
     type: Sequelize.INTEGER,
     references: {
-      model: 'recruiter',
+      model: 'Recruiter',
       key: 'RecruiterID',
     },
-    onDelete: 'SET NULL',
+    onDelete: 'CASCADE'
   },
   ApplicationTime: {
     type: Sequelize.DATE,
@@ -48,5 +46,11 @@ const Application = sequelize.define('applicationModel', {
   timestamps: false,
   tableName: 'APPLICATION'
 });
+
+Application.associate = (models) => {
+  Application.belongsTo(models.Job, { foreignKey: 'JobID', onDelete: 'CASCADE' });
+  Application.belongsTo(models.Student, { foreignKey: 'StudentID', onDelete: 'CASCADE' });
+  Application.belongsTo(models.Recruiter, { foreignKey: 'RecruiterID', onDelete: 'SET NULL' });
+};
 
 module.exports = Application;

@@ -25,9 +25,14 @@ const Student = sequelize.define('studentModel', {
     allowNull: false,
     unique: true
   },
-  AcademicYear: {
+  AcademicYear: {             // enforced 1-6
     type: Sequelize.INTEGER,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      min: 1,
+      max: 6,
+      isInt: true,
+    }
   },
   Age: Sequelize.INTEGER,
   ResumeLink: {
@@ -50,10 +55,26 @@ const Student = sequelize.define('studentModel', {
   Experience: {
     type: Sequelize.FLOAT,
     allowNull: true
+  },
+  Preference: {
+    type: Sequelize.ENUM('HYBRID', 'REMOTE', 'INPERSON'),
+    allowNull: true
+  },
+  Duration: {
+    type: Sequelize.ENUM('4', '8', '12'),
+    allowNull: true
+  },
+  Season: {
+    type: Sequelize.ENUM('F24', 'W25', 'S25', 'F25'),
+    allowNull: true
   }
 }, {
   timestamps: false,
   tableName: 'STUDENT'
 });
+
+Student.associate = (models) => {
+  Student.hasMany(models.Application, { foreignKey: 'StudentID', onDelete: 'CASCADE' });
+};
 
 module.exports = Student;

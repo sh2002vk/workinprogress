@@ -26,7 +26,7 @@ const sampleStudents = [
         LastName: 'Smith',
         School: 'Another University',
         EmailID: 'alicesmith@example.com',
-        AcademicYear: 4,
+        AcademicYear: 5,
         Age: 23,
         ResumeLink: 'https://example.com/resume/alicesmith',
         AcademicMajor: 'Business Administration',
@@ -35,6 +35,70 @@ const sampleStudents = [
         PersonalStatement: 'Driven and goal-oriented.',
         Experience: 3,
     },
+    {
+        FirstName: 'ABC',
+        LastName: 'DEF',
+        School: 'Another University',
+        EmailID: 'ABC@example.com',
+        AcademicYear: 6,
+        Age: 23,
+        ResumeLink: 'https://example.com/resume/alicesmith',
+        AcademicMajor: 'Business Administration',
+        GPA: 3.5,
+        WorkExperience: 'Marketing Coordinator at Company Y',
+        PersonalStatement: 'Driven and goal-oriented.',
+        Experience: 3,
+        Season: 'W25'
+    },
+    {
+        FirstName: 'AB',
+        LastName: 'DE',
+        School: 'Another University',
+        EmailID: 'Haber@example.com',
+        AcademicYear: 3,
+        Age: 23,
+        ResumeLink: 'https://example.com/resume/alicesmith',
+        AcademicMajor: 'Business Administration',
+        GPA: 3.5,
+        WorkExperience: 'Marketing Coordinator at Company Y',
+        PersonalStatement: 'Driven and goal-oriented.',
+        Experience: 3,
+        Season: 'W25'
+    },
+    {
+        FirstName: 'XYZ',
+        LastName: 'FRG',
+        School: 'Another University',
+        EmailID: 'XYZ@example.com',
+        AcademicYear: 6,
+        Age: 23,
+        ResumeLink: 'https://example.com/resume/alicesmith',
+        AcademicMajor: 'Business Administration',
+        GPA: 3.5,
+        WorkExperience: 'Marketing Coordinator at Company Y',
+        PersonalStatement: 'Driven and goal-oriented.',
+        Experience: 3,
+        Season: 'F24',
+        Duration: '4',
+        Prefernce: 'HYBRID'
+    },
+    {
+        FirstName: 'Gaga',
+        LastName: 'Drake',
+        School: 'Another University',
+        EmailID: 'Gaga@example.com',
+        AcademicYear: 6,
+        Age: 23,
+        ResumeLink: 'https://example.com/resume/alicesmith',
+        AcademicMajor: 'Business Administration',
+        GPA: 3.5,
+        WorkExperience: 'Marketing Coordinator at Company Y',
+        PersonalStatement: 'Driven and goal-oriented.',
+        Experience: 1,
+        Season: 'F25',
+        Duration: '4',
+        Prefernce: 'INPERSON'
+    }
     // Add more student records as needed
 ];
 
@@ -61,8 +125,8 @@ const sampleRecruiters = [
 ];
 
 const sampleJobs = [
-    { CompanyID: 1, Role: 'Software Engineer', Location: 'San Francisco', Experience: 2.5, Pay: 100000 },
-    { CompanyID: 1, Role: 'Product Manager', Location: 'Seattle', Experience: 4, Pay: 120000 },
+    { CompanyID: 1, Role: 'Software Engineer', RecruiterID: 1, Location: 'San Francisco', Experience: 2.5, Pay: 100000 },
+    { CompanyID: 2, Role: 'Product Manager', RecruiterID: 2, Location: 'Seattle', Experience: 4, Pay: 120000 },
     // Add more job records as needed
 ];
 
@@ -73,19 +137,20 @@ const sampleApplications = [
 ];
 
 (async () => {
+    const transaction = await sequelize.transaction();
     try {
-        await sequelize.sync({ force: false }); // Reset the database and recreate tables
-        // console.log("table cleared");
-        await Company.bulkCreate(sampleCompanies);
-        await Job.bulkCreate(sampleJobs);
-        await Student.bulkCreate(sampleStudents);
-        await Recruiter.bulkCreate(sampleRecruiters);
-        await Application.bulkCreate(sampleApplications);
+        // await sequelize.sync({ force: true }); // Reset the database and recreate tables
 
+        await Company.bulkCreate(sampleCompanies, { transaction });
+        await Recruiter.bulkCreate(sampleRecruiters, { transaction });
+        await Job.bulkCreate(sampleJobs, { transaction });
+        await Student.bulkCreate(sampleStudents, { transaction });
+        await Application.bulkCreate(sampleApplications, { transaction });
+
+        await transaction.commit();
         console.log('Sample data has been seeded successfully.');
     } catch (error) {
+        await transaction.rollback();
         console.error('Error seeding sample data:', error);
-    } finally {
-        await sequelize.close(); // Close the database connection when done
     }
 })();

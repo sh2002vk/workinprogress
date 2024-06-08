@@ -1,6 +1,9 @@
 const Student = require('../models/studentModel');
 const Recruiter = require('../models/recruiterModel');
 const Company = require("../models/companyModel");
+const { where } = require('sequelize');
+
+// TODO: add gets for all students, recruiters, jobs, companies and applications
 
 exports.createStudent = async (req, res) => {
     try {
@@ -67,6 +70,58 @@ exports.deleteStudent = async (req, res) => {
     }
 };
 
+// exports.getStudents = async (req, res) => {
+//     try {
+//         let students = await Student.findAll ({
+//             attributes: ['StudentId', 'FirstName', 'LastName', 'School', 'WorkExperience']
+//         });
+
+//         console.log("WRONG PLACE");
+
+//         res.status(200).send({message: "Students are listed", data: students});
+//     } catch (error) {
+//         res.status(400).send({ message: "Error getting all students", error: error.message });
+//     }
+// };
+
+exports.getStudentsFiltered = async (req, res) => {
+    try {
+        const { 
+            preference, // work style
+            duration, // length of term
+            season, // f24, w25, s25, etc
+            level // used as 1-4 for ug, 5 master, 6 phd
+        } = req.body;
+
+
+        let whereClause = {};
+
+        if (preference) {
+            whereClause.Preference = preference;
+        }
+        if (duration) {
+            whereClause.Duration = duration;
+        } 
+        if (season) {
+            whereClause.Season = season;
+        }
+        if (level) {
+            whereClause.AcademicYear = parseInt(level);
+        }
+
+        console.log(whereClause);
+
+        let students = await Student.findAll({
+            where: whereClause,
+            attributes: ['StudentID', 'FirstName', 'LastName', 'School', 'WorkExperience']
+        });
+
+        res.status(200).send({ message: "Filtered students are listed", data: students });
+    } catch (error) {
+        res.status(400).send({ message: "Error filtering students", error: error.message });
+    }
+}
+
 exports.createRecruiter = async (req, res) => {
     try {
         const { RecruiterID, FirstName, LastName, CompanyID, EmailID, CompanyName, Roles, Locations } = req.body;
@@ -100,7 +155,7 @@ exports.updateRecruiter = async (req, res) => {
 
         if (updated) {
             const updatedRecruiter = await Recruiter.findByPk(recruiterID);
-            res.status(200).send(updatedRecruiter);
+            res.status(200).send({message: "Recruiter successfully updated", data: updatedRecruiter});
         } else {
             res.status(404).send({ message: "Recruiter not found" });
         }
@@ -124,6 +179,30 @@ exports.deleteRecruiter = async (req, res) => {
         }
     } catch (error) {
         res.status(400).send({ message: "Error deleting recruiter", error: error.message });
+    }
+};
+
+exports.getRecruiters = async (req, res) => {
+    try{
+        const companyID = req.params.companyID;
+
+        let recruiters;
+        if (companyID) {
+            // if companyid was provided then get recrutiers for a specific company
+            recruiters = await Recruiter.findAll({
+                where: {
+                    CompanyID: companyID
+                },
+                attributes: ['RecruiterID', 'FirstName', 'LastName', 'CompanyName']
+            })
+        } else {
+            recruiters = await Recruiter.findAll({
+                attributes: ['RecruiterID', 'FirstName', 'LastName', 'CompanyName']
+            })
+        }
+        res.status(200).send({message: "Recruiters are listed", data: recruiters})
+    } catch (error) {
+        res.status(400).send({message: "Error getting all recuiters", error: error.message});
     }
 };
 

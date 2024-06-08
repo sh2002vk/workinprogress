@@ -1,17 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const accountController = require('../controllers/recruiterController');
+const recruiterController = require('../controllers/recruiterController');
 
 //Route to create a new job
-router.post('/job/', accountController.createJob);
+router.post('/job/', recruiterController.createJob);
 
 //Route to update a current job
-router.put('/job/:jobID', accountController.updateJob);
+router.put('/job/:jobID', recruiterController.updateJob);
 
 //Route to delete a job
-router.delete('/job/:jobID', accountController.deleteJob);
+router.delete('/job/:jobID', recruiterController.deleteJob);
 
 //Route to get applicants from a job
-router.get('/job/:jobID', accountController.getApplicants);
+router.get('/job/:jobID', recruiterController.getApplicants);
 
 module.exports = router;

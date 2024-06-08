@@ -47,4 +47,10 @@ const Recruiter = sequelize.define('recruiterModel', {
   tableName: 'RECRUITER'
 });
 
+Recruiter.associate = (models) => {
+  Recruiter.belongsTo(models.Company, { foreignKey: 'CompanyID', onDelete: 'CASCADE' });
+  Recruiter.hasMany(models.Job, { foreignKey: 'RecruiterID', onDelete: 'CASCADE' });
+  Recruiter.hasMany(models.Application, { foreignKey: 'RecruiterID', onDelete: 'CASCADE' });
+};
+
 module.exports = Recruiter;

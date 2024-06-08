@@ -17,6 +17,15 @@ const Job = sequelize.define('jobModel', {
     },
     onDelete: 'CASCADE'
   },
+  RecruiterID: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'recruiter',
+      key: 'RecruiterID',
+    },
+    onDelete: 'CASCADE',
+  },
   Role: {
     type: Sequelize.STRING,
     allowNull: false
@@ -34,5 +43,11 @@ const Job = sequelize.define('jobModel', {
   timestamps: false,
   tableName: 'JOB'
 });
+
+Job.associate = (models) => {
+  Job.belongsTo(models.Company, { foreignKey: 'CompanyID', onDelete: 'CASCADE' });
+  Job.belongsTo(models.Recruiter, { foreignKey: 'RecruiterID', onDelete: 'CASCADE' });
+  Job.hasMany(models.Application, { foreignKey: 'JobID', onDelete: 'CASCADE' });
+};
 
 module.exports = Job;

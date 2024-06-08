@@ -29,12 +29,14 @@ connection.connect(err => {
     const createJobTable = `
         CREATE TABLE IF NOT EXISTS JOB (
             JobID INT AUTO_INCREMENT PRIMARY KEY,
+            RecruiterID INT NOT NULL,
             CompanyID INT NOT NULL,
             Role VARCHAR(255) NOT NULL,
             Location VARCHAR(255) NOT NULL,
             Experience FLOAT NOT NULL,
             Pay FLOAT,
-            FOREIGN KEY (CompanyID) REFERENCES COMPANY(CompanyID) ON DELETE CASCADE
+            FOREIGN KEY (CompanyID) REFERENCES COMPANY(CompanyID) ON DELETE CASCADE,
+            FOREIGN KEY (RecruiterID) REFERENCES RECRUITER(RecruiterID) ON DELETE CASCADE
         );`;
 
     const createStudentTable = `
@@ -51,7 +53,10 @@ connection.connect(err => {
             GPA DECIMAL(3, 2),
             WorkExperience TEXT NOT NULL,
             PersonalStatement TEXT NOT NULL,
-            Experience FLOAT NOT NULL
+            Experience FLOAT NOT NULL,
+            Status ENUM('REMOTE', 'INPERSON', 'HYBRID'),
+            Duration ENUM('4', '8', '12'),
+            Season ENUM('F24', 'W25', 'S25', 'F25')
         );`;
 
     const createRecruiterTable = `
@@ -75,10 +80,9 @@ connection.connect(err => {
             RecruiterID INT,
             ApplicationTime DATETIME NOT NULL,
             Status ENUM('APPLIED', 'REVIEW', 'INTERVIEW', 'ACCEPT', 'REJECT') NOT NULL, 
---             PRIMARY KEY (JobID, StudentID),
             FOREIGN KEY (JobID) REFERENCES JOB(JobID) ON DELETE CASCADE,
             FOREIGN KEY (StudentID) REFERENCES STUDENT(StudentID) ON DELETE CASCADE,
-            FOREIGN KEY (RecruiterID) REFERENCES RECRUITER(RecruiterID) ON DELETE SET NULL
+            FOREIGN KEY (RecruiterID) REFERENCES RECRUITER(RecruiterID) ON DELETE CASCADE
         );`;
 
     // Creation execution
@@ -89,12 +93,12 @@ connection.connect(err => {
         }
         console.log("COMPANY table created or exists already!");
 
-        connection.query(createJobTable, function (err) {
+        connection.query(createRecruiterTable, function (err) {
             if (err) {
-                console.error("Error creating Job table:", err);
+                console.error("Error creating Recruiter table:", err);
                 return connection.end();
             }
-            console.log("JOB table created or exists already!");
+            console.log("RECRUITER table created or exists already!");
 
             connection.query(createStudentTable, function (err) {
                 if (err) {
@@ -103,12 +107,12 @@ connection.connect(err => {
                 }
                 console.log("STUDENT table created or exists already!");
 
-                connection.query(createRecruiterTable, function (err) {
+                connection.query(createJobTable, function (err) {
                     if (err) {
-                        console.error("Error creating RECRUITER table:", err);
+                        console.error("Error creating JOB table:", err);
                         return connection.end();
                     }
-                    console.log("RECRUITER table created or exists already!");
+                    console.log("JOB table created or exists already!");
 
                     connection.query(createApplicationTable, function (err) {
                         if (err) {
