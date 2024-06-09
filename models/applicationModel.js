@@ -1,6 +1,8 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../database');
 
+//test
+
 const Application = sequelize.define('Application', {
   ApplicationID: {
     type: Sequelize.INTEGER,
