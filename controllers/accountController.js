@@ -259,3 +259,19 @@ exports.getQuota = async (req, res) => {
         res.status(400).send("Error getting student quota");
     }
 }
+
+exports.getStudent = async (req, res) => {
+    try {
+        const studentID = req.params.studentID;
+
+        const stu = await Student.findByPk(studentID);
+
+        if (!stu) {
+            res.status(404).send("Student not found");
+        } else {
+            res.status(200).json({stu});
+        }
+    } catch (error) {
+        res.status(400).send({message: "Error getting student", error: error.message})
+    }
+}
