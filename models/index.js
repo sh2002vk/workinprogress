@@ -4,6 +4,7 @@ const Job = require('./jobModel');
 const Student = require('./studentModel');
 const Recruiter = require('./recruiterModel');
 const Application = require('./applicationModel');
+const Bookmark = require('./bookmarkModel');
 
 // A Company has many Jobs
 Company.hasMany(Job, { foreignKey: 'CompanyID' });
@@ -25,6 +26,13 @@ Job.hasMany(Application, { foreignKey: 'JobID' });
 // An Application belongs to one Job
 Application.belongsTo(Job, { foreignKey: 'JobID' });
 
+Bookmark.belongsTo(Job, { foreignKey: 'JobID', onDelete: 'CASCADE' });
+Bookmark.belongsTo(Recruiter, { foreignKey: 'RecruiterID', onDelete: 'CASCADE' });
+Bookmark.belongsTo(Student, { foreignKey: 'StudentID', onDelete: 'CASCADE' });
+
+Job.hasMany(Bookmark, { foreignKey: 'JobID', onDelete: 'CASCADE' });
+Recruiter.hasMany(Bookmark, { foreignKey: 'RecruiterID', onDelete: 'CASCADE' });
+
 // Sync all models with the database
 sequelize.sync();
 
@@ -34,6 +42,7 @@ module.exports = {
   Job,
   Student,
   Recruiter,
-  Application
+  Application,
+  Bookmark
 };
 

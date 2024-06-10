@@ -8,6 +8,9 @@ router.post('/job/', recruiterController.createJob);
 //Route to update a current job
 router.put('/job/:jobID', recruiterController.updateJob);
 
+//Route to add student to a bookmark for a job
+router.post('/job/addBookmark', recruiterController.addStudentToBookMark);
+
 //Route to delete a job
 router.delete('/job/:jobID', recruiterController.deleteJob);
 

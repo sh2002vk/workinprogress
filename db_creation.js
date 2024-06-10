@@ -85,6 +85,17 @@ connection.connect(err => {
             FOREIGN KEY (RecruiterID) REFERENCES RECRUITER(RecruiterID) ON DELETE CASCADE
         );`;
 
+    const createBookmarkTable = `
+        CREATE TABLE IF NOT EXISTS BOOKMARK (
+            BookmarkID INT AUTO_INCREMENT PRIMARY KEY,
+            JobID INT NOT NULL,
+            RecruiterID INT NOT NULL,
+            StudentID INT NOT NULL,
+            FOREIGN KEY (JobID) REFERENCES JOB(JobID) ON DELETE CASCADE,
+            FOREIGN KEY (StudentID) REFERENCES STUDENT(StudentID) ON DELETE CASCADE,
+            FOREIGN KEY (RecruiterID) REFERENCES RECRUITER(RecruiterID) ON DELETE CASCADE
+        );`;
+
     // Creation execution
     connection.query(createCompanyTable, function (err) {
         if (err) {
@@ -114,13 +125,21 @@ connection.connect(err => {
                     }
                     console.log("JOB table created or exists already!");
 
-                    connection.query(createApplicationTable, function (err) {
+                    connection.query(createBookmarkTable, function (err) {
                         if (err) {
-                            console.error("Error creating Application table:", err);
-                        } else {
-                            console.log("APPLICATION table created or exists already!");
+                            console.error("Error creating BOOKMARK table:", err);
+                            return connection.end();
                         }
-                        connection.end();
+                        console.log("BOOKMARK table created or exists already!");
+
+                        connection.query(createApplicationTable, function (err) {
+                            if (err) {
+                                console.error("Error creating Application table:", err);
+                            } else {
+                                console.log("APPLICATION table created or exists already!");
+                            }
+                            connection.end();
+                        });
                     });
                 });
             });

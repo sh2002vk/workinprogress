@@ -12,7 +12,6 @@ router.get('/recruiter/:companyID', accountController.getRecruiters);
 router.post('/student/createStudent', accountController.createStudent);
 router.put('/student/:studentID', accountController.updateStudent);
 router.delete('/student/:studentID', accountController.deleteStudent);
-// router.get('/student', accountController.getStudents);
 router.post('/student/getStudents', accountController.getStudentsFiltered);
 
 // Company routes

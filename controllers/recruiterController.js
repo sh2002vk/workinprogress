@@ -1,5 +1,6 @@
 const Job = require('../models/jobModel');
 const Application = require("../models/applicationModel");
+const Bookmark = require("../models/bookmarkModel");
 
 exports.createJob = async (req, res) => {
     //Logic to create a job
@@ -69,5 +70,36 @@ exports.getApplicants = async (req, res) => {
         res.json(students);
     } catch (error) {
         res.status(400).send({message: "Error fetching applicants", error: error.message});
+    }
+}
+
+exports.addStudentToBookMark = async (req, res) => {
+    try {
+        const {
+            recruiterID,
+            jobID,
+            studentID
+        } = req.body;
+
+        let whereClause = {};
+
+        if (recruiterID) {
+            whereClause.recruiterID = recruiterID;
+        } 
+        if (jobID) {
+            whereClause.jobID = jobID;
+        }
+        if (studentID) {
+            whereClause.studentID = studentID;
+        }
+
+        const newBookmark = await Bookmark.create({
+            recruiterID,
+            jobID,
+            studentID
+        });
+        res.status(201).send(newBookmark);
+    } catch (error) {
+        res.status(400).send({message: "Unable to bookmark student", error: error.message});
     }
 }
