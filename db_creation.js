@@ -54,7 +54,8 @@ connection.connect(err => {
             WorkExperience TEXT NOT NULL,
             PersonalStatement TEXT NOT NULL,
             Experience FLOAT NOT NULL,
-            Status ENUM('REMOTE', 'INPERSON', 'HYBRID'),
+            Quota INT NOT NULL,
+            Preference ENUM('REMOTE', 'INPERSON', 'HYBRID'),
             Duration ENUM('4', '8', '12'),
             Season ENUM('F24', 'W25', 'S25', 'F25')
         );`;

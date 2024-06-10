@@ -7,7 +7,7 @@ const { where } = require('sequelize');
 
 exports.createStudent = async (req, res) => {
     try {
-        const { FirstName, LastName, School, EmailID, AcademicYear, Age, ResumeLink, AcademicMajor, GPA, WorkExperience, PersonalStatement, Experience } = req.body;
+        const { FirstName, LastName, School, EmailID, AcademicYear, Age, ResumeLink, AcademicMajor, GPA, WorkExperience, PersonalStatement, Experience, Quota} = req.body;
 
         const newStudent = await Student.create({
             FirstName,
@@ -21,7 +21,8 @@ exports.createStudent = async (req, res) => {
             GPA,
             WorkExperience,
             PersonalStatement,
-            Experience
+            Experience,
+            Quota
         });
 
         res.status(201).send(newStudent);
@@ -239,5 +240,22 @@ exports.deleteCompany = async (req, res) => {
 
     } catch (error) {
         res.status(400).send("Error deleting company");
+    }
+}
+
+exports.getQuota = async (req, res) => {
+    try {
+        const targetStudentID = req.params.studentID;
+
+        const stu = await Student.findByPk(targetStudentID)
+
+        if (!stu) {
+            res.status(404).send("Student not found");
+        } else {
+            const quota = stu.Quota;
+            res.status(200).send({quota});
+        }
+    } catch (error) {
+        res.status(400).send("Error getting student quota");
     }
 }
