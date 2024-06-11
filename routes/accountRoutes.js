@@ -18,4 +18,7 @@ router.post('/student/getStudents', accountController.getStudentsFiltered);
 router.post('/company', accountController.createCompany);
 router.delete('/company/:companyID', accountController.deleteCompany);
 
+// Getters
+router.get('/student/quota/:studentID', accountController.getQuota);
+router.get('/student/:studentID', accountController.getStudent);
 module.exports = router;

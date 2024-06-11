@@ -54,7 +54,8 @@ connection.connect(err => {
             WorkExperience TEXT NOT NULL,
             PersonalStatement TEXT NOT NULL,
             Experience FLOAT NOT NULL,
-            Status ENUM('REMOTE', 'INPERSON', 'HYBRID'),
+            Quota INT NOT NULL,
+            Preference ENUM('REMOTE', 'INPERSON', 'HYBRID'),
             Duration ENUM('4', '8', '12'),
             Season ENUM('F24', 'W25', 'S25', 'F25')
         );`;
@@ -85,6 +86,17 @@ connection.connect(err => {
             FOREIGN KEY (RecruiterID) REFERENCES RECRUITER(RecruiterID) ON DELETE CASCADE
         );`;
 
+
+    const createInterestTable = `
+        CREATE TABLE IF NOT EXISTS INTEREST (
+--             ApplicationID INT AUTO_INCREMENT PRIMARY KEY, 
+            JobID INT NOT NULL,
+            StudentID INT NOT NULL,
+            MutualInterest BOOLEAN NOT NULL,
+            FOREIGN KEY (JobID) REFERENCES JOB(JobID) ON DELETE CASCADE,
+            FOREIGN KEY (StudentID) REFERENCES STUDENT(StudentID) ON DELETE CASCADE,
+            PRIMARY KEY (JobID, StudentID)
+
     const createBookmarkTable = `
         CREATE TABLE IF NOT EXISTS BOOKMARK (
             BookmarkID INT AUTO_INCREMENT PRIMARY KEY,
@@ -94,6 +106,7 @@ connection.connect(err => {
             FOREIGN KEY (JobID) REFERENCES JOB(JobID) ON DELETE CASCADE,
             FOREIGN KEY (StudentID) REFERENCES STUDENT(StudentID) ON DELETE CASCADE,
             FOREIGN KEY (RecruiterID) REFERENCES RECRUITER(RecruiterID) ON DELETE CASCADE
+
         );`;
 
     // Creation execution
@@ -131,14 +144,22 @@ connection.connect(err => {
                             return connection.end();
                         }
                         console.log("BOOKMARK table created or exists already!");
-
+                        
                         connection.query(createApplicationTable, function (err) {
                             if (err) {
                                 console.error("Error creating Application table:", err);
-                            } else {
-                                console.log("APPLICATION table created or exists already!");
+                                return connection.end();
                             }
-                            connection.end();
+                            console.log("APPLICATION table created or exists already!");
+
+                            connection.query(createInterestTable, function (err) {
+                                if (err) {
+                                    console.error("Error creating Interest table:", err);
+                                } else {
+                                    console.log("Interest table created or exists already!");
+                                }
+                                connection.end();
+                            });
                         });
                     });
                 });

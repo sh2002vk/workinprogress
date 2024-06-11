@@ -1,4 +1,5 @@
-const { sequelize, Company, Job, Student, Recruiter, Application, Bookmark } = require('./models'); // Adjust the path as needed
+const { sequelize, Company, Job, Student, Recruiter, Application, Interest, Bookmark } = require('./models'); // Adjust the path as needed
+
 
 const sampleCompanies = [
     { Name: 'Company A', Industry: 'Tech', ContactEmail: 'companya@example.com' },
@@ -20,6 +21,7 @@ const sampleStudents = [
         WorkExperience: 'Intern at Company X, Freelancer',
         PersonalStatement: 'Passionate about technology and innovation.',
         Experience: 2.5,
+        Quota: 3
     },
     {
         FirstName: 'Alice',
@@ -34,6 +36,7 @@ const sampleStudents = [
         WorkExperience: 'Marketing Coordinator at Company Y',
         PersonalStatement: 'Driven and goal-oriented.',
         Experience: 3,
+        Quota: 3
     },
     {
         FirstName: 'ABC',
@@ -48,6 +51,7 @@ const sampleStudents = [
         WorkExperience: 'Marketing Coordinator at Company Y',
         PersonalStatement: 'Driven and goal-oriented.',
         Experience: 3,
+        Quota: 3,
         Season: 'W25'
     },
     {
@@ -63,6 +67,7 @@ const sampleStudents = [
         WorkExperience: 'Marketing Coordinator at Company Y',
         PersonalStatement: 'Driven and goal-oriented.',
         Experience: 3,
+        Quota: 3,
         Season: 'W25'
     },
     {
@@ -78,9 +83,10 @@ const sampleStudents = [
         WorkExperience: 'Marketing Coordinator at Company Y',
         PersonalStatement: 'Driven and goal-oriented.',
         Experience: 3,
+        Quota: 3,
         Season: 'F24',
         Duration: '4',
-        Prefernce: 'HYBRID'
+        Preference: 'HYBRID'
     },
     {
         FirstName: 'Gaga',
@@ -95,9 +101,10 @@ const sampleStudents = [
         WorkExperience: 'Marketing Coordinator at Company Y',
         PersonalStatement: 'Driven and goal-oriented.',
         Experience: 1,
+        Quota: 3,
         Season: 'F25',
         Duration: '4',
-        Prefernce: 'INPERSON'
+        Preference: 'INPERSON'
     }
     // Add more student records as needed
 ];
@@ -136,6 +143,11 @@ const sampleApplications = [
     // Add more application records as needed
 ];
 
+const sampleInterest = [
+    { JobID: 1, StudentID: 1, MutualInterest: true },
+    { JobID: 2, StudentID: 3, MutualInterest: false},
+];
+
 const sampleBookmarks = [
     { JobID: 1, StudentID: 1, RecruiterID: 1},
     { JobID: 1, StudentID: 2, RecruiterID: 1},
@@ -152,6 +164,7 @@ const sampleBookmarks = [
         await Job.bulkCreate(sampleJobs, { transaction });
         await Student.bulkCreate(sampleStudents, { transaction });
         await Application.bulkCreate(sampleApplications, { transaction });
+        await Interest.bulkCreate(sampleInterest, {transaction});
         await Bookmark.bulkCreate(sampleBookmarks, {transaction});
 
         await transaction.commit();

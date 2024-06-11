@@ -56,6 +56,10 @@ const Student = sequelize.define('studentModel', {
     type: Sequelize.FLOAT,
     allowNull: true
   },
+  Quota: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
   Preference: {
     type: Sequelize.ENUM('HYBRID', 'REMOTE', 'INPERSON'),
     allowNull: true
