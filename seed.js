@@ -1,4 +1,4 @@
-const { sequelize, Company, Job, Student, Recruiter, Application } = require('./models'); // Adjust the path as needed
+const { sequelize, Company, Job, Student, Recruiter, Application, Interest} = require('./models'); // Adjust the path as needed
 
 const sampleCompanies = [
     { Name: 'Company A', Industry: 'Tech', ContactEmail: 'companya@example.com' },
@@ -142,6 +142,13 @@ const sampleApplications = [
     // Add more application records as needed
 ];
 
+const sampleInterest = [
+    { JobID: 1, StudentID: 1, MutualInterest: true },
+    { JobID: 2, StudentID: 3, MutualInterest: false},
+];
+
+
+
 (async () => {
     const transaction = await sequelize.transaction();
     try {
@@ -152,6 +159,7 @@ const sampleApplications = [
         await Job.bulkCreate(sampleJobs, { transaction });
         await Student.bulkCreate(sampleStudents, { transaction });
         await Application.bulkCreate(sampleApplications, { transaction });
+        await Interest.bulkCreate(sampleInterest, {transaction});
 
         await transaction.commit();
         console.log('Sample data has been seeded successfully.');

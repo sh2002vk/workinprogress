@@ -4,6 +4,7 @@ const Job = require('./jobModel');
 const Student = require('./studentModel');
 const Recruiter = require('./recruiterModel');
 const Application = require('./applicationModel');
+const Interest = require('./interestModel');
 
 // A Company has many Jobs
 Company.hasMany(Job, { foreignKey: 'CompanyID' });
@@ -25,6 +26,11 @@ Job.hasMany(Application, { foreignKey: 'JobID' });
 // An Application belongs to one Job
 Application.belongsTo(Job, { foreignKey: 'JobID' });
 
+// An Interest belongs to one Job
+Interest.belongsTo(Job, { foreignKey: 'StudentID'});
+// An Interest belongs to one Student
+Interest.belongsTo(Student, { foreignKey: 'JobID'});
+
 // Sync all models with the database
 sequelize.sync();
 
@@ -34,6 +40,7 @@ module.exports = {
   Job,
   Student,
   Recruiter,
-  Application
+  Application,
+  Interest
 };
 
