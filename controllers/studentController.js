@@ -3,6 +3,7 @@
 // Import required models
 const Application = require('../models/applicationModel');
 const Interest = require('../models/interestModel');
+const Bookmark = require('../models/bookmarkModel');
 
 exports.createApplication = async (req, res) => {
     // Logic to apply to a job
@@ -69,3 +70,27 @@ exports.requestContact = async (req, res) => {
         res.status(400).send({message: "Error requesting contact", error: error.message});
     }
 };
+
+exports.createBookmark = async (req, res) => {
+    try {
+        const student = req.params.studentID;
+        const job = req.params.jobID;
+
+        const bookmark = await Bookmark.create({
+            JobID: job,
+            StudentID: student,
+            Direction: 'STUDENT'
+        });
+
+        if (bookmark) {
+            res.status(200).send({
+                message: "Bookmark successfully created",
+                send: bookmark
+            })
+        } else {
+            res.status(400).send( "Other error")
+        }
+    } catch (error) {
+        res.status(400).send({message: "Error bookmarking job", error: error.message})
+    }
+}
