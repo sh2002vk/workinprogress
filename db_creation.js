@@ -96,6 +96,7 @@ connection.connect(err => {
             FOREIGN KEY (JobID) REFERENCES JOB(JobID) ON DELETE CASCADE,
             FOREIGN KEY (StudentID) REFERENCES STUDENT(StudentID) ON DELETE CASCADE,
             PRIMARY KEY (JobID, StudentID)
+        );`;
 
     const createBookmarkTable = `
         CREATE TABLE IF NOT EXISTS BOOKMARK (
@@ -106,7 +107,6 @@ connection.connect(err => {
             FOREIGN KEY (JobID) REFERENCES JOB(JobID) ON DELETE CASCADE,
             FOREIGN KEY (StudentID) REFERENCES STUDENT(StudentID) ON DELETE CASCADE,
             FOREIGN KEY (RecruiterID) REFERENCES RECRUITER(RecruiterID) ON DELETE CASCADE
-
         );`;
 
     // Creation execution
