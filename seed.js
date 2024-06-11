@@ -149,8 +149,8 @@ const sampleInterest = [
 ];
 
 const sampleBookmarks = [
-    { JobID: 1, StudentID: 1, RecruiterID: 1},
-    { JobID: 1, StudentID: 2, RecruiterID: 1},
+    { JobID: 1, StudentID: 1, Direction: 'RECRUITER' },
+    { JobID: 1, StudentID: 2, Direction: 'RECRUITER' },
     // Add more bookmark records as needed
 ];
 

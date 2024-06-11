@@ -89,7 +89,6 @@ connection.connect(err => {
 
     const createInterestTable = `
         CREATE TABLE IF NOT EXISTS INTEREST (
---             ApplicationID INT AUTO_INCREMENT PRIMARY KEY, 
             JobID INT NOT NULL,
             StudentID INT NOT NULL,
             MutualInterest BOOLEAN NOT NULL,
@@ -102,11 +101,10 @@ connection.connect(err => {
         CREATE TABLE IF NOT EXISTS BOOKMARK (
             BookmarkID INT AUTO_INCREMENT PRIMARY KEY,
             JobID INT NOT NULL,
-            RecruiterID INT NOT NULL,
             StudentID INT NOT NULL,
+            Direction ENUM('RECRUITER', 'STUDENT') NOT NULL,
             FOREIGN KEY (JobID) REFERENCES JOB(JobID) ON DELETE CASCADE,
-            FOREIGN KEY (StudentID) REFERENCES STUDENT(StudentID) ON DELETE CASCADE,
-            FOREIGN KEY (RecruiterID) REFERENCES RECRUITER(RecruiterID) ON DELETE CASCADE
+            FOREIGN KEY (StudentID) REFERENCES STUDENT(StudentID) ON DELETE CASCADE
         );`;
 
     // Creation execution

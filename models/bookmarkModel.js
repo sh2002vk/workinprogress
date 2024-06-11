@@ -16,15 +16,6 @@ const Bookmark = sequelize.define('bookmarkModel', {
     },
     onDelete: 'CASCADE',
   },
-  RecruiterID: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    references: {
-      model: 'recruiter', // 'Recruiter' should match the name of your Recruiter model
-      key: 'RecruiterID',
-    },
-    onDelete: 'CASCADE',
-  },
   StudentID: {
     type: Sequelize.INTEGER,
     allowNull: false,
@@ -34,6 +25,10 @@ const Bookmark = sequelize.define('bookmarkModel', {
     },
     onDelete: 'CASCADE',
   },
+  Direction: {
+    type: Sequelize.ENUM('RECRUITER', 'STUDENT'),
+    allowNull: false,
+  }
 }, {
   timestamps: false,
   tableName: 'BOOKMARK',
