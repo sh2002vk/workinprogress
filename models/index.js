@@ -33,7 +33,6 @@ Interest.belongsTo(Job, { foreignKey: 'StudentID'});
 Interest.belongsTo(Student, { foreignKey: 'JobID'});
 
 Bookmark.belongsTo(Job, { foreignKey: 'JobID', onDelete: 'CASCADE' });
-Bookmark.belongsTo(Recruiter, { foreignKey: 'RecruiterID', onDelete: 'CASCADE' });
 Bookmark.belongsTo(Student, { foreignKey: 'StudentID', onDelete: 'CASCADE' });
 
 Job.hasMany(Bookmark, { foreignKey: 'JobID', onDelete: 'CASCADE' });
