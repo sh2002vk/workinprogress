@@ -2,6 +2,7 @@
 
 // Import required models
 const Application = require('../models/applicationModel');
+const Interest = require('../models/interestModel');
 
 exports.createApplication = async (req, res) => {
     // Logic to apply to a job
@@ -37,5 +38,34 @@ exports.deleteApplication = async (req, res) => {
         }
     } catch (error) {
         res.status(400).send({message: "Error deleting application", error: error.message});
+    }
+};
+
+exports.requestContact = async (req, res) => {
+    try {
+        const student = req.params.studentID;
+        const job = req.params.jobID;
+
+        const interest = await Interest.findOne({
+            where: {
+                studentID: student,
+                jobID: job
+            }
+        });
+
+        if (interest) {
+            res.status(200).send({
+                message: `${job} is interested in ${student}`,
+                result: true}
+            );
+        } else {
+            res.status(404).send({
+                message: `${job} is NOT interested in ${student}`,
+                result: false}
+            )
+        }
+
+    } catch (error) {
+        res.status(400).send({message: "Error requesting contact", error: error.message});
     }
 };

@@ -9,5 +9,8 @@ router.post('/application/:jobID/:studentID/:recruiterID/:status', studentContro
 // Route to delete an application
 router.delete('/application/:applicationID', studentController.deleteApplication);
 
+// Route to request recruiters contact
+router.get('/requestContact/:studentID/:jobID', studentController.requestContact);
+
 // Export the router to be mounted by the main application
 module.exports = router;
