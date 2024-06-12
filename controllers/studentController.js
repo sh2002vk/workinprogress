@@ -4,6 +4,7 @@
 const Application = require('../models/applicationModel');
 const Interest = require('../models/interestModel');
 const Bookmark = require('../models/bookmarkModel');
+const Job = require('../models/jobModel');
 
 exports.createApplication = async (req, res) => {
     // Logic to apply to a job
@@ -92,5 +93,34 @@ exports.createBookmark = async (req, res) => {
         }
     } catch (error) {
         res.status(400).send({message: "Error bookmarking job", error: error.message})
+    }
+}
+
+exports.deleteBookmark = async (req, res) => {
+    try {
+        const stu = req.params.studentID;
+        const job = req.params.jobID;
+
+        const bookmark = await Bookmark.destroy({
+            where: {
+                StudentID: stu,
+                JobID: job,
+                Direction: "STUDENT"
+            }
+        });
+
+        if (!bookmark) {
+            res.status(404).send("Bookmark not found");
+        } else {
+            res.status(200).send({
+                message: "Successfully removed bookmark",
+                send: bookmark
+            })
+        }
+    } catch (error) {
+        res.status(400).send({
+            message: "Error when removing bookmark",
+            error: error.message
+        })
     }
 }

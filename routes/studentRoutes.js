@@ -15,5 +15,8 @@ router.get('/requestContact/:studentID/:jobID', studentController.requestContact
 // Route to bookmark a job posting
 router.post('/bookmark/:studentID/:jobID', studentController.createBookmark);
 
+// Route to remove a bookmarked job posting
+router.delete('/bookmark/:studentID/:jobID', studentController.deleteBookmark);
+
 // Export the router to be mounted by the main application
 module.exports = router;
