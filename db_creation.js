@@ -35,6 +35,11 @@ connection.connect(err => {
             Location VARCHAR(255) NOT NULL,
             Experience FLOAT NOT NULL,
             Pay FLOAT,
+            Environment ENUM('REMOTE', 'INPERSON', 'HYBRID') NOT NULL,
+            Duration ENUM('4', '8', '12'),
+            StartTime ENUM('F24', 'W25', 'S25', 'F25'),
+            EndTime ENUM('F24', 'W25', 'S25', 'F25'),
+            Industry ENUM('Technology', 'Business'),
             FOREIGN KEY (CompanyID) REFERENCES COMPANY(CompanyID) ON DELETE CASCADE,
             FOREIGN KEY (RecruiterID) REFERENCES RECRUITER(RecruiterID) ON DELETE CASCADE
         );`;
