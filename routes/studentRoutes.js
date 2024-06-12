@@ -12,5 +12,8 @@ router.delete('/application/:applicationID', studentController.deleteApplication
 // Route to request recruiters contact
 router.get('/requestContact/:studentID/:jobID', studentController.requestContact);
 
+// Route to bookmark a job posting
+router.post('/bookmark/:studentID/:jobID', studentController.createBookmark);
+
 // Export the router to be mounted by the main application
 module.exports = router;

@@ -38,7 +38,23 @@ const Job = sequelize.define('jobModel', {
     type: Sequelize.FLOAT,
     allowNull: false
   },
-  Pay: Sequelize.FLOAT
+  Pay: Sequelize.FLOAT,
+  Environment: {
+    type: Sequelize.ENUM('REMOTE', 'INPERSON', 'HYBRID'),
+    allowNull: false
+  },
+  Duration: {
+    type: Sequelize.ENUM('4', '8', '12')
+  },
+  StartTime: {
+    type: Sequelize.ENUM('F24', 'W25', 'S25', 'F25')
+  },
+  EndTime: {
+    type: Sequelize.ENUM('F24', 'W25', 'S25', 'F25')
+  },
+  Industry: {
+    type: Sequelize.ENUM('Technology', 'Business')
+  }
 }, {
   timestamps: false,
   tableName: 'JOB'

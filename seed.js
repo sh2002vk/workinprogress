@@ -132,8 +132,39 @@ const sampleRecruiters = [
 ];
 
 const sampleJobs = [
-    { CompanyID: 1, Role: 'Software Engineer', RecruiterID: 1, Location: 'San Francisco', Experience: 2.5, Pay: 100000 },
-    { CompanyID: 2, Role: 'Product Manager', RecruiterID: 2, Location: 'Seattle', Experience: 4, Pay: 120000 },
+    {
+        CompanyID: 1,
+        Role: 'Software Engineer',
+        RecruiterID: 1,
+        Location: 'San Francisco',
+        Experience: 2.5,
+        Pay: 100000,
+        Environment: 'REMOTE',
+        Duration: '4',
+        StartTime: 'F24',
+        EndTime: 'F25',
+        Industry: 'Technology'
+    },
+    {
+        CompanyID: 2,
+        Role: 'Product Manager',
+        RecruiterID: 2,
+        Location: 'Seattle',
+        Experience: 4,
+        Pay: 120000,
+        StartTime: 'W25',
+        EndTime: 'S25',
+        Environment: "HYBRID"
+    },
+    {
+        CompanyID: 1,
+        Role: 'Product Manager',
+        RecruiterID: 2,
+        Location: 'Washington',
+        Experience: 4,
+        Pay: 10000,
+        Environment: "HYBRID"
+    }
     // Add more job records as needed
 ];
 
