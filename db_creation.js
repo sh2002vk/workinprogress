@@ -96,7 +96,7 @@ connection.connect(err => {
         CREATE TABLE IF NOT EXISTS INTEREST (
             JobID INT NOT NULL,
             StudentID INT NOT NULL,
-            MutualInterest BOOLEAN NOT NULL,
+            Direction ENUM('RECRUITER', 'STUDENT', 'MUTUAL') NOT NULL,
             FOREIGN KEY (JobID) REFERENCES JOB(JobID) ON DELETE CASCADE,
             FOREIGN KEY (StudentID) REFERENCES STUDENT(StudentID) ON DELETE CASCADE,
             PRIMARY KEY (JobID, StudentID)

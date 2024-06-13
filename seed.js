@@ -175,8 +175,9 @@ const sampleApplications = [
 ];
 
 const sampleInterest = [
-    { JobID: 1, StudentID: 1, MutualInterest: true },
-    { JobID: 2, StudentID: 3, MutualInterest: false},
+    { JobID: 1, StudentID: 1, Direction: "RECRUITER" },
+    { JobID: 2, StudentID: 3, Direction: "STUDENT"},
+    { JobID: 1, StudentID: 2, Direction: "MUTUAL"},
 ];
 
 const sampleBookmarks = [
