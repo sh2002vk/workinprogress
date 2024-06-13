@@ -86,7 +86,11 @@ exports.requestContact = async (req, res) => {
         const interest = await Interest.findOne({
             where: {
                 studentID: student,
-                jobID: job
+                jobID: job,
+                [Sequelize.Op.or]: [
+                    { Direction: "RECRUITER" },
+                    { Direction: "MUTUAL" }
+                ]
             }
         });
 
