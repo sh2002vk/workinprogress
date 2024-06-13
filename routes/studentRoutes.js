@@ -21,5 +21,8 @@ router.post('/bookmark/:studentID/:jobID', studentController.createBookmark);
 // Route to remove a bookmarked job posting
 router.delete('/bookmark/:studentID/:jobID', studentController.deleteBookmark);
 
+// Route to get all jobs a student has shown interest in
+router.get('/interest/:studentID', studentController.getInterest);
+
 // Export the router to be mounted by the main application
 module.exports = router;

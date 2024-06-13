@@ -12,8 +12,8 @@ const Interest = sequelize.define('Interest', {
         primaryKey: true,
         allowNull: false
     },
-    MutualInterest: {
-        type: Sequelize.BOOLEAN,
+    Direction: {
+        type: Sequelize.ENUM('RECRUITER', 'STUDENT', 'MUTUAL'),
         allowNull: false
     }
 }, {

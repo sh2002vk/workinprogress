@@ -5,6 +5,7 @@ const Application = require('../models/applicationModel');
 const Interest = require('../models/interestModel');
 const Bookmark = require('../models/bookmarkModel');
 const Job = require('../models/jobModel');
+const {Sequelize} = require("sequelize");
 
 exports.createApplication = async (req, res) => {
     // Logic to apply to a job
@@ -156,5 +157,35 @@ exports.deleteBookmark = async (req, res) => {
             message: "Error when removing bookmark",
             error: error.message
         })
+    }
+}
+
+exports.getInterest = async (req, res) => {
+    try {
+        const student = req.params.studentID;
+
+        const interest = await Interest.findAll({
+            where: {
+                StudentID: student,
+                [Sequelize.Op.or]: [
+                    { Direction: "STUDENT" },
+                    { Direction: "MUTUAL" }
+                ]
+            },
+            attributes: {
+                JobID: ["JobID"]
+            }
+        })
+
+        if(!student) {
+            res.status(404).send("Error not found")
+        } else {
+            res.status(200).send({
+                message: "Interested Jobs:",
+                data: interest
+            })
+        }
+    } catch (error) {
+        res.status(400).send({message: "Error", error: error.message})
     }
 }
