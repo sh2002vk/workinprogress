@@ -9,7 +9,13 @@ const Job = require('../models/jobModel');
 exports.createApplication = async (req, res) => {
     // Logic to apply to a job
     try {
-        const {JobID, StudentID, RecruiterID, Status, ApplicationTime} = req.body;
+        const {
+            JobID,
+            StudentID,
+            RecruiterID,
+            Status,
+            ApplicationTime
+        } = req.body;
         const newApplication = await Application.create({
             JobID,
             StudentID,
@@ -42,6 +48,34 @@ exports.deleteApplication = async (req, res) => {
         res.status(400).send({message: "Error deleting application", error: error.message});
     }
 };
+
+exports.getApplications = async (req, res) => {
+    try {
+        const student = req.params.studentID;
+
+        const applications = await Application.findAll({
+            where: {
+                StudentID: student,
+            },
+            attributes: ['ApplicationID']
+        });
+
+        if (!applications) {
+            res.status(404).send("Error")
+        } else {
+            res.status(200).send({
+                message: "Applications listed below:",
+                data: applications
+            })
+        }
+
+    } catch (error) {
+        res.status(400).send({
+            message: "Error in getting applications",
+            error: error.message
+        })
+    }
+}
 
 exports.requestContact = async (req, res) => {
     try {

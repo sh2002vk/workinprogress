@@ -4,10 +4,13 @@ const studentController = require('../controllers/studentController');
 const router = express.Router();
 
 // Route to create a new application to a job (requires jobID, studentsID, recruiterID, and STATUS
-router.post('/application/:jobID/:studentID/:recruiterID/:status', studentController.createApplication);
+router.post('/application', studentController.createApplication);
 
 // Route to delete an application
 router.delete('/application/:applicationID', studentController.deleteApplication);
+
+// Route to get applications of a studentID
+router.get('/application/:studentID', studentController.getApplications);
 
 // Route to request recruiters contact
 router.get('/requestContact/:studentID/:jobID', studentController.requestContact);
