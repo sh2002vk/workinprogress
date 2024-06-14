@@ -6,6 +6,7 @@ const Interest = require('../models/interestModel');
 const Bookmark = require('../models/bookmarkModel');
 const Job = require('../models/jobModel');
 const {Sequelize} = require("sequelize");
+const Recruiter = require("../models/recruiterModel");
 
 exports.createApplication = async (req, res) => {
     // Logic to apply to a job
@@ -31,6 +32,26 @@ exports.createApplication = async (req, res) => {
     }
 };
 
+exports.updateApplication = async (req, res) => {
+    try {
+        const application = req.params.applicationID;
+        const updatedData = req.body;
+
+        const [updated] = await Application.update(updatedData, {
+            where: { ApplicationID: application }
+        });
+
+        if (updated) {
+            const updatedApplication = await Application.findByPk(application);
+            res.status(200).send({message: "Application successfully updated", data: updatedApplication});
+        } else {
+            res.status(404).send({ message: "Application not found or nothing updated" });
+        }
+    } catch (error) {
+        res.status(400).send({ message: "Error updating application", error: error.message });
+    }
+}
+
 exports.deleteApplication = async (req, res) => {
     // Logic to delete a current job application
     try {
@@ -52,11 +73,11 @@ exports.deleteApplication = async (req, res) => {
 
 exports.getApplications = async (req, res) => {
     try {
-        const student = req.params.studentID;
+        const {studentID} = req.body;
 
         const applications = await Application.findAll({
             where: {
-                StudentID: student,
+                StudentID: studentID,
             },
             attributes: ['ApplicationID']
         });
@@ -73,6 +94,59 @@ exports.getApplications = async (req, res) => {
     } catch (error) {
         res.status(400).send({
             message: "Error in getting applications",
+            error: error.message
+        })
+    }
+}
+
+exports.checkRequiredDocuments = async (req, res) => {
+    try {
+        const {jobID, applicationID} = req.body;
+
+        const job = await Job.findByPk(jobID);
+        const application = await Application.findByPk(applicationID);
+        const requiredDocuments = job.RequiredDocuments;
+        // console.log(application);
+        const resume = application.Resume;
+        const cover = application.CoverLetter;
+        const engSample = application.EnglishSample;
+        console.log(resume);
+        console.log(cover);
+        console.log(engSample);
+
+        // console.log(reqs);
+
+        Object.keys(requiredDocuments).forEach(key => {
+            // console.log(requiredDocuments[key]);
+            if (requiredDocuments[key]) {
+                switch (key) {
+                    case "Resume":
+                        console.log("resume case")
+                        if (!application.Resume) {
+                            console.log("resume not found")
+                            return res.status(200).send(false);
+                        }
+                        break;
+                    case "CoverLetter":
+                        console.log("cover case")
+                        if (!application.CoverLetter) {
+                            return res.status(200).send(false);
+                        }
+                        break;
+                    case "EnglishSample":
+                        console.log("english case")
+                        if (!application.EnglishSample) {
+                            return res.status(200).send(false);
+                        }
+                        break;
+                }
+            }
+        })
+        return res.status(200).send(true);
+
+    } catch (error) {
+        res.status(400).send({
+            message: "Error in checking eligibility",
             error: error.message
         })
     }
