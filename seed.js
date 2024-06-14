@@ -143,7 +143,11 @@ const sampleJobs = [
         Duration: '4',
         StartTime: 'F24',
         EndTime: 'F25',
-        Industry: 'Technology'
+        Industry: 'Technology',
+        RequiredDocuments: {
+            'Resume': true,
+            'CoverLetter': true
+        }
     },
     {
         CompanyID: 2,

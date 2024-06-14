@@ -73,11 +73,11 @@ exports.deleteApplication = async (req, res) => {
 
 exports.getApplications = async (req, res) => {
     try {
-        const student = req.params.studentID;
+        const {studentID} = req.body;
 
         const applications = await Application.findAll({
             where: {
-                StudentID: student,
+                StudentID: studentID,
             },
             attributes: ['ApplicationID']
         });
@@ -94,6 +94,59 @@ exports.getApplications = async (req, res) => {
     } catch (error) {
         res.status(400).send({
             message: "Error in getting applications",
+            error: error.message
+        })
+    }
+}
+
+exports.checkRequiredDocuments = async (req, res) => {
+    try {
+        const {jobID, applicationID} = req.body;
+
+        const job = await Job.findByPk(jobID);
+        const application = await Application.findByPk(applicationID);
+        const requiredDocuments = job.RequiredDocuments;
+        // console.log(application);
+        const resume = application.Resume;
+        const cover = application.CoverLetter;
+        const engSample = application.EnglishSample;
+        console.log(resume);
+        console.log(cover);
+        console.log(engSample);
+
+        // console.log(reqs);
+
+        Object.keys(requiredDocuments).forEach(key => {
+            // console.log(requiredDocuments[key]);
+            if (requiredDocuments[key]) {
+                switch (key) {
+                    case "Resume":
+                        console.log("resume case")
+                        if (!application.Resume) {
+                            console.log("resume not found")
+                            return res.status(200).send(false);
+                        }
+                        break;
+                    case "CoverLetter":
+                        console.log("cover case")
+                        if (!application.CoverLetter) {
+                            return res.status(200).send(false);
+                        }
+                        break;
+                    case "EnglishSample":
+                        console.log("english case")
+                        if (!application.EnglishSample) {
+                            return res.status(200).send(false);
+                        }
+                        break;
+                }
+            }
+        })
+        return res.status(200).send(true);
+
+    } catch (error) {
+        res.status(400).send({
+            message: "Error in checking eligibility",
             error: error.message
         })
     }

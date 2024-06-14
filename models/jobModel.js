@@ -54,6 +54,10 @@ const Job = sequelize.define('jobModel', {
   },
   Industry: {
     type: Sequelize.ENUM('Technology', 'Business')
+  },
+  RequiredDocuments: {
+    type: Sequelize.JSON,
+    allowNull: true
   }
 }, {
   timestamps: false,

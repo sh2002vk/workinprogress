@@ -40,6 +40,7 @@ connection.connect(err => {
             StartTime ENUM('F24', 'W25', 'S25', 'F25'),
             EndTime ENUM('F24', 'W25', 'S25', 'F25'),
             Industry ENUM('Technology', 'Business'),
+            RequiredDocuments JSON,
             FOREIGN KEY (CompanyID) REFERENCES COMPANY(CompanyID) ON DELETE CASCADE,
             FOREIGN KEY (RecruiterID) REFERENCES RECRUITER(RecruiterID) ON DELETE CASCADE
         );`;

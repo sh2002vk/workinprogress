@@ -13,7 +13,10 @@ router.post('/application/:applicationID', studentController.updateApplication);
 router.delete('/application/:applicationID', studentController.deleteApplication);
 
 // Route to get applications of a studentID
-router.get('/application/:studentID', studentController.getApplications);
+router.get('/application', studentController.getApplications);
+
+// Route to check if application has required documents for job
+router.get('/application/eligible', studentController.checkRequiredDocuments);
 
 // Route to request recruiters contact
 router.get('/requestContact/:studentID/:jobID', studentController.requestContact);
