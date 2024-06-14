@@ -169,8 +169,8 @@ const sampleJobs = [
 ];
 
 const sampleApplications = [
-    { JobID: 1, StudentID: 1, RecruiterID: 1, ApplicationTime: new Date(), Status: 'APPLIED' },
-    { JobID: 2, StudentID: 2, RecruiterID: 2, ApplicationTime: new Date(), Status: 'REVIEW' },
+    { JobID: 1, StudentID: 1, RecruiterID: 1, ApplicationTime: new Date(), Status: 'APPLIED', Resume: "SampleResumeLink" },
+    { JobID: 2, StudentID: 2, RecruiterID: 2, ApplicationTime: new Date(), Status: 'REVIEW', Resume: "resume.txt", CoverLetter: "COVERLETTER", EnglishSample: "ENGLISHSAMPLE.TXT"},
     // Add more application records as needed
 ];
 

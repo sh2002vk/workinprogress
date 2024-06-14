@@ -6,6 +6,7 @@ const Interest = require('../models/interestModel');
 const Bookmark = require('../models/bookmarkModel');
 const Job = require('../models/jobModel');
 const {Sequelize} = require("sequelize");
+const Recruiter = require("../models/recruiterModel");
 
 exports.createApplication = async (req, res) => {
     // Logic to apply to a job
@@ -30,6 +31,26 @@ exports.createApplication = async (req, res) => {
         res.status(400).send({message: "Error creating application", error: error.message});
     }
 };
+
+exports.updateApplication = async (req, res) => {
+    try {
+        const application = req.params.applicationID;
+        const updatedData = req.body;
+
+        const [updated] = await Application.update(updatedData, {
+            where: { ApplicationID: application }
+        });
+
+        if (updated) {
+            const updatedApplication = await Application.findByPk(application);
+            res.status(200).send({message: "Application successfully updated", data: updatedApplication});
+        } else {
+            res.status(404).send({ message: "Application not found or nothing updated" });
+        }
+    } catch (error) {
+        res.status(400).send({ message: "Error updating application", error: error.message });
+    }
+}
 
 exports.deleteApplication = async (req, res) => {
     // Logic to delete a current job application

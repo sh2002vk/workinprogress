@@ -86,6 +86,9 @@ connection.connect(err => {
             RecruiterID INT,
             ApplicationTime DATETIME NOT NULL,
             Status ENUM('APPLIED', 'REVIEW', 'INTERVIEW', 'ACCEPT', 'REJECT') NOT NULL, 
+            Resume TEXT NOT NULL,
+            CoverLetter TEXT,
+            EnglishSample TEXT,
             FOREIGN KEY (JobID) REFERENCES JOB(JobID) ON DELETE CASCADE,
             FOREIGN KEY (StudentID) REFERENCES STUDENT(StudentID) ON DELETE CASCADE,
             FOREIGN KEY (RecruiterID) REFERENCES RECRUITER(RecruiterID) ON DELETE CASCADE

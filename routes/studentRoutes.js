@@ -6,6 +6,9 @@ const router = express.Router();
 // Route to create a new application to a job (requires jobID, studentsID, recruiterID, and STATUS
 router.post('/application', studentController.createApplication);
 
+// Route to update an application
+router.post('/application/:applicationID', studentController.updateApplication);
+
 // Route to delete an application
 router.delete('/application/:applicationID', studentController.deleteApplication);
 
