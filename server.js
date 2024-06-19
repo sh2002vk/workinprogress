@@ -5,6 +5,8 @@ const db = require('./models');
 require('dotenv').config();
 
 const accountRoutes = require('./routes/accountRoutes');
+const profileRoutes = require('./routes/profileRoutes');
+const actionRoutes = require('./routes/actionRoutes');
 const recruiterRoutes = require('./routes/recruiterRoutes');
 const studentRoutes = require('./routes/studentRoutes');
 
@@ -13,8 +15,8 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use('/account', accountRoutes);
-app.use('/recruiter', recruiterRoutes);
-app.use('/student', studentRoutes);
+app.use('/profile', profileRoutes);
+app.use('/action',actionRoutes);
 
 
 const PORT = process.env.PORT || 4000;

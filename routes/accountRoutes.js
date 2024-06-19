@@ -3,25 +3,25 @@ const router = express.Router();
 const accountController = require('../controllers/accountController');
 
 // Recruiter routes
-router.post('/recruiter', accountController.createRecruiter);
-router.put('/recruiter/:recruiterID', accountController.updateRecruiter);
-router.delete('/recruiter/:recruiterID', accountController.deleteRecruiter);
-router.get('/recruiter/:companyID', accountController.getRecruiters);
+router.post('/recruiter/create', accountController.createRecruiter);
+router.put('/recruiter/update', accountController.updateRecruiter);
+router.delete('/recruiter/delete', accountController.deleteRecruiter);
 
 // Student routes
-router.post('/student/createStudent', accountController.createStudent);
-router.put('/student/:studentID', accountController.updateStudent);
-router.delete('/student/:studentID', accountController.deleteStudent);
-router.post('/student/getStudents', accountController.getStudentsFiltered);
-
-// Job routes
-router.post('/job/getJobs', accountController.getJobsFiltered);
+router.post('/student/create', accountController.createStudent);
+router.put('/student/update', accountController.updateStudent);
+router.delete('/student/delete', accountController.deleteStudent);
+router.get('/student/getQuota', accountController.getStudentsQuota); // need to implement
 
 // Company routes
-router.post('/company', accountController.createCompany);
-router.delete('/company/:companyID', accountController.deleteCompany);
+router.post('/company/create', accountController.createCompany);
+router.put('/company/update', accountController.updateCompany); // need to implement
+router.delete('/company/delete', accountController.deleteCompany);
 
-// Getters
-router.get('/student/quota/:studentID', accountController.getQuota);
-router.get('/student/:studentID', accountController.getStudent);
+// router.post('/student/getStudents', accountController.getStudentsFiltered);
+// router.get('/recruiter/:companyID', accountController.getRecruiters);
+// router.post('/job/getJobs', accountController.getJobsFiltered);
+// router.get('/student/quota/:studentID', accountController.getQuota);
+// router.get('/student/:studentID', accountController.getStudent);
+
 module.exports = router;

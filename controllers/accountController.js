@@ -35,8 +35,7 @@ exports.createStudent = async (req, res) => {
 
 exports.updateStudent = async (req, res) => {
     try {
-        const studentID = req.params.studentID;
-        const updatedData = req.body;
+        const {studentID, updatedData} = req.body;
 
         // TODO: Update the parsing
         const [updated] = await Student.update(updatedData, {
@@ -56,7 +55,7 @@ exports.updateStudent = async (req, res) => {
 
 exports.deleteStudent = async (req, res) => {
     try {
-        const deleteID = req.params.studentID;
+        const {deleteID} = req.body;
 
         const deleted = await Student.destroy({
             where: { studentID: deleteID }
@@ -86,93 +85,6 @@ exports.deleteStudent = async (req, res) => {
 //     }
 // };
 
-exports.getStudentsFiltered = async (req, res) => {
-    try {
-        const { 
-            preference, // work style
-            duration, // length of term
-            season, // f24, w25, s25, etc
-            level // used as 1-4 for ug, 5 master, 6 phd
-        } = req.body;
-
-
-        let whereClause = {};
-
-        if (preference) {
-            whereClause.Preference = preference;
-        }
-        if (duration) {
-            whereClause.Duration = duration;
-        } 
-        if (season) {
-            whereClause.Season = season;
-        }
-        if (level) {
-            whereClause.AcademicYear = parseInt(level);
-        }
-
-        console.log(whereClause);
-
-        let students = await Student.findAll({
-            where: whereClause,
-            attributes: ['StudentID', 'FirstName', 'LastName', 'School', 'WorkExperience']
-        });
-
-        res.status(200).send({ message: "Filtered students are listed", data: students });
-    } catch (error) {
-        res.status(400).send({ message: "Error filtering students", error: error.message });
-    }
-}
-
-exports.getJobsFiltered = async (req, res) => {
-    try {
-        const {
-            role, // title
-            environment, //work style
-            location,
-            duration, // length of term
-            startAvailability, // f24, w25, s25, etc
-            endAvailability, // f24, w25, s25, etc
-            industry
-        } = req.body;
-
-        let whereClause = {};
-
-        if (role) {
-            whereClause.Role = role;
-        }
-        if (environment) {
-            whereClause.Environment = environment;
-        }
-        if (location) {
-            whereClause.Location = location;
-        }
-        if (duration) {
-            whereClause.Duration = duration;
-        }
-        if (startAvailability) {
-            whereClause.StartTime = startAvailability;
-        }
-        if (endAvailability) {
-            whereClause.EndTime = endAvailability;
-        }
-        if (industry) {
-            whereClause.Industry = industry;
-        }
-
-        console.log(whereClause);
-
-        let jobs = await Job.findAll({
-            where: whereClause,
-            attributes: ['JobID']
-        });
-
-        res.status(200).send({ message: "Filtered jobs are listed", data: jobs });
-    } catch (error) {
-        res.status(400).send({ message: "Error filtering jobs", error: error.message });
-    }
-}
-
 exports.createRecruiter = async (req, res) => {
     try {
         const { RecruiterID, FirstName, LastName, CompanyID, EmailID, CompanyName, Roles, Locations } = req.body;
@@ -197,8 +109,7 @@ exports.createRecruiter = async (req, res) => {
 
 exports.updateRecruiter = async (req, res) => {
     try {
-        const recruiterID = req.params.recruiterID;
-        const updatedData = req.body;
+        const {recruiterID, updatedData} = req.body;
 
         const [updated] = await Recruiter.update(updatedData, {
             where: { RecruiterID: recruiterID }
@@ -217,7 +128,7 @@ exports.updateRecruiter = async (req, res) => {
 
 exports.deleteRecruiter = async (req, res) => {
     try {
-        const deleteID = req.params.recruiterID;
+        const {deleteID} = req.body;
 
         const deleted = await Recruiter.destroy({
             where: { RecruiterID: deleteID }
@@ -235,7 +146,7 @@ exports.deleteRecruiter = async (req, res) => {
 
 exports.getRecruiters = async (req, res) => {
     try{
-        const companyID = req.params.companyID;
+        const {companyID} = req.body;
 
         let recruiters;
         if (companyID) {
@@ -276,7 +187,7 @@ exports.createCompany = async (req, res) => {
 
 exports.deleteCompany = async (req, res) => {
     try {
-        const deleteId = req.params.companyID;
+        const {deleteId} = req.body;
 
         const deleted = await Company.destroy({
             where: {CompanyID: deleteId}
@@ -295,7 +206,7 @@ exports.deleteCompany = async (req, res) => {
 
 exports.getQuota = async (req, res) => {
     try {
-        const targetStudentID = req.params.studentID;
+        const {targetStudentID} = req.body;
 
         const stu = await Student.findByPk(targetStudentID)
 
@@ -312,7 +223,7 @@ exports.getQuota = async (req, res) => {
 
 exports.getStudent = async (req, res) => {
     try {
-        const studentID = req.params.studentID;
+        const {studentID} = req.body;
 
         const stu = await Student.findByPk(studentID);
 

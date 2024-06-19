@@ -103,3 +103,41 @@ exports.addStudentToBookMark = async (req, res) => {
         res.status(400).send({message: "Unable to bookmark student", error: error.message});
     }
 }
+
+exports.getStudentsFiltered = async (req, res) => {
+    try {
+        const { 
+            preference, // work style
+            duration, // length of term
+            season, // f24, w25, s25, etc
+            level // used as 1-4 for ug, 5 master, 6 phd
+        } = req.body;
+
+
+        let whereClause = {};
+
+        if (preference) {
+            whereClause.Preference = preference;
+        }
+        if (duration) {
+            whereClause.Duration = duration;
+        } 
+        if (season) {
+            whereClause.Season = season;
+        }
+        if (level) {
+            whereClause.AcademicYear = parseInt(level);
+        }
+
+        console.log(whereClause);
+
+        let students = await Student.findAll({
+            where: whereClause,
+            attributes: ['StudentID', 'FirstName', 'LastName', 'School', 'WorkExperience']
+        });
+
+        res.status(200).send({ message: "Filtered students are listed", data: students });
+    } catch (error) {
+        res.status(400).send({ message: "Error filtering students", error: error.message });
+    }
+}

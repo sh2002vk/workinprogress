@@ -62,6 +62,7 @@ At WIP, we're building the future of internship recruiting. Our software is our 
     - /editJobPosting
     - /submitJobPosting
     - /deleteJobPosting
+    - /getStudentsThatApplied
   - **/company**
     - /onboardRecruiter
     - /offboardRecruiter
