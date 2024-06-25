@@ -159,15 +159,6 @@ const sampleJobs = [
         StartTime: 'W25',
         EndTime: 'S25',
         Environment: "HYBRID"
-    },
-    {
-        CompanyID: 1,
-        Role: 'Product Manager',
-        RecruiterID: 2,
-        Location: 'Washington',
-        Experience: 4,
-        Pay: 10000,
-        Environment: "HYBRID"
     }
     // Add more job records as needed
 ];

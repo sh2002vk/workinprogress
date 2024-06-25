@@ -11,17 +11,11 @@ router.delete('/recruiter/delete', accountController.deleteRecruiter);
 router.post('/student/create', accountController.createStudent);
 router.put('/student/update', accountController.updateStudent);
 router.delete('/student/delete', accountController.deleteStudent);
-router.get('/student/getQuota', accountController.getStudentsQuota); // need to implement
+router.get('/student/getQuota', accountController.getQuota); 
 
 // Company routes
 router.post('/company/create', accountController.createCompany);
-router.put('/company/update', accountController.updateCompany); // need to implement
+router.put('/company/update', accountController.updateCompany); 
 router.delete('/company/delete', accountController.deleteCompany);
-
-// router.post('/student/getStudents', accountController.getStudentsFiltered);
-// router.get('/recruiter/:companyID', accountController.getRecruiters);
-// router.post('/job/getJobs', accountController.getJobsFiltered);
-// router.get('/student/quota/:studentID', accountController.getQuota);
-// router.get('/student/:studentID', accountController.getStudent);
 
 module.exports = router;

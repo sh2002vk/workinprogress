@@ -185,6 +185,26 @@ exports.createCompany = async (req, res) => {
     }
 }
 
+// Update an existing company
+exports.updateCompany = async (req, res) => {
+    try {
+        const { companyID, updatedData } = req.body;
+
+        const [updated] = await Company.update(updatedData, {
+            where: { CompanyID: companyID }
+        });
+
+        if (updated) {
+            const updatedCompany = await Company.findByPk(companyID);
+            res.status(200).send(updatedCompany);
+        } else {
+            res.status(404).send({ message: "Company not found" });
+        }
+    } catch (error) {
+        res.status(400).send({ message: "Error updating company", error: error.message });
+    }
+};
+
 exports.deleteCompany = async (req, res) => {
     try {
         const {deleteId} = req.body;

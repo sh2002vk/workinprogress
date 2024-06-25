@@ -1,5 +1,3 @@
-// USE THIS SCRIPT TO CREATE NEW TABLES IN THE DB WITH "node db_creation.js"
-
 delete require.cache[require.resolve('dotenv/config')];
 require('dotenv').config();
 const mysql = require('mysql2');
@@ -95,7 +93,6 @@ connection.connect(err => {
             FOREIGN KEY (RecruiterID) REFERENCES RECRUITER(RecruiterID) ON DELETE CASCADE
         );`;
 
-
     const createInterestTable = `
         CREATE TABLE IF NOT EXISTS INTEREST (
             JobID INT NOT NULL,
@@ -114,6 +111,17 @@ connection.connect(err => {
             Direction ENUM('RECRUITER', 'STUDENT') NOT NULL,
             FOREIGN KEY (JobID) REFERENCES JOB(JobID) ON DELETE CASCADE,
             FOREIGN KEY (StudentID) REFERENCES STUDENT(StudentID) ON DELETE CASCADE
+        );`;
+
+    const createShortlistTable = `
+        CREATE TABLE IF NOT EXISTS SHORTLIST (
+            ShortlistID INT AUTO_INCREMENT PRIMARY KEY,
+            StudentID INT NOT NULL,
+            JobID INT NOT NULL,
+            RecruiterID INT NOT NULL,
+            FOREIGN KEY (StudentID) REFERENCES STUDENT(StudentID) ON DELETE CASCADE,
+            FOREIGN KEY (JobID) REFERENCES JOB(JobID) ON DELETE CASCADE,
+            FOREIGN KEY (RecruiterID) REFERENCES RECRUITER(RecruiterID) ON DELETE CASCADE
         );`;
 
     // Creation execution
@@ -162,10 +170,18 @@ connection.connect(err => {
                             connection.query(createInterestTable, function (err) {
                                 if (err) {
                                     console.error("Error creating Interest table:", err);
-                                } else {
-                                    console.log("Interest table created or exists already!");
+                                    return connection.end();
                                 }
-                                connection.end();
+                                console.log("Interest table created or exists already!");
+
+                                connection.query(createShortlistTable, function (err) {
+                                    if (err) {
+                                        console.error("Error creating Shortlist table:", err);
+                                    } else {
+                                        console.log("SHORTLIST table created or exists already!");
+                                    }
+                                    connection.end();
+                                });
                             });
                         });
                     });

@@ -6,6 +6,7 @@ const Interest = require('../models/interestModel');
 const Bookmark = require('../models/bookmarkModel');
 const Job = require('../models/jobModel');
 const {Sequelize} = require("sequelize");
+const Student = require('../models/studentModel');
 const Recruiter = require("../models/recruiterModel");
 
 exports.createApplication = async (req, res) => {
@@ -34,8 +35,7 @@ exports.createApplication = async (req, res) => {
 
 exports.updateApplication = async (req, res) => {
     try {
-        const application = req.params.applicationID;
-        const updatedData = req.body;
+        const {application, updatedData} = req.body;
 
         const [updated] = await Application.update(updatedData, {
             where: { ApplicationID: application }
@@ -55,7 +55,7 @@ exports.updateApplication = async (req, res) => {
 exports.deleteApplication = async (req, res) => {
     // Logic to delete a current job application
     try {
-        const deleteID = req.params.applicationID;
+        const {deleteID} = req.body;
 
         const deleted = await Application.destroy({
             where: {ApplicationID: deleteID}
@@ -154,8 +154,7 @@ exports.checkRequiredDocuments = async (req, res) => {
 
 exports.requestContact = async (req, res) => {
     try {
-        const student = req.params.studentID;
-        const job = req.params.jobID;
+        const {student, job} = req.body;
 
         const interest = await Interest.findOne({
             where: {
@@ -187,8 +186,7 @@ exports.requestContact = async (req, res) => {
 
 exports.createBookmark = async (req, res) => {
     try {
-        const student = req.params.studentID;
-        const job = req.params.jobID;
+        const {student, job} = req.body;
 
         const bookmark = await Bookmark.create({
             JobID: job,
@@ -211,8 +209,7 @@ exports.createBookmark = async (req, res) => {
 
 exports.deleteBookmark = async (req, res) => {
     try {
-        const stu = req.params.studentID;
-        const job = req.params.jobID;
+        const {stu, job} = req.body;
 
         const bookmark = await Bookmark.destroy({
             where: {
@@ -240,7 +237,7 @@ exports.deleteBookmark = async (req, res) => {
 
 exports.getInterest = async (req, res) => {
     try {
-        const student = req.params.studentID;
+        const {student} = req.body;
 
         const interest = await Interest.findAll({
             where: {
@@ -316,3 +313,37 @@ exports.getJobsFiltered = async (req, res) => {
         res.status(400).send({ message: "Error filtering jobs", error: error.message });
     }
 }
+
+exports.getFullProfile = async (req, res) => {
+    try {
+        const { studentID } = req.body;
+
+        const student = await Student.findByPk(studentID);
+
+        if (student) {
+            res.status(200).send({ message: "Full student profile", data: student });
+        } else {
+            res.status(404).send({ message: "Student not found" });
+        }
+    } catch (error) {
+        res.status(400).send({ message: "Error getting student profile", error: error.message });
+    }
+};
+
+exports.getShortProfile = async (req, res) => {
+    try {
+        const { studentID } = req.body;
+
+        const student = await Student.findByPk(studentID, {
+            attributes: ['StudentID', 'FirstName', 'LastName', 'School', 'AcademicMajor', 'GPA']
+        });
+
+        if (student) {
+            res.status(200).send({ message: "Short student profile", data: student });
+        } else {
+            res.status(404).send({ message: "Student not found" });
+        }
+    } catch (error) {
+        res.status(400).send({ message: "Error getting student profile", error: error.message });
+    }
+};
