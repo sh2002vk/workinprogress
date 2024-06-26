@@ -3,6 +3,8 @@ const router = express.Router();
 const studentController = require('../controllers/studentController');
 const recruiterController = require('../controllers/recruiterController');
 const companyController = require('../controllers/companyController');
+const applicationController = require("../controllers/applicationController");
+const jobController = require("../controllers/jobController");
 
 // student
 router.get('/student/getRecruiterContact', studentController.requestContact);
@@ -33,5 +35,11 @@ router.delete('/recruiter/deleteJobPosting', recruiterController.deleteJob);
 
 // company
 router.get('/company/getRecruiters', companyController.getRecruiters);
+
+// job
+router.get('/job/getJob', jobController.getJob);
+
+// application
+router.get('/application/getApplication', applicationController.getApplication);
 
 module.exports = router;

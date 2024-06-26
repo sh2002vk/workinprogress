@@ -96,9 +96,9 @@ exports.addStudentToBookMark = async (req, res) => {
         }
 
         const newBookmark = await Bookmark.create({
-            recruiterID,
-            jobID,
-            studentID
+            JobID: jobID,
+            StudentID: studentID,
+            Direction: "RECRUITER"
         });
         res.status(201).send(newBookmark);
     } catch (error) {

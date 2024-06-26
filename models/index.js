@@ -47,7 +47,7 @@ module.exports = {
   Job,
   Student,
   Recruiter,
-  Application,
+  Application, // Add shortlist table in as well
   Interest,
   Bookmark
 };
