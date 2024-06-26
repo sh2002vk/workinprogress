@@ -36,10 +36,4 @@ router.delete('/recruiter/deleteJobPosting', recruiterController.deleteJob);
 // company
 router.get('/company/getRecruiters', companyController.getRecruiters);
 
-// job
-router.get('/job/getJob', jobController.getJob);
-
-// application
-router.get('/application/getApplication', applicationController.getApplication);
-
 module.exports = router;
