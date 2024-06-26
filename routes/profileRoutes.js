@@ -12,6 +12,6 @@ router.get('/student/getShortProfile', studentController.getShortProfile);
 router.get('/recruiter/getFullProfile', recruiterController.getFullProfile); 
 
 // company
-router.get('/company/getFullProfile', companyController.getFullProfile); 
+router.get('/company/getFullProfile', companyController.getFullProfile);
 
 module.exports = router;

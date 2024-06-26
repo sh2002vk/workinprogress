@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../database'); // Adjust the path as needed
+const sequelize = require('../database');
+const {Student, Job} = require("./index"); // Adjust the path as needed
 
 const Bookmark = sequelize.define('bookmarkModel', {
   BookmarkID: {
@@ -7,11 +8,12 @@ const Bookmark = sequelize.define('bookmarkModel', {
     autoIncrement: true,
     primaryKey: true,
   },
+  // Do we need RecruiterID here
   JobID: {
     type: Sequelize.INTEGER,
     allowNull: false,
     references: {
-      model: 'job', // 'Job' should match the name of your Job model
+      model: Job, // 'Job' should match the name of your Job model
       key: 'JobID',
     },
     onDelete: 'CASCADE',
@@ -20,7 +22,7 @@ const Bookmark = sequelize.define('bookmarkModel', {
     type: Sequelize.INTEGER,
     allowNull: false,
     references: {
-      model: 'student', // 'Student' should match the name of your Student model
+      model: Student, // 'Student' should match the name of your Student model
       key: 'StudentID',
     },
     onDelete: 'CASCADE',
