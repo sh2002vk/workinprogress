@@ -67,8 +67,10 @@ At WIP, we're building the future of internship recruiting. Our software is our 
     - /onboardRecruiter
     - /offboardRecruiter
     - /getRecruiter
-
-
+  - **/job**
+      - /getJob
+  - **/application**
+    - /getApplication
 # Project Structure
 
 This project is organized into several directories, each with a specific role in the application's architecture: \
