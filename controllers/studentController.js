@@ -2,7 +2,7 @@
 
 // Import required models
 const Application = require('../models/applicationModel');
-const Interest = require('../models/interestModel');
+const Shortlist = require('../models/shortlistModel');
 const Bookmark = require('../models/bookmarkModel');
 const Job = require('../models/jobModel');
 const {Sequelize} = require("sequelize");
@@ -154,27 +154,23 @@ exports.checkRequiredDocuments = async (req, res) => {
 
 exports.requestContact = async (req, res) => {
     try {
-        const {student, job} = req.body;
+        const {studentID, recruiterID} = req.body;
 
-        const interest = await Interest.findOne({
+        const shortlist = await Shortlist.findOne({
             where: {
-                studentID: student,
-                jobID: job,
-                [Sequelize.Op.or]: [
-                    { Direction: "RECRUITER" },
-                    { Direction: "MUTUAL" }
-                ]
+                StudentID: studentID,
+                RecruiterID: recruiterID,
             }
         });
 
-        if (interest) {
+        if (shortlist) {
             res.status(200).send({
-                message: `${job} is interested in ${student}`,
+                message: `${recruiterID} is interested in ${studentID}`,
                 result: true}
             );
         } else {
             res.status(404).send({
-                message: `${job} is NOT interested in ${student}`,
+                message: `${recruiterID} is NOT interested in ${studentID}`,
                 result: false}
             )
         }

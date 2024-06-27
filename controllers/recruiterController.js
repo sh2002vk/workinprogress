@@ -2,6 +2,7 @@ const Job = require('../models/jobModel');
 const Application = require("../models/applicationModel");
 const Bookmark = require("../models/bookmarkModel");
 const Recruiter = require('../models/recruiterModel');
+const Shortlist = require('../models/shortlistModel')
 
 exports.createJob = async (req, res) => {
     //Logic to create a job
