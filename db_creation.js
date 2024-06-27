@@ -31,13 +31,17 @@ connection.connect(err => {
             CompanyID INT NOT NULL,
             Role VARCHAR(255) NOT NULL,
             Location VARCHAR(255) NOT NULL,
-            Experience FLOAT NOT NULL,
+            DatePosted DATETIME NOT NULL,
+            Experience FLOAT,
             Pay FLOAT,
-            Environment ENUM('REMOTE', 'INPERSON', 'HYBRID') NOT NULL,
+            Environment ENUM('REMOTE', 'INPERSON', 'HYBRID'),
             Duration ENUM('4', '8', '12'),
             StartTime ENUM('F24', 'W25', 'S25', 'F25'),
             EndTime ENUM('F24', 'W25', 'S25', 'F25'),
             Industry ENUM('Technology', 'Business'),
+            JobDescription TEXT,
+            JobQualification TEXT,
+            Status ENUM('DRAFT', 'COMPLETED') NOT NULL,
             RequiredDocuments JSON,
             FOREIGN KEY (CompanyID) REFERENCES COMPANY(CompanyID) ON DELETE CASCADE,
             FOREIGN KEY (RecruiterID) REFERENCES RECRUITER(RecruiterID) ON DELETE CASCADE
@@ -84,7 +88,7 @@ connection.connect(err => {
             StudentID INT NOT NULL,
             RecruiterID INT,
             ApplicationTime DATETIME NOT NULL,
-            Status ENUM('APPLIED', 'REVIEW', 'INTERVIEW', 'ACCEPT', 'REJECT') NOT NULL, 
+            Status ENUM('DRAFT', 'APPLIED', 'REVIEWED', 'INTERVIEW', 'ACCEPT', 'REJECT') NOT NULL, 
             Resume TEXT NOT NULL,
             CoverLetter TEXT,
             EnglishSample TEXT,
@@ -93,15 +97,15 @@ connection.connect(err => {
             FOREIGN KEY (RecruiterID) REFERENCES RECRUITER(RecruiterID) ON DELETE CASCADE
         );`;
 
-    const createInterestTable = `
-        CREATE TABLE IF NOT EXISTS INTEREST (
-            JobID INT NOT NULL,
-            StudentID INT NOT NULL,
-            Direction ENUM('RECRUITER', 'STUDENT', 'MUTUAL') NOT NULL,
-            FOREIGN KEY (JobID) REFERENCES JOB(JobID) ON DELETE CASCADE,
-            FOREIGN KEY (StudentID) REFERENCES STUDENT(StudentID) ON DELETE CASCADE,
-            PRIMARY KEY (JobID, StudentID)
-        );`;
+    // const createInterestTable = `
+    //     CREATE TABLE IF NOT EXISTS INTEREST (
+    //         JobID INT NOT NULL,
+    //         StudentID INT NOT NULL,
+    //         Direction ENUM('RECRUITER', 'STUDENT', 'MUTUAL') NOT NULL,
+    //         FOREIGN KEY (JobID) REFERENCES JOB(JobID) ON DELETE CASCADE,
+    //         FOREIGN KEY (StudentID) REFERENCES STUDENT(StudentID) ON DELETE CASCADE,
+    //         PRIMARY KEY (JobID, StudentID)
+    //     );`;
 
     const createBookmarkTable = `
         CREATE TABLE IF NOT EXISTS BOOKMARK (
@@ -167,21 +171,13 @@ connection.connect(err => {
                             }
                             console.log("APPLICATION table created or exists already!");
 
-                            connection.query(createInterestTable, function (err) {
+                            connection.query(createShortlistTable, function (err) {
                                 if (err) {
-                                    console.error("Error creating Interest table:", err);
-                                    return connection.end();
+                                    console.error("Error creating Shortlist table:", err);
+                                } else {
+                                    console.log("SHORTLIST table created or exists already!");
                                 }
-                                console.log("Interest table created or exists already!");
-
-                                connection.query(createShortlistTable, function (err) {
-                                    if (err) {
-                                        console.error("Error creating Shortlist table:", err);
-                                    } else {
-                                        console.log("SHORTLIST table created or exists already!");
-                                    }
-                                    connection.end();
-                                });
+                                connection.end();
                             });
                         });
                     });

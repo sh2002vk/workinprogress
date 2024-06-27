@@ -1,4 +1,4 @@
-const { sequelize, Company, Job, Student, Recruiter, Application, Interest, Bookmark } = require('./models'); // Adjust the path as needed
+const { sequelize, Company, Job, Student, Recruiter, Application, Bookmark } = require('./models'); // Adjust the path as needed
 
 
 const sampleCompanies = [
@@ -137,6 +137,7 @@ const sampleJobs = [
         Role: 'Software Engineer',
         RecruiterID: 1,
         Location: 'San Francisco',
+        DatePosted: new Date(),
         Experience: 2.5,
         Pay: 100000,
         Environment: 'REMOTE',
@@ -144,6 +145,9 @@ const sampleJobs = [
         StartTime: 'F24',
         EndTime: 'F25',
         Industry: 'Technology',
+        JobDescription: "Doing this, Doing That",
+        JobQualification: "Needs this, Needs that",
+        Status: 'DRAFT',
         RequiredDocuments: {
             'Resume': true,
             'CoverLetter': true
@@ -154,31 +158,34 @@ const sampleJobs = [
         Role: 'Product Manager',
         RecruiterID: 2,
         Location: 'Seattle',
+        DatePosted: new Date(),
         Experience: 4,
         Pay: 120000,
         StartTime: 'W25',
         EndTime: 'S25',
-        Environment: "HYBRID"
+        Environment: "HYBRID",
+        JobDescription: "Doing this, Doing That",
+        JobQualification: "Needs this, Needs that",
+        Status: 'COMPLETED'
     }
     // Add more job records as needed
 ];
 
 const sampleApplications = [
     { JobID: 1, StudentID: 1, RecruiterID: 1, ApplicationTime: new Date(), Status: 'APPLIED', Resume: "SampleResumeLink" },
-    { JobID: 2, StudentID: 2, RecruiterID: 2, ApplicationTime: new Date(), Status: 'REVIEW', Resume: "resume.txt", CoverLetter: "COVERLETTER", EnglishSample: "ENGLISHSAMPLE.TXT"},
+    { JobID: 2, StudentID: 2, RecruiterID: 2, ApplicationTime: new Date(), Status: 'REVIEWED', Resume: "resume.txt", CoverLetter: "COVERLETTER", EnglishSample: "ENGLISHSAMPLE.TXT"},
     // Add more application records as needed
-];
-
-const sampleInterest = [
-    { JobID: 1, StudentID: 1, Direction: "RECRUITER" },
-    { JobID: 2, StudentID: 3, Direction: "STUDENT"},
-    { JobID: 1, StudentID: 2, Direction: "MUTUAL"},
 ];
 
 const sampleBookmarks = [
     { JobID: 1, StudentID: 1, Direction: 'RECRUITER' },
     { JobID: 1, StudentID: 2, Direction: 'RECRUITER' },
     // Add more bookmark records as needed
+];
+
+const sampleShortlist = [
+    { StudentID: 1, JobID: 1, RecruiterID: 1},
+    { StudentID: 2, JobID: 2, RecruiterID: 2}
 ];
 
 (async () => {
@@ -191,7 +198,6 @@ const sampleBookmarks = [
         await Job.bulkCreate(sampleJobs, { transaction });
         await Student.bulkCreate(sampleStudents, { transaction });
         await Application.bulkCreate(sampleApplications, { transaction });
-        await Interest.bulkCreate(sampleInterest, {transaction});
         await Bookmark.bulkCreate(sampleBookmarks, {transaction});
 
         await transaction.commit();
