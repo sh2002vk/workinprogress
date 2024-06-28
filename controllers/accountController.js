@@ -8,9 +8,10 @@ const { where } = require('sequelize');
 
 exports.createStudent = async (req, res) => {
     try {
-        const { FirstName, LastName, School, EmailID, AcademicYear, Age, ResumeLink, AcademicMajor, GPA, WorkExperience, PersonalStatement, Experience, Quota} = req.body;
+        const { StudentID, FirstName, LastName, School, EmailID, AcademicYear, Age, ResumeLink, AcademicMajor, GPA, WorkExperience, PersonalStatement, Experience, Quota, Preference, Duration, Season} = req.body;
 
         const newStudent = await Student.create({
+            StudentID,
             FirstName,
             LastName,
             School,
@@ -23,12 +24,16 @@ exports.createStudent = async (req, res) => {
             WorkExperience,
             PersonalStatement,
             Experience,
-            Quota
+            Quota,
+            Preference,
+            Duration,
+            Season
         });
 
         res.status(201).send(newStudent);
 
     } catch (error) {
+        // console.log(error);
         res.status(400).send({ message: "Error creating new student", error: error.message });
     }
 };
@@ -214,13 +219,13 @@ exports.deleteCompany = async (req, res) => {
         });
 
         if (deleted) {
-            res.status(201).send("Successfully deleted company");
+            res.status(200).send({message: "Successfully deleted company"});
         } else {
-            res.status(404).send("Company not found");
+            res.status(404).send({message: "Company not found"});
         }
 
     } catch (error) {
-        res.status(400).send("Error deleting company");
+        res.status(400).send({message: "Error deleting company"});
     }
 }
 
@@ -231,13 +236,13 @@ exports.getQuota = async (req, res) => {
         const stu = await Student.findByPk(targetStudentID)
 
         if (!stu) {
-            res.status(404).send("Student not found");
+            res.status(404).send({message: "Student not found"});
         } else {
             const quota = stu.Quota;
             res.status(200).send({quota});
         }
     } catch (error) {
-        res.status(400).send("Error getting student quota");
+        res.status(400).send({message: "Error getting student quota"});
     }
 }
 
@@ -248,7 +253,7 @@ exports.getStudent = async (req, res) => {
         const stu = await Student.findByPk(studentID);
 
         if (!stu) {
-            res.status(404).send("Student not found");
+            res.status(404).send({message: "Student not found"});
         } else {
             res.status(200).json({stu});
         }

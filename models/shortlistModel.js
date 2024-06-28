@@ -1,17 +1,17 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const Sequelize = require('sequelize');
+const sequelize = require('../database');
 const Student = require('./studentModel');
 const Job = require('./jobModel');
 const Recruiter = require('./recruiterModel');
 
 const Shortlist = sequelize.define('Shortlist', {
     ShortlistID: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
     StudentID: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
             model: Student,
@@ -19,7 +19,7 @@ const Shortlist = sequelize.define('Shortlist', {
         }
     },
     JobID: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
             model: Job,
@@ -27,7 +27,7 @@ const Shortlist = sequelize.define('Shortlist', {
         }
     },
     RecruiterID: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
             model: Recruiter,

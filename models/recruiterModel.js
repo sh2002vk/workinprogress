@@ -3,8 +3,7 @@ const sequelize = require('../database');
 
 const Recruiter = sequelize.define('recruiterModel', {
   RecruiterID: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
+    type: Sequelize.STRING,
     allowNull: false,
     primaryKey: true
   },

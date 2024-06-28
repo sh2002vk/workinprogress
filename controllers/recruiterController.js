@@ -2,13 +2,16 @@ const Job = require('../models/jobModel');
 const Application = require("../models/applicationModel");
 const Bookmark = require("../models/bookmarkModel");
 const Recruiter = require('../models/recruiterModel');
+const Student = require('../models/studentModel');
+const Shortlist = require('../models/shortlistModel');
 
 exports.createJob = async (req, res) => {
     //Logic to create a job
     try {
-        const {CompanyID, Role, Location, Experience, Pay} = req.body;
+        const {CompanyID, RecrutierID, Role, Location, Experience, Pay} = req.body;
         const newJob = await Job.create({
             CompanyID,
+            RecruiterID,
             Role,
             Location,
             Experience,
@@ -131,8 +134,6 @@ exports.getStudentsFiltered = async (req, res) => {
             whereClause.AcademicYear = parseInt(level);
         }
 
-        console.log(whereClause);
-
         let students = await Student.findAll({
             where: whereClause,
             attributes: ['StudentID', 'FirstName', 'LastName', 'School', 'WorkExperience']
@@ -140,6 +141,7 @@ exports.getStudentsFiltered = async (req, res) => {
 
         res.status(200).send({ message: "Filtered students are listed", data: students });
     } catch (error) {
+        console.log(error);
         res.status(400).send({ message: "Error filtering students", error: error.message });
     }
 }
@@ -173,6 +175,7 @@ exports.shortlistStudent = async (req, res) => {
 
         res.status(201).send({ message: "Student successfully shortlisted", data: newShortlist });
     } catch (error) {
+        console.log(error);
         res.status(400).send({ message: "Error shortlisting student", error: error.message });
     }
 };

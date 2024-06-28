@@ -3,8 +3,8 @@ const router = express.Router();
 const studentController = require('../controllers/studentController');
 const recruiterController = require('../controllers/recruiterController');
 const companyController = require('../controllers/companyController');
-const applicationController = require("../controllers/applicationController");
-const jobController = require("../controllers/jobController");
+// const applicationController = require("../controllers/applicationController");
+// const jobController = require("../controllers/jobController");
 
 // student
 router.get('/student/getRecruiterContact', studentController.requestContact);
@@ -15,7 +15,7 @@ router.delete('/student/unbookmarkJob', studentController.deleteBookmark);
 router.post('/student/createApplication', studentController.createApplication);
 router.put('/student/updateApplication', studentController.updateApplication);
 router.get('/student/checkEligibility', studentController.checkRequiredDocuments);
-// router.post('/student/submitApplication', studentController.submitApplication); // TODO: Implement and disucss with team
+// router.post('/student/submitApplication', studentController.submitApplication); // TODO: Implement and disucss with team. is needed
 router.delete('/student/deleteApplication', studentController.deleteApplication);
 router.get('/student/getApplications', studentController.getApplications);
 
@@ -37,9 +37,9 @@ router.delete('/recruiter/deleteJobPosting', recruiterController.deleteJob);
 router.get('/company/getRecruiters', companyController.getRecruiters);
 
 // job
-router.get('/job/getJob', jobController.getJob);
+// router.get('/job/getJob', jobController.getJob);
 
 // application
-router.get('/application/getApplication', applicationController.getApplication);
+// router.get('/application/getApplication', applicationController.getApplication);
 
 module.exports = router;

@@ -3,8 +3,7 @@ const sequelize = require('../database');
 
 const Student = sequelize.define('studentModel', {
   StudentID: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
+    type: Sequelize.STRING,
     allowNull: false,
     primaryKey: true
   },
