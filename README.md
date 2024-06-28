@@ -115,7 +115,7 @@ The flow of a request through the API is as follows:
 4. Run ` node db_creation.js ` to create the tables in the database.
 5. OPTIONAL: use ```mysql -u root -p ``` to access the database and run ```show tables;``` to see the tables.
 6. Run ` node server.js ` to start the server (``` npm start ``` also works)
-7. Test the API using Postman or another API testing tool.
+7. Test the API using ```npm test```
 
 # Linter (used to verify promise handling in JS)
 1. ` npm install eslint --save-dev `
