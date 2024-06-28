@@ -8,7 +8,7 @@ const Shortlist = require('../models/shortlistModel');
 exports.createJob = async (req, res) => {
     //Logic to create a job
     try {
-        const {RecruiterID, CompanyID, Role, Location, Experience, Pay, Environment, Duration, StartTime, EndTime, Industry, RequiredDocuments} = req.body;
+        const {RecruiterID, CompanyID, Role, Location, Experience, Pay, Environment, Duration, StartTime, EndTime, Industry, RequiredDocuments, DatePosted, Status} = req.body;
         const newJob = await Job.create({
             RecruiterID, 
             CompanyID, 
@@ -21,7 +21,9 @@ exports.createJob = async (req, res) => {
             StartTime, 
             EndTime, 
             Industry, 
-            RequiredDocuments
+            RequiredDocuments,
+            DatePosted,
+            Status
         });
         res.status(201).send(newJob);
     } catch (error) {

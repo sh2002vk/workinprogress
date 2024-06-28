@@ -55,7 +55,8 @@ describe('API Tests', function () {
         StartTime: 'F24',
         EndTime: 'F25',
         Industry: 'Technology',
-        RequiredDocuments: JSON.stringify({ Resume: true, CoverLetter: true })
+        RequiredDocuments: JSON.stringify({ Resume: true, CoverLetter: true }),
+        Status: 'DRAFT'
     };
 
     // Recruiter tests
@@ -284,6 +285,7 @@ describe('API Tests', function () {
         it('should create a new job posting', function (done) {
             sampleJobPosting.CompanyID = createdCompanyId;
             sampleJobPosting.RecruiterID = createdRecruiterId;
+            sampleJobPosting.DatePosted = new Date();
 
             request(app)
                 .post('/action/recruiter/createJobPosting')
