@@ -2,21 +2,32 @@ const Job = require('../models/jobModel');
 const Application = require("../models/applicationModel");
 const Bookmark = require("../models/bookmarkModel");
 const Recruiter = require('../models/recruiterModel');
-const Shortlist = require('../models/shortlistModel')
+const Student = require('../models/studentModel');
+const Shortlist = require('../models/shortlistModel');
 
 exports.createJob = async (req, res) => {
     //Logic to create a job
     try {
-        const {CompanyID, Role, Location, Experience, Pay} = req.body;
+        const {RecruiterID, CompanyID, Role, Location, Experience, Pay, Environment, Duration, StartTime, EndTime, Industry, RequiredDocuments, DatePosted, Status} = req.body;
         const newJob = await Job.create({
-            CompanyID,
-            Role,
-            Location,
-            Experience,
-            Pay
+            RecruiterID, 
+            CompanyID, 
+            Role, 
+            Location, 
+            Experience, 
+            Pay, 
+            Environment, 
+            Duration, 
+            StartTime, 
+            EndTime, 
+            Industry, 
+            RequiredDocuments,
+            DatePosted,
+            Status
         });
         res.status(201).send(newJob);
     } catch (error) {
+        console.log(error);
         res.status(400).send({message: "Error creating job", error: error.message});
     }
 }
@@ -31,7 +42,7 @@ exports.updateJob = async (req, res) => {
 
         if (updated) {
             const updatedJob = await Job.findByPk(jobID);
-            res.status(201).send(updatedJob);
+            res.status(200).send(updatedJob);
         } else {
             res.status(404).send("Job not found")
         }
@@ -42,19 +53,20 @@ exports.updateJob = async (req, res) => {
 
 exports.deleteJob = async (req, res) => {
     try {
-        const {deleteID} = req.body;
+        const {jobID} = req.body;
 
         const deleted = await Job.destroy({
-            where: {JobID: deleteID}
+            where: {JobID: jobID}
         });
 
         if (deleted) {
-            res.status(200).send("Successfully deleted job")
+            res.status(200).send({message: "Successfully deleted job"})
         } else {
-            res.status(404).send("Job not found");
+            res.status(404).send({message: "Job not found"});
         }
     } catch (error) {
-        res.status(400).send("Error deleting job");
+        console.log(error);
+        res.status(400).send({message: "Error deleting job"});
     }
 }
 
@@ -132,8 +144,6 @@ exports.getStudentsFiltered = async (req, res) => {
             whereClause.AcademicYear = parseInt(level);
         }
 
-        console.log(whereClause);
-
         let students = await Student.findAll({
             where: whereClause,
             attributes: ['StudentID', 'FirstName', 'LastName', 'School', 'WorkExperience']
@@ -141,6 +151,7 @@ exports.getStudentsFiltered = async (req, res) => {
 
         res.status(200).send({ message: "Filtered students are listed", data: students });
     } catch (error) {
+        console.log(error);
         res.status(400).send({ message: "Error filtering students", error: error.message });
     }
 }
@@ -174,6 +185,7 @@ exports.shortlistStudent = async (req, res) => {
 
         res.status(201).send({ message: "Student successfully shortlisted", data: newShortlist });
     } catch (error) {
+        console.log(error);
         res.status(400).send({ message: "Error shortlisting student", error: error.message });
     }
 };

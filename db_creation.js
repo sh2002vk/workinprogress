@@ -27,7 +27,7 @@ connection.connect(err => {
     const createJobTable = `
         CREATE TABLE IF NOT EXISTS JOB (
             JobID INT AUTO_INCREMENT PRIMARY KEY,
-            RecruiterID INT NOT NULL,
+            RecruiterID VARCHAR(255) NOT NULL,
             CompanyID INT NOT NULL,
             Role VARCHAR(255) NOT NULL,
             Location VARCHAR(255) NOT NULL,
@@ -49,7 +49,7 @@ connection.connect(err => {
 
     const createStudentTable = `
         CREATE TABLE IF NOT EXISTS STUDENT (
-            StudentID INT AUTO_INCREMENT PRIMARY KEY,
+            StudentID VARCHAR(255) PRIMARY KEY,
             FirstName VARCHAR(100) NOT NULL,
             LastName VARCHAR(100) NOT NULL,
             School VARCHAR(255) NOT NULL,
@@ -70,7 +70,7 @@ connection.connect(err => {
 
     const createRecruiterTable = `
         CREATE TABLE IF NOT EXISTS RECRUITER (
-            RecruiterID INT AUTO_INCREMENT PRIMARY KEY,
+            RecruiterID VARCHAR(255) PRIMARY KEY,
             FirstName VARCHAR(100) NOT NULL,
             LastName VARCHAR(100) NOT NULL,
             CompanyID INT NOT NULL,
@@ -85,8 +85,8 @@ connection.connect(err => {
         CREATE TABLE IF NOT EXISTS APPLICATION (
             ApplicationID INT AUTO_INCREMENT PRIMARY KEY, 
             JobID INT NOT NULL,
-            StudentID INT NOT NULL,
-            RecruiterID INT,
+            StudentID VARCHAR(255) NOT NULL,
+            RecruiterID VARCHAR(255),
             ApplicationTime DATETIME NOT NULL,
             Status ENUM('DRAFT', 'APPLIED', 'REVIEWED', 'INTERVIEW', 'ACCEPT', 'REJECT') NOT NULL, 
             Resume TEXT NOT NULL,
@@ -96,6 +96,7 @@ connection.connect(err => {
             FOREIGN KEY (StudentID) REFERENCES STUDENT(StudentID) ON DELETE CASCADE,
             FOREIGN KEY (RecruiterID) REFERENCES RECRUITER(RecruiterID) ON DELETE CASCADE
         );`;
+
 
     // const createInterestTable = `
     //     CREATE TABLE IF NOT EXISTS INTEREST (
@@ -111,7 +112,7 @@ connection.connect(err => {
         CREATE TABLE IF NOT EXISTS BOOKMARK (
             BookmarkID INT AUTO_INCREMENT PRIMARY KEY,
             JobID INT NOT NULL,
-            StudentID INT NOT NULL,
+            StudentID VARCHAR(255) NOT NULL,
             Direction ENUM('RECRUITER', 'STUDENT') NOT NULL,
             FOREIGN KEY (JobID) REFERENCES JOB(JobID) ON DELETE CASCADE,
             FOREIGN KEY (StudentID) REFERENCES STUDENT(StudentID) ON DELETE CASCADE
@@ -120,9 +121,9 @@ connection.connect(err => {
     const createShortlistTable = `
         CREATE TABLE IF NOT EXISTS SHORTLIST (
             ShortlistID INT AUTO_INCREMENT PRIMARY KEY,
-            StudentID INT NOT NULL,
+            StudentID VARCHAR(255) NOT NULL,
             JobID INT NOT NULL,
-            RecruiterID INT NOT NULL,
+            RecruiterID VARCHAR(255) NOT NULL,
             FOREIGN KEY (StudentID) REFERENCES STUDENT(StudentID) ON DELETE CASCADE,
             FOREIGN KEY (JobID) REFERENCES JOB(JobID) ON DELETE CASCADE,
             FOREIGN KEY (RecruiterID) REFERENCES RECRUITER(RecruiterID) ON DELETE CASCADE
