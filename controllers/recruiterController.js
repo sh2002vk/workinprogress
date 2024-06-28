@@ -8,17 +8,24 @@ const Shortlist = require('../models/shortlistModel');
 exports.createJob = async (req, res) => {
     //Logic to create a job
     try {
-        const {CompanyID, RecrutierID, Role, Location, Experience, Pay} = req.body;
+        const {RecruiterID, CompanyID, Role, Location, Experience, Pay, Environment, Duration, StartTime, EndTime, Industry, RequiredDocuments} = req.body;
         const newJob = await Job.create({
-            CompanyID,
-            RecruiterID,
-            Role,
-            Location,
-            Experience,
-            Pay
+            RecruiterID, 
+            CompanyID, 
+            Role, 
+            Location, 
+            Experience, 
+            Pay, 
+            Environment, 
+            Duration, 
+            StartTime, 
+            EndTime, 
+            Industry, 
+            RequiredDocuments
         });
         res.status(201).send(newJob);
     } catch (error) {
+        console.log(error);
         res.status(400).send({message: "Error creating job", error: error.message});
     }
 }
@@ -33,7 +40,7 @@ exports.updateJob = async (req, res) => {
 
         if (updated) {
             const updatedJob = await Job.findByPk(jobID);
-            res.status(201).send(updatedJob);
+            res.status(200).send(updatedJob);
         } else {
             res.status(404).send("Job not found")
         }
@@ -44,19 +51,20 @@ exports.updateJob = async (req, res) => {
 
 exports.deleteJob = async (req, res) => {
     try {
-        const {deleteID} = req.body;
+        const {jobID} = req.body;
 
         const deleted = await Job.destroy({
-            where: {JobID: deleteID}
+            where: {JobID: jobID}
         });
 
         if (deleted) {
-            res.status(200).send("Successfully deleted job")
+            res.status(200).send({message: "Successfully deleted job"})
         } else {
-            res.status(404).send("Job not found");
+            res.status(404).send({message: "Job not found"});
         }
     } catch (error) {
-        res.status(400).send("Error deleting job");
+        console.log(error);
+        res.status(400).send({message: "Error deleting job"});
     }
 }
 

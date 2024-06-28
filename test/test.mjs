@@ -4,6 +4,9 @@ import app from '../server.js';
 
 describe('API Tests', function () {
     // Sample data
+
+    let createdRecruiterId, createdStudentId, createdCompanyId, createdJobId;
+
     const sampleRecruiter = {
         RecruiterID: 'rec123',
         FirstName: 'John',
@@ -40,7 +43,9 @@ describe('API Tests', function () {
         ContactEmail: 'contact@example.com'
     };
 
-    const sampleJobPosting = {
+    let sampleJobPosting = {
+        RecruiterID: null,
+        CompanyID: null,
         Role: 'Software Engineer',
         Location: 'NY',
         Experience: 2,
@@ -52,9 +57,6 @@ describe('API Tests', function () {
         Industry: 'Technology',
         RequiredDocuments: JSON.stringify({ Resume: true, CoverLetter: true })
     };
-
-    let createdRecruiterId, createdStudentId, createdCompanyId, createdJobId;
-
 
     // Recruiter tests
     describe('Recruiter Account Routes', function () {
@@ -279,14 +281,30 @@ describe('API Tests', function () {
                 });
         });
 
-        it('should shortlist a student', function (done) {
+        it('should create a new job posting', function (done) {
+            sampleJobPosting.CompanyID = createdCompanyId;
+            sampleJobPosting.RecruiterID = createdRecruiterId;
+
             request(app)
-                .post('/action/recruiter/shortlistStudent')
-                .send({ RecruiterID: createdRecruiterId, StudentID: 'stu123', JobID: 'job123' })
+                .post('/action/recruiter/createJobPosting')
+                .send(sampleJobPosting)
                 .expect(201)
                 .end((err, res) => {
                     if (err) return done(err);
-                    expect(res.body).to.have.property('ShortlistID');
+                    createdJobId = res.body.JobID;
+                    expect(res.body).to.have.property('JobID');
+                    done();
+                });
+        });
+
+        it('should shortlist a student', function (done) {
+            request(app)
+                .post('/action/recruiter/shortlistStudent')
+                .send({ RecruiterID: createdRecruiterId, StudentID: createdStudentId, JobID: createdJobId })
+                .expect(201)
+                .end((err, res) => {
+                    if (err) return done(err);
+                    expect(res.body.data).to.have.property('ShortlistID');
                     done();
                 });
         });
@@ -294,7 +312,7 @@ describe('API Tests', function () {
         it('should get shortlisted students', function (done) {
             request(app)
                 .get('/action/recruiter/getShortlistedStudents')
-                .query({ recruiterID: createdRecruiterId })
+                .send({ recruiterID: createdRecruiterId })
                 .expect(200)
                 .end((err, res) => {
                     if (err) return done(err);
@@ -319,7 +337,7 @@ describe('API Tests', function () {
         it('should bookmark a student', function (done) {
             request(app)
                 .post('/action/recruiter/bookmarkStudent')
-                .send({ recruiterID: createdRecruiterId, studentID: 'stu123', jobID: 'job123' })
+                .send({ recruiterID: createdRecruiterId, studentID: 'stu123', jobID: createdJobId })
                 .expect(201)
                 .end((err, res) => {
                     if (err) return done(err);
@@ -331,24 +349,10 @@ describe('API Tests', function () {
         it('should get students that applied to a job', function (done) {
             request(app)
                 .get('/action/recruiter/getStudentsThatApplied')
-                .query({ jobID: 'job123' })
-                .expect(200)
+                .send({ jobID: createdJobId })
+                .expect(404)
                 .end((err, res) => {
                     if (err) return done(err);
-                    expect(res.body).to.have.property('data');
-                    done();
-                });
-        });
-
-        it('should create a new job posting', function (done) {
-            request(app)
-                .post('/action/recruiter/createJobPosting')
-                .send({ ...sampleJobPosting, RecruiterID: createdRecruiterId, CompanyID: createdCompanyId })
-                .expect(201)
-                .end((err, res) => {
-                    if (err) return done(err);
-                    createdJobId = res.body.JobID;
-                    expect(res.body).to.have.property('JobID');
                     done();
                 });
         });
@@ -369,7 +373,20 @@ describe('API Tests', function () {
         it('should get job postings for a recruiter', function (done) {
             request(app)
                 .get('/action/recruiter/getJobPostings')
-                .query({ recruiterID: createdRecruiterId })
+                .send({ recruiterID: createdRecruiterId })
+                .expect(200)
+                .end((err, res) => {
+                    if (err) return done(err);
+                    expect(res.body).to.have.property('data');
+                    expect(res.body.data).to.have.lengthOf(1);
+                    done();
+                });
+        });
+
+        it('should get job postings for a recruiter - 1', function (done) {
+            request(app)
+                .get('/action/recruiter/getJobPostings')
+                .send({ recruiterID: createdRecruiterId })
                 .expect(200)
                 .end((err, res) => {
                     if (err) return done(err);
@@ -391,15 +408,13 @@ describe('API Tests', function () {
                 });
         });
 
-        it('should get job postings for a recruiter', function (done) {
+        it('should get job postings for a recruiter - 0', function (done) {
             request(app)
                 .get('/action/recruiter/getJobPostings')
-                .query({ recruiterID: createdRecruiterId })
-                .expect(200)
+                .send({ recruiterID: createdRecruiterId })
+                .expect(404)
                 .end((err, res) => {
                     if (err) return done(err);
-                    expect(res.body).to.have.property('data');
-                    expect(res.body.data).to.have.lengthOf(0);
                     done();
                 });
         });
