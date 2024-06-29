@@ -16,8 +16,9 @@ exports.createApplication = async (req, res) => {
             JobID,
             StudentID,
             RecruiterID,
+            ApplicationTime,
             Status,
-            ApplicationTime
+            SubmittedDocuments
         } = req.body;
         const newApplication = await Application.create({
             JobID,
@@ -25,9 +26,13 @@ exports.createApplication = async (req, res) => {
             RecruiterID,
             ApplicationTime,
             Status,
+            SubmittedDocuments
         });
 
-        res.status(200).send("Application successfully created");
+        res.status(201).send({
+            message: "Application successfully created",
+            data: newApplication
+        });
     } catch (error) {
         res.status(400).send({message: "Error creating application", error: error.message});
     }
@@ -35,15 +40,15 @@ exports.createApplication = async (req, res) => {
 
 exports.updateApplication = async (req, res) => {
     try {
-        const {application, updatedData} = req.body;
+        const {ApplicationID, updatedData} = req.body;
 
         const [updated] = await Application.update(updatedData, {
-            where: { ApplicationID: application }
+            where: { ApplicationID: ApplicationID }
         });
 
         if (updated) {
-            const updatedApplication = await Application.findByPk(application);
-            res.status(200).send({message: "Application successfully updated", data: updatedApplication});
+            const updatedApplication = await Application.findByPk(ApplicationID);
+            res.status(200).send(updatedApplication);
         } else {
             res.status(404).send({ message: "Application not found or nothing updated" });
         }
@@ -73,17 +78,19 @@ exports.deleteApplication = async (req, res) => {
 
 exports.getApplications = async (req, res) => {
     try {
-        const {studentID} = req.body;
+
+        const {StudentID} = req.body;
 
         const applications = await Application.findAll({
             where: {
-                StudentID: studentID,
+                StudentID: StudentID,
             },
             attributes: ['ApplicationID']
         });
 
-        if (!applications) {
-            res.status(404).send("Error")
+        const student = await Student.findByPk(StudentID);
+        if (!student) {
+            return res.status(404).send({ message: 'Student not found' });
         } else {
             res.status(200).send({
                 message: "Applications listed below:",
@@ -101,41 +108,28 @@ exports.getApplications = async (req, res) => {
 
 exports.checkRequiredDocuments = async (req, res) => {
     try {
-        const {jobID, applicationID} = req.body;
+        const {JobID, ApplicationID} = req.body;
 
-        const job = await Job.findByPk(jobID);
-        const application = await Application.findByPk(applicationID);
+        const job = await Job.findByPk(JobID);
+        const application = await Application.findByPk(ApplicationID);
         const requiredDocuments = job.RequiredDocuments;
-        // console.log(application);
-        const resume = application.Resume;
-        const cover = application.CoverLetter;
-        const engSample = application.EnglishSample;
-        console.log(resume);
-        console.log(cover);
-        console.log(engSample);
-
-        // console.log(reqs);
 
         Object.keys(requiredDocuments).forEach(key => {
-            // console.log(requiredDocuments[key]);
             if (requiredDocuments[key]) {
                 switch (key) {
                     case "Resume":
-                        console.log("resume case")
-                        if (!application.Resume) {
+                        if (!application.SubmittedDocuments.Resume) {
                             console.log("resume not found")
                             return res.status(200).send(false);
                         }
                         break;
                     case "CoverLetter":
-                        console.log("cover case")
-                        if (!application.CoverLetter) {
+                        if (!application.SubmittedDocuments.CoverLetter) {
                             return res.status(200).send(false);
                         }
                         break;
                     case "EnglishSample":
-                        console.log("english case")
-                        if (!application.EnglishSample) {
+                        if (!application.SubmittedDocuments.EnglishSample) {
                             return res.status(200).send(false);
                         }
                         break;
@@ -154,23 +148,23 @@ exports.checkRequiredDocuments = async (req, res) => {
 
 exports.requestContact = async (req, res) => {
     try {
-        const {studentID, recruiterID} = req.body;
+        const {StudentID, RecruiterID} = req.body;
 
         const shortlist = await Shortlist.findOne({
             where: {
-                StudentID: studentID,
-                RecruiterID: recruiterID,
+                StudentID: StudentID,
+                RecruiterID: RecruiterID,
             }
         });
 
         if (shortlist) {
             res.status(200).send({
-                message: `${recruiterID} is interested in ${studentID}`,
+                message: `${RecruiterID} is interested in ${StudentID}`,
                 result: true}
             );
         } else {
             res.status(404).send({
-                message: `${recruiterID} is NOT interested in ${studentID}`,
+                message: `${RecruiterID} is NOT interested in ${StudentID}`,
                 result: false}
             )
         }
@@ -182,21 +176,21 @@ exports.requestContact = async (req, res) => {
 
 exports.createBookmark = async (req, res) => {
     try {
-        const {student, job} = req.body;
+        const {StudentID, JobID} = req.body;
 
         const bookmark = await Bookmark.create({
-            JobID: job,
-            StudentID: student,
+            JobID: JobID,
+            StudentID: StudentID,
             Direction: 'STUDENT'
         });
 
         if (bookmark) {
-            res.status(200).send({
+            res.status(201).send({
                 message: "Bookmark successfully created",
-                send: bookmark
+                data: bookmark
             })
         } else {
-            res.status(400).send( "Other error")
+            res.status(400).send("Bookmark not created")
         }
     } catch (error) {
         res.status(400).send({message: "Error bookmarking job", error: error.message})
@@ -205,22 +199,23 @@ exports.createBookmark = async (req, res) => {
 
 exports.deleteBookmark = async (req, res) => {
     try {
-        const {stu, job} = req.body;
+        const {StudentID, JobID} = req.body;
 
         const bookmark = await Bookmark.destroy({
             where: {
-                StudentID: stu,
-                JobID: job,
+                StudentID: StudentID,
+                JobID: JobID,
                 Direction: "STUDENT"
             }
         });
 
         if (!bookmark) {
-            res.status(404).send("Bookmark not found");
+            res.status(404).send({
+                message: "Bookmark not found"
+            });
         } else {
             res.status(200).send({
-                message: "Successfully removed bookmark",
-                send: bookmark
+                message: "Successfully removed bookmark"
             })
         }
     } catch (error) {

@@ -9,7 +9,7 @@ const companyController = require('../controllers/companyController');
 // student
 router.get('/student/getRecruiterContact', studentController.requestContact);
 router.get('/student/getJobs', studentController.getJobsFiltered);
-router.get('/student/getInterestedJobs', studentController.getInterest);
+// router.get('/student/getInterestedJobs', studentController.getInterest); // We are removing interest column
 router.post('/student/bookmarkJob', studentController.createBookmark);
 router.delete('/student/unbookmarkJob', studentController.deleteBookmark);
 router.post('/student/createApplication', studentController.createApplication);
