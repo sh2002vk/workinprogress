@@ -65,7 +65,8 @@ connection.connect(err => {
             Quota INT NOT NULL,
             Preference ENUM('REMOTE', 'INPERSON', 'HYBRID'),
             Duration ENUM('4', '8', '12'),
-            Season ENUM('F24', 'W25', 'S25', 'F25')
+            Season ENUM('F24', 'W25', 'S25', 'F25'),
+            Location VARCHAR(100)
         );`;
 
     const createRecruiterTable = `

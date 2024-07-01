@@ -9,7 +9,7 @@ const companyController = require('../controllers/companyController');
 // student
 router.get('/student/getRecruiterContact', studentController.requestContact);
 router.get('/student/getJobs', studentController.getJobsFiltered);
-router.get('/student/getInterestedJobs', studentController.getInterest);
+// router.get('/student/getInterestedJobs', studentController.getsInterest);
 router.post('/student/bookmarkJob', studentController.createBookmark);
 router.delete('/student/unbookmarkJob', studentController.deleteBookmark);
 router.post('/student/createApplication', studentController.createApplication);
@@ -21,9 +21,9 @@ router.get('/student/getApplications', studentController.getApplications);
 
 
 // recruiter
-router.get('/recruiter/getStudents', recruiterController.getStudentsFiltered);
+router.post('/recruiter/getStudents', recruiterController.getStudentsFiltered);
 router.get('/recruiter/getShortlistedStudents', recruiterController.getShortlistedStudents); 
-router.get('/recruiter/getApplicants', recruiterController.getApplicants)
+// router.get('/recruiter/getApplicants', recruiterController.getApplicants)
 router.post('/recruiter/bookmarkStudent', recruiterController.addStudentToBookMark); 
 router.post('/recruiter/shortlistStudent', recruiterController.shortlistStudent); 
 router.get('/recruiter/getStudentsThatApplied', recruiterController.getStudentsThatApplied);

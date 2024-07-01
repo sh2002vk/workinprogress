@@ -125,7 +125,9 @@ exports.getStudentsFiltered = async (req, res) => {
             preference, // work style
             duration, // length of term
             season, // f24, w25, s25, etc
-            level // used as 1-4 for ug, 5 master, 6 phd
+            level, // used as 1-4 for ug, 5 master, 6 phd,
+            location, // location
+            program // educational program
         } = req.body;
 
 
@@ -135,18 +137,41 @@ exports.getStudentsFiltered = async (req, res) => {
             whereClause.Preference = preference;
         }
         if (duration) {
-            whereClause.Duration = duration;
+            if (Array.isArray(duration)) {  // handles the case of it being an array for multiple durations
+                whereClause.Duration = {
+                    [Sequelize.Op.in]: duration
+                };
+            } else {
+                whereClause.Duration = duration;
+            }
         } 
         if (season) {
             whereClause.Season = season;
         }
         if (level) {
-            whereClause.AcademicYear = parseInt(level);
+            if (Array.isArray(level)) {  // handles the case of it being an array for multiple levels
+                whereClause.AcademicYear = {
+                    [Sequelize.Op.in]: parseInt(level)
+                };
+            } else {
+                whereClause.AcademicYear = parseInt(level);
+            }
+        }
+        if (location) {
+            whereClause.Location = location;
+        }
+        if (program) {
+            if (Array.isArray(program)) {  // handles the case of it being an array for multiple programs
+                whereClause.AcademicMajor = {
+                    [Sequelize.Op.in]: program
+                };
+            } else {
+                whereClause.AcademicMajor = program;
+            }
         }
 
         let students = await Student.findAll({
-            where: whereClause,
-            attributes: ['StudentID', 'FirstName', 'LastName', 'School', 'WorkExperience']
+            where: whereClause
         });
 
         res.status(200).send({ message: "Filtered students are listed", data: students });

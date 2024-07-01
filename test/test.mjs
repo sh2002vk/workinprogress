@@ -245,7 +245,7 @@ describe('API Tests', function () {
 
         it('should get filtered students, 1 result', function (done) {
             request(app)
-                .get('/action/recruiter/getStudents')
+                .post('/action/recruiter/getStudents')
                 .send({ preference: 'REMOTE' }) // example filter
                 .expect(200)
                 .end((err, res) => {
@@ -258,7 +258,7 @@ describe('API Tests', function () {
 
         it('should get no filter all students, 1 result', function (done) {
             request(app)
-                .get('/action/recruiter/getStudents')
+                .post('/action/recruiter/getStudents')
                 .send({}) // example filter
                 .expect(200)
                 .end((err, res) => {
@@ -271,7 +271,7 @@ describe('API Tests', function () {
 
         it('should get filtered students, no result', function (done) {
             request(app)
-                .get('/action/recruiter/getStudents')
+                .post('/action/recruiter/getStudents')
                 .send({ level: 5 }) // example filter
                 .expect(200)
                 .end((err, res) => {
