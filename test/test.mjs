@@ -390,8 +390,7 @@ describe('API Tests', function () {
 
         it('should get job postings for a recruiter', function (done) {
             request(app)
-                .get('/action/recruiter/getJobPostings')
-                .send({ recruiterID: createdRecruiterId })
+                .get(`/action/recruiter/getJobPostings?recruiterID=${createdRecruiterId}`)
                 .expect(200)
                 .end((err, res) => {
                     if (err) return done(err);
@@ -403,7 +402,7 @@ describe('API Tests', function () {
 
         it('should get job postings for a recruiter - 1', function (done) {
             request(app)
-                .get('/action/recruiter/getJobPostings')
+                .get(`/action/recruiter/getJobPostings?recruiterID=${createdRecruiterId}`)
                 .send({ recruiterID: createdRecruiterId })
                 .expect(200)
                 .end((err, res) => {
@@ -428,11 +427,12 @@ describe('API Tests', function () {
 
         it('should get job postings for a recruiter - 0', function (done) {
             request(app)
-                .get('/action/recruiter/getJobPostings')
+                .get(`/action/recruiter/getJobPostings?recruiterID=${createdRecruiterId}`)
                 .send({ recruiterID: createdRecruiterId })
-                .expect(404)
+                .expect(200)
                 .end((err, res) => {
                     if (err) return done(err);
+                    expect(res.body.data).to.have.lengthOf(0);
                     done();
                 });
         });
