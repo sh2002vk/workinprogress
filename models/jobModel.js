@@ -26,13 +26,14 @@ const Job = sequelize.define('jobModel', {
     },
     onDelete: 'CASCADE',
   },
+  Type: {
+    type: Sequelize.ENUM('INTERNSHIP', 'CONTRACT', 'OTHER')
+  },
   Role: {
-    type: Sequelize.STRING,
-    allowNull: false
+    type: Sequelize.STRING
   },
   Location: {
-    type: Sequelize.STRING,
-    allowNull: false
+    type: Sequelize.STRING
   },
   DatePosted: {
     type: Sequelize.DATE,

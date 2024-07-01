@@ -4,6 +4,7 @@ const Bookmark = require("../models/bookmarkModel");
 const Recruiter = require('../models/recruiterModel');
 const Student = require('../models/studentModel');
 const Shortlist = require('../models/shortlistModel');
+const {Company} = require("../models");
 
 exports.createJob = async (req, res) => {
     //Logic to create a job
@@ -242,16 +243,22 @@ exports.getStudentsThatApplied = async (req, res) => {
 
 exports.getJobPostings = async (req, res) => {
     try {
-        const { recruiterID } = req.body;
+        const { recruiterID } = req.query;
 
         const jobPostings = await Job.findAll({
             where: { RecruiterID: recruiterID },
-            attributes: ['JobID', 'Role', 'Location', 'Experience', 'Pay', 'Environment', 'Duration', 'StartTime', 'EndTime', 'Industry']
+            attributes: ['JobID', 'RecruiterID', 'CompanyID', 'Role', 'Location', 'DatePosted', 'Experience', 'Pay', 'Environment', 'Duration', 'StartTime', 'EndTime', 'Industry', 'JobDescription', 'JobQualification', 'Status', 'RequiredDocuments'],
+            include: [
+                {
+                    model: Company,
+                    attributes: ['Name'] // Assuming you have a Company model related to Job
+                }
+            ]
         });
 
-        if (jobPostings.length === 0) {
-            return res.status(404).send({ message: "No job postings found for this recruiter" });
-        }
+        // if (jobPostings.length === 0) {
+        //     return res.status(404).send({ message: "No job postings found for this recruiter" });
+        // }
 
         res.status(200).send({ message: "Job postings for the recruiter", data: jobPostings });
     } catch (error) {
