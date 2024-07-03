@@ -4,6 +4,7 @@ const Bookmark = require("../models/bookmarkModel");
 const Recruiter = require('../models/recruiterModel');
 const Student = require('../models/studentModel');
 const Shortlist = require('../models/shortlistModel');
+const {Company} = require("../models");
 
 exports.createJob = async (req, res) => {
     //Logic to create a job
@@ -159,14 +160,28 @@ exports.getStudentsFiltered = async (req, res) => {
 // Get the full profile of a recruiter
 exports.getFullProfile = async (req, res) => {
     try {
-        const { recruiterID } = req.body;
+        const { recruiterID } = req.query;
+
+        console.log(`recruiterID: ${recruiterID}, type: ${typeof recruiterID}`);
+        //Console logs for debugging purpose
+        // console.log(recruiterID === "Yng3AaKdUNWnkFOXmutw9Gw3Amo1");
+        // const obj = await Recruiter.findAll();
+        // console.log(obj);
+        // console.log(obj[0].dataValues.RecruiterID)
+        // console.log(obj[0].dataValues.RecruiterID === "Yng3AaKdUNWnkFOXmutw9Gw3Amo1")
+        // console.log(obj[0].dataValues.RecruiterID === recruiterID)
+        // const recruiterIDArray = Array.from(recruiterID);
+        // const databaseRecruiterIDArray = Array.from(obj[0].dataValues.RecruiterID);
+        // console.log(`recruiterID char codes: ${recruiterIDArray.map(char => char.charCodeAt(0))}`);
+        // console.log(`Database RecruiterID char codes: ${databaseRecruiterIDArray.map(char => char.charCodeAt(0))}`);
+
 
         const recruiter = await Recruiter.findByPk(recruiterID);
 
         if (recruiter) {
             res.status(200).send({ message: "Full recruiter profile", data: recruiter });
         } else {
-            res.status(404).send({ message: "Recruiter not found" });
+            res.status(404).send({ message: "Recruiter not found: " + recruiterID, });
         }
     } catch (error) {
         res.status(400).send({ message: "Error getting recruiter profile", error: error.message });
@@ -242,16 +257,22 @@ exports.getStudentsThatApplied = async (req, res) => {
 
 exports.getJobPostings = async (req, res) => {
     try {
-        const { recruiterID } = req.body;
+        const { recruiterID } = req.query;
 
         const jobPostings = await Job.findAll({
             where: { RecruiterID: recruiterID },
-            attributes: ['JobID', 'Role', 'Location', 'Experience', 'Pay', 'Environment', 'Duration', 'StartTime', 'EndTime', 'Industry']
+            attributes: ['JobID', 'RecruiterID', 'CompanyID', 'Role', 'Location', 'DatePosted', 'Experience', 'Pay', 'Environment', 'Duration', 'StartTime', 'EndTime', 'Industry', 'JobDescription', 'JobQualification', 'Status', 'RequiredDocuments'],
+            include: [
+                {
+                    model: Company,
+                    attributes: ['Name'] // Assuming you have a Company model related to Job
+                }
+            ]
         });
 
-        if (jobPostings.length === 0) {
-            return res.status(404).send({ message: "No job postings found for this recruiter" });
-        }
+        // if (jobPostings.length === 0) {
+        //     return res.status(404).send({ message: "No job postings found for this recruiter" });
+        // }
 
         res.status(200).send({ message: "Job postings for the recruiter", data: jobPostings });
     } catch (error) {

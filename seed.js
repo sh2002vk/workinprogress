@@ -111,6 +111,7 @@ const sampleStudents = [
 
 const sampleRecruiters = [
     {
+        RecruiterID: 1,
         FirstName: 'Recruiter',
         LastName: 'One',
         CompanyID: 1,
@@ -120,6 +121,7 @@ const sampleRecruiters = [
         Locations: 'San Francisco, Seattle',
     },
     {
+        RecruiterID: 2,
         FirstName: 'Recruiter',
         LastName: 'Two',
         CompanyID: 2,
