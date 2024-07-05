@@ -24,7 +24,7 @@ exports.getRecruiters = async (req, res) => {
 // Get the full profile of a company
 exports.getFullProfile = async (req, res) => {
     try {
-        const { companyID } = req.body;
+        const { companyID } = req.query;
 
         const company = await Company.findByPk(companyID);
 

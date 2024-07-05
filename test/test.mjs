@@ -52,8 +52,7 @@ describe('API Tests', function () {
         Pay: 100000,
         Environment: 'REMOTE',
         Duration: '8',
-        StartTime: 'F24',
-        EndTime: 'F25',
+        Terms: JSON.stringify(['F24']),
         Industry: 'Technology',
         RequiredDocuments: {
             Resume: true,

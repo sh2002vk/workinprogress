@@ -9,18 +9,18 @@ const {Company} = require("../models");
 exports.createJob = async (req, res) => {
     //Logic to create a job
     try {
-        const {RecruiterID, CompanyID, Role, Location, Experience, Pay, Environment, Duration, StartTime, EndTime, Industry, RequiredDocuments, DatePosted, Status} = req.body;
+        const {RecruiterID, CompanyID, Type, Role, Location, Experience, Pay, Environment, Duration, Terms, Industry, RequiredDocuments, DatePosted, Status} = req.body;
         const newJob = await Job.create({
             RecruiterID, 
-            CompanyID, 
+            CompanyID,
+            Type,
             Role, 
             Location, 
             Experience, 
             Pay, 
             Environment, 
             Duration, 
-            StartTime, 
-            EndTime, 
+            Terms,
             Industry, 
             RequiredDocuments,
             DatePosted,
@@ -42,10 +42,12 @@ exports.updateJob = async (req, res) => {
         });
 
         if (updated) {
-            const updatedJob = await Job.findByPk(jobID);
+            const updatedJob = await Job.findOne({
+                where: {JobID: jobID}
+            });
             res.status(200).send(updatedJob);
         } else {
-            res.status(404).send("Job not found")
+            res.status(404).send("Update not made")
         }
     } catch (error) {
         res.status(400).send({message:"Error updated job", error: error.message});
@@ -247,13 +249,7 @@ exports.getJobPostings = async (req, res) => {
 
         const jobPostings = await Job.findAll({
             where: { RecruiterID: recruiterID },
-            attributes: ['JobID', 'RecruiterID', 'CompanyID', 'Role', 'Location', 'DatePosted', 'Experience', 'Pay', 'Environment', 'Duration', 'StartTime', 'EndTime', 'Industry', 'JobDescription', 'JobQualification', 'Status', 'RequiredDocuments'],
-            include: [
-                {
-                    model: Company,
-                    attributes: ['Name'] // Assuming you have a Company model related to Job
-                }
-            ]
+            attributes: ['JobID', 'RecruiterID', 'CompanyID', 'Role', 'Location', 'DatePosted', 'Experience', 'Pay', 'Environment', 'Duration', 'Terms', 'Industry', 'JobDescription', 'JobQualification', 'Status', 'RequiredDocuments'],
         });
 
         // if (jobPostings.length === 0) {
