@@ -86,7 +86,7 @@ const sampleStudents = [
         Quota: 3,
         Season: 'F24',
         Duration: '4',
-        Preference: 'HYBRID'
+        Preference: 'Hybrid'
     },
     {
         FirstName: 'Gaga',
@@ -104,7 +104,7 @@ const sampleStudents = [
         Quota: 3,
         Season: 'F25',
         Duration: '4',
-        Preference: 'INPERSON'
+        Preference: 'In-person'
     }
     // Add more student records as needed
 ];
@@ -136,16 +136,16 @@ const sampleRecruiters = [
 const sampleJobs = [
     {
         CompanyID: 1,
+        Type: 'Internship',
         Role: 'Software Engineer',
         RecruiterID: 1,
         Location: 'San Francisco',
         DatePosted: new Date(),
         Experience: 2.5,
         Pay: 100000,
-        Environment: 'REMOTE',
+        Environment: 'In-person',
         Duration: '4',
-        StartTime: 'F24',
-        EndTime: 'F25',
+        Terms: ['F24'],
         Industry: 'Technology',
         JobDescription: "Doing this, Doing That",
         JobQualification: "Needs this, Needs that",
@@ -157,15 +157,15 @@ const sampleJobs = [
     },
     {
         CompanyID: 2,
+        Type: 'Contract',
         Role: 'Product Manager',
         RecruiterID: 2,
         Location: 'Seattle',
         DatePosted: new Date(),
         Experience: 4,
         Pay: 120000,
-        StartTime: 'W25',
-        EndTime: 'S25',
-        Environment: "HYBRID",
+        Terms: ['W25', 'S25'],
+        Environment: "Hybrid",
         JobDescription: "Doing this, Doing That",
         JobQualification: "Needs this, Needs that",
         Status: 'COMPLETED'
