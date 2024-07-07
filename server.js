@@ -12,14 +12,15 @@ const actionRoutes = require('./routes/actionRoutes');
 const app = express();
 
 const corsOptions = {
-    origin: 'http://localhost:3000', // Allow requests from this origin
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allowed HTTP methods
-    credentials: true, // Allow cookies to be sent with requests
+    origin: 'http://localhost:3000', // Specify the allowed origin
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Specify the allowed methods
+    allowedHeaders: 'Content-Type,Authorization', // Specify the allowed headers
+    credentials: true,
 };
 
 app.use(cors(corsOptions));
-
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/account', accountRoutes);
 app.use('/profile', profileRoutes);

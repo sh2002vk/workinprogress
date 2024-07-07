@@ -42,9 +42,13 @@ const Student = sequelize.define('studentModel', {
     type: Sequelize.STRING,
     allowNull: false
   },
+  Location: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
   GPA: Sequelize.DECIMAL(3, 2),
   WorkExperience: {
-    type: Sequelize.TEXT,
+    type: Sequelize.JSON,
     allowNull: false
   },
   PersonalStatement: {

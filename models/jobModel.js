@@ -18,7 +18,7 @@ const Job = sequelize.define('jobModel', {
     onDelete: 'CASCADE'
   },
   RecruiterID: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
     allowNull: false,
     references: {
       model: 'recruiter',
@@ -44,10 +44,10 @@ const Job = sequelize.define('jobModel', {
   },
   Pay: Sequelize.FLOAT,
   Environment: {
-    type: Sequelize.ENUM('In-person', 'Remote', 'Hybrid')
+    type: Sequelize.ENUM('INPERSON', 'REMOTE', 'HYBRID')
   },
   Duration: {
-    type: Sequelize.ENUM('4 months', '8 months', '12 months')
+    type: Sequelize.ENUM('4', '8', '12')
   },
   Terms: {
     type: Sequelize.JSON

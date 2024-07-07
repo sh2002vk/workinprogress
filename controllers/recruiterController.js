@@ -4,6 +4,9 @@ const Bookmark = require("../models/bookmarkModel");
 const Recruiter = require('../models/recruiterModel');
 const Student = require('../models/studentModel');
 const Shortlist = require('../models/shortlistModel');
+const Sequelize = require('sequelize');
+const sequelize = require('../database');
+const { Op } = require('sequelize');
 const {Company} = require("../models");
 
 exports.createJob = async (req, res) => {
@@ -99,25 +102,18 @@ exports.addStudentToBookMark = async (req, res) => {
             studentID
         } = req.body;
 
-        let whereClause = {};
-
-        if (recruiterID) {
-            whereClause.recruiterID = recruiterID;
-        } 
+        let whereClause = {
+            StudentID: studentID,
+            RecruiterID: recruiterID,
+            Direction: "RECRUITER"
+        };
         if (jobID) {
             whereClause.jobID = jobID;
         }
-        if (studentID) {
-            whereClause.studentID = studentID;
-        }
-
-        const newBookmark = await Bookmark.create({
-            JobID: jobID,
-            StudentID: studentID,
-            Direction: "RECRUITER"
-        });
+        const newBookmark = await Bookmark.create(whereClause);
         res.status(201).send(newBookmark);
     } catch (error) {
+        console.log(error);
         res.status(400).send({message: "Unable to bookmark student", error: error.message});
     }
 }
@@ -128,9 +124,10 @@ exports.getStudentsFiltered = async (req, res) => {
             preference, // work style
             duration, // length of term
             season, // f24, w25, s25, etc
-            level // used as 1-4 for ug, 5 master, 6 phd
+            level, // used as 1-4 for ug, 5 master, 6 phd,
+            location, // location
+            program // educational program
         } = req.body;
-
 
         let whereClause = {};
 
@@ -138,18 +135,49 @@ exports.getStudentsFiltered = async (req, res) => {
             whereClause.Preference = preference;
         }
         if (duration) {
-            whereClause.Duration = duration;
+            if (Array.isArray(duration)) {  // handles the case of it being an array for multiple durations
+                if (duration.length > 0) {
+                    whereClause.Duration = {
+                        [Sequelize.Op.in]: duration
+                    };
+                }
+            } else {
+                whereClause.Duration = duration;
+            }
         } 
         if (season) {
             whereClause.Season = season;
         }
         if (level) {
-            whereClause.AcademicYear = parseInt(level);
+            if (Array.isArray(level)) {  // handles the case of it being an array for multiple levels
+                if (level.length > 0) {
+                    const parsedLevels = level.map(l => parseInt(l));
+                    whereClause.AcademicYear = {
+                        [Sequelize.Op.in]: parsedLevels
+                    };
+                }
+            } else {
+                const parsedLevel = parseInt(level);
+                whereClause.AcademicYear = parsedLevel;
+            }
+        }
+        if (location) {
+            whereClause.Location = location;
+        }
+        if (program) {
+            if (Array.isArray(program)) {  // handles the case of it being an array for multiple programs
+                if (program.length > 0) {
+                    whereClause.AcademicMajor = {
+                        [Sequelize.Op.in]: program
+                    };
+                }
+            } else {
+                whereClause.AcademicMajor = program;
+            }
         }
 
         let students = await Student.findAll({
-            where: whereClause,
-            attributes: ['StudentID', 'FirstName', 'LastName', 'School', 'WorkExperience']
+            where: whereClause
         });
 
         res.status(200).send({ message: "Filtered students are listed", data: students });
@@ -275,3 +303,66 @@ exports.getJobPostings = async (req, res) => {
         res.status(400).send({ message: "Error getting job postings", error: error.message });
     }
 };
+
+exports.removeStudentFromBookmark = async (req, res) => {
+    try {
+        const { recruiterID, jobID, studentID } = req.body;
+
+        let whereClause = {
+            RecruiterID: recruiterID,
+            StudentID: studentID,
+            Direction: "RECRUITER"
+        };
+
+        if (jobID) {
+            whereClause.JobID = jobID;
+        }
+
+        console.log(whereClause);
+        const deleted = await Bookmark.destroy({
+            where: whereClause
+        });
+
+        if (deleted) {
+            res.status(200).send({ message: "Successfully removed bookmark" });
+        } else {
+            res.status(404).send({ message: "Bookmark not found" });
+        }
+    } catch (error) {
+        res.status(400).send({ message: "Error removing bookmark", error: error.message });
+    }
+};
+
+exports.getBookmarkedStudents = async (req, res) => {
+    try {
+        const { recruiterID } = req.query;
+
+        const bookmarks = await Bookmark.findAll({
+            where: {
+                RecruiterID: recruiterID,
+                Direction: "RECRUITER"
+            },
+            include: [{
+                model: Student
+            }]
+        });
+
+        if (bookmarks.length === 0) {
+            return res.status(404).send({ message: "No bookmarked students found" });
+        }
+
+        const studentIDs = bookmarks.map(bookmark => bookmark.StudentID);
+        const students = await Student.findAll({
+            where: {
+              StudentID: {
+                [Op.in]: studentIDs
+              }
+            }
+        });
+
+        res.status(200).send({ message: "Bookmarked students", data: students });
+    } catch (error) {
+        res.status(400).send({ message: "Error getting bookmarked students", error: error.message });
+    }
+};
+

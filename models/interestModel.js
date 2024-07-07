@@ -8,7 +8,7 @@ const Interest = sequelize.define('Interest', {
         allowNull: false
     },
     StudentID: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         primaryKey: true,
         allowNull: false
     },
