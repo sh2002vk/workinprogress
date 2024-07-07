@@ -18,7 +18,7 @@ const Application = sequelize.define('Application', {
     onDelete: 'CASCADE'
   },
   StudentID: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
     allowNull: false,
     references: {
       model: 'Student',
@@ -27,7 +27,7 @@ const Application = sequelize.define('Application', {
     onDelete: 'CASCADE'
   },
   RecruiterID: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
     references: {
       model: 'Recruiter',
       key: 'RecruiterID',

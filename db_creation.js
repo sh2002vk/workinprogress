@@ -59,7 +59,7 @@ connection.connect(err => {
             ResumeLink TEXT,
             AcademicMajor VARCHAR(100) NOT NULL,
             GPA DECIMAL(3, 2),
-            WorkExperience TEXT NOT NULL,
+            WorkExperience JSON NOT NULL,
             PersonalStatement TEXT NOT NULL,
             Experience FLOAT NOT NULL,
             Quota INT NOT NULL,
@@ -111,13 +111,17 @@ connection.connect(err => {
 
     const createBookmarkTable = `
         CREATE TABLE IF NOT EXISTS BOOKMARK (
-            BookmarkID INT AUTO_INCREMENT PRIMARY KEY,
-            JobID INT NOT NULL,
+            JobID INT,
             StudentID VARCHAR(255) NOT NULL,
+            RecruiterID VARCHAR(255),
             Direction ENUM('RECRUITER', 'STUDENT') NOT NULL,
+            PRIMARY KEY (StudentID, Direction),
             FOREIGN KEY (JobID) REFERENCES JOB(JobID) ON DELETE CASCADE,
-            FOREIGN KEY (StudentID) REFERENCES STUDENT(StudentID) ON DELETE CASCADE
-        );`;
+            FOREIGN KEY (StudentID) REFERENCES STUDENT(StudentID) ON DELETE CASCADE,
+            FOREIGN KEY (RecruiterID) REFERENCES RECRUITER(RecruiterID) ON DELETE CASCADE
+        );
+    `;
+
 
     const createShortlistTable = `
         CREATE TABLE IF NOT EXISTS SHORTLIST (

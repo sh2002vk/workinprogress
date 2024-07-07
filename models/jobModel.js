@@ -18,7 +18,7 @@ const Job = sequelize.define('jobModel', {
     onDelete: 'CASCADE'
   },
   RecruiterID: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
     allowNull: false,
     references: {
       model: 'recruiter',

@@ -9,6 +9,7 @@ const sampleCompanies = [
 
 const sampleStudents = [
     {
+        StudentID: 'abc',
         FirstName: 'John',
         LastName: 'Doe',
         School: 'University of Example',
@@ -18,12 +19,14 @@ const sampleStudents = [
         ResumeLink: 'https://example.com/resume/johndoe',
         AcademicMajor: 'Computer Science',
         GPA: 3.7,
-        WorkExperience: 'Intern at Company X, Freelancer',
+        WorkExperience: [{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }],
         PersonalStatement: 'Passionate about technology and innovation.',
         Experience: 2.5,
+        Duration: '12',
         Quota: 3
     },
     {
+        StudentID: 'cdf',
         FirstName: 'Alice',
         LastName: 'Smith',
         School: 'Another University',
@@ -31,14 +34,16 @@ const sampleStudents = [
         AcademicYear: 5,
         Age: 23,
         ResumeLink: 'https://example.com/resume/alicesmith',
-        AcademicMajor: 'Business Administration',
+        AcademicMajor: 'Arts',
         GPA: 3.5,
-        WorkExperience: 'Marketing Coordinator at Company Y',
+        WorkExperience: [{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }],
         PersonalStatement: 'Driven and goal-oriented.',
         Experience: 3,
+        Duration: '4',
         Quota: 3
     },
     {
+        StudentID: 'ehj',
         FirstName: 'ABC',
         LastName: 'DEF',
         School: 'Another University',
@@ -46,15 +51,17 @@ const sampleStudents = [
         AcademicYear: 6,
         Age: 23,
         ResumeLink: 'https://example.com/resume/alicesmith',
-        AcademicMajor: 'Business Administration',
+        AcademicMajor: 'Statistics',
         GPA: 3.5,
-        WorkExperience: 'Marketing Coordinator at Company Y',
+        WorkExperience: [{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }],
         PersonalStatement: 'Driven and goal-oriented.',
         Experience: 3,
         Quota: 3,
-        Season: 'W25'
+        Season: 'W25',
+        Duration: '8',
     },
     {
+        StudentID: 'erf',
         FirstName: 'AB',
         LastName: 'DE',
         School: 'Another University',
@@ -62,15 +69,17 @@ const sampleStudents = [
         AcademicYear: 3,
         Age: 23,
         ResumeLink: 'https://example.com/resume/alicesmith',
-        AcademicMajor: 'Business Administration',
+        AcademicMajor: 'Engineering',
         GPA: 3.5,
-        WorkExperience: 'Marketing Coordinator at Company Y',
+        WorkExperience: [{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }],
         PersonalStatement: 'Driven and goal-oriented.',
         Experience: 3,
         Quota: 3,
-        Season: 'W25'
+        Season: 'W25',
+        Duration: '12',
     },
     {
+        StudentID: 'adwesdbc',
         FirstName: 'XYZ',
         LastName: 'FRG',
         School: 'Another University',
@@ -78,9 +87,9 @@ const sampleStudents = [
         AcademicYear: 6,
         Age: 23,
         ResumeLink: 'https://example.com/resume/alicesmith',
-        AcademicMajor: 'Business Administration',
+        AcademicMajor: 'Computer Science',
         GPA: 3.5,
-        WorkExperience: 'Marketing Coordinator at Company Y',
+        WorkExperience: [{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }],
         PersonalStatement: 'Driven and goal-oriented.',
         Experience: 3,
         Quota: 3,
@@ -89,16 +98,17 @@ const sampleStudents = [
         Preference: 'HYBRID'
     },
     {
+        StudentID: 'adwsdswddedebc',
         FirstName: 'Gaga',
         LastName: 'Drake',
         School: 'Another University',
         EmailID: 'Gaga@example.com',
-        AcademicYear: 6,
+        AcademicYear: 5,
         Age: 23,
         ResumeLink: 'https://example.com/resume/alicesmith',
-        AcademicMajor: 'Business Administration',
+        AcademicMajor: 'Arts',
         GPA: 3.5,
-        WorkExperience: 'Marketing Coordinator at Company Y',
+        WorkExperience: [{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }],
         PersonalStatement: 'Driven and goal-oriented.',
         Experience: 1,
         Quota: 3,
@@ -111,6 +121,7 @@ const sampleStudents = [
 
 const sampleRecruiters = [
     {
+        RecruiterID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2',
         FirstName: 'Recruiter',
         LastName: 'One',
         CompanyID: 1,
@@ -120,6 +131,7 @@ const sampleRecruiters = [
         Locations: 'San Francisco, Seattle',
     },
     {
+        RecruiterID: '12dwedw3ds',
         FirstName: 'Recruiter',
         LastName: 'Two',
         CompanyID: 2,
@@ -135,7 +147,7 @@ const sampleJobs = [
     {
         CompanyID: 1,
         Role: 'Software Engineer',
-        RecruiterID: 1,
+        RecruiterID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2',
         Location: 'San Francisco',
         DatePosted: new Date(),
         Experience: 2.5,
@@ -156,7 +168,7 @@ const sampleJobs = [
     {
         CompanyID: 2,
         Role: 'Product Manager',
-        RecruiterID: 2,
+        RecruiterID: '12dwedw3ds',
         Location: 'Seattle',
         DatePosted: new Date(),
         Experience: 4,
@@ -171,23 +183,6 @@ const sampleJobs = [
     // Add more job records as needed
 ];
 
-const sampleApplications = [
-    { JobID: 1, StudentID: 1, RecruiterID: 1, ApplicationTime: new Date(), Status: 'APPLIED', Resume: "SampleResumeLink" },
-    { JobID: 2, StudentID: 2, RecruiterID: 2, ApplicationTime: new Date(), Status: 'REVIEWED', Resume: "resume.txt", CoverLetter: "COVERLETTER", EnglishSample: "ENGLISHSAMPLE.TXT"},
-    // Add more application records as needed
-];
-
-const sampleBookmarks = [
-    { JobID: 1, StudentID: 1, Direction: 'RECRUITER' },
-    { JobID: 1, StudentID: 2, Direction: 'RECRUITER' },
-    // Add more bookmark records as needed
-];
-
-const sampleShortlist = [
-    { StudentID: 1, JobID: 1, RecruiterID: 1},
-    { StudentID: 2, JobID: 2, RecruiterID: 2}
-];
-
 (async () => {
     const transaction = await sequelize.transaction();
     try {
@@ -197,8 +192,6 @@ const sampleShortlist = [
         await Recruiter.bulkCreate(sampleRecruiters, { transaction });
         await Job.bulkCreate(sampleJobs, { transaction });
         await Student.bulkCreate(sampleStudents, { transaction });
-        await Application.bulkCreate(sampleApplications, { transaction });
-        await Bookmark.bulkCreate(sampleBookmarks, {transaction});
 
         await transaction.commit();
         console.log('Sample data has been seeded successfully.');

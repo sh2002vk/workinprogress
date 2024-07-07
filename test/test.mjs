@@ -339,7 +339,7 @@ describe('API Tests', function () {
         it('should bookmark a student', function (done) {
             request(app)
                 .post('/action/recruiter/bookmarkStudent')
-                .send({ recruiterID: createdRecruiterId, studentID: 'stu123', jobID: createdJobId })
+                .send({ recruiterID: createdRecruiterId, studentID: 'stu123', direction: "STUDENT" })
                 .expect(201)
                 .end((err, res) => {
                     if (err) return done(err);

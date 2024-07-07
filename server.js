@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');                  // parsing for middleware
 delete require.cache[require.resolve('dotenv/config')];
 const db = require('./models');
@@ -10,7 +11,14 @@ const actionRoutes = require('./routes/actionRoutes');
 
 const app = express();
 
+const corsOptions = {
+    origin: 'http://localhost:3000', // Specify the allowed origin
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Specify the allowed methods
+    allowedHeaders: 'Content-Type,Authorization', // Specify the allowed headers
+};
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/account', accountRoutes);
 app.use('/profile', profileRoutes);
