@@ -42,16 +42,8 @@ const Application = sequelize.define('Application', {
     type: Sequelize.ENUM('DRAFT', 'APPLIED', 'REVIEWED', 'INTERVIEW', 'ACCEPT', 'REJECT'),
     allowNull: false
   },
-  Resume: {
-    type: Sequelize.TEXT,
-    allowNull: false
-  },
-  CoverLetter: {
-    type: Sequelize.TEXT,
-    allowNull: true
-  },
-  EnglishSample: {
-    type: Sequelize.TEXT,
+  SubmittedDocuments: {
+    type: Sequelize.JSON,
     allowNull: true
   }
 }, {

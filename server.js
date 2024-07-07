@@ -15,7 +15,9 @@ const corsOptions = {
     origin: 'http://localhost:3000', // Specify the allowed origin
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Specify the allowed methods
     allowedHeaders: 'Content-Type,Authorization', // Specify the allowed headers
+    credentials: true,
 };
+
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
