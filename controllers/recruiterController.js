@@ -6,7 +6,7 @@ const Student = require('../models/studentModel');
 const Shortlist = require('../models/shortlistModel');
 const Sequelize = require('sequelize');
 const sequelize = require('../database');
-const { Op } = require('sequelize');
+const { Op, where } = require('sequelize');
 const {Company} = require("../models");
 
 exports.createJob = async (req, res) => {
@@ -31,7 +31,6 @@ exports.createJob = async (req, res) => {
         });
         res.status(201).send(newJob);
     } catch (error) {
-        console.log(error);
         res.status(400).send({message: "Error creating job", error: error.message});
     }
 }
@@ -71,7 +70,6 @@ exports.deleteJob = async (req, res) => {
             res.status(404).send({message: "Job not found"});
         }
     } catch (error) {
-        console.log(error);
         res.status(400).send({message: "Error deleting job"});
     }
 }
@@ -110,10 +108,10 @@ exports.addStudentToBookMark = async (req, res) => {
         if (jobID) {
             whereClause.jobID = jobID;
         }
+
         const newBookmark = await Bookmark.create(whereClause);
         res.status(201).send(newBookmark);
     } catch (error) {
-        console.log(error);
         res.status(400).send({message: "Unable to bookmark student", error: error.message});
     }
 }
@@ -132,7 +130,15 @@ exports.getStudentsFiltered = async (req, res) => {
         let whereClause = {};
 
         if (preference) {
-            whereClause.Preference = preference;
+            if (Array.isArray(preference)) {  // handles the case of it being an array for multiple preferences
+                if (preference.length > 0) {
+                    whereClause.Preference = {
+                        [Sequelize.Op.in]: preference
+                    };
+                }
+            } else {
+                whereClause.Preference = preference;
+            }
         }
         if (duration) {
             if (Array.isArray(duration)) {  // handles the case of it being an array for multiple durations
@@ -146,7 +152,15 @@ exports.getStudentsFiltered = async (req, res) => {
             }
         } 
         if (season) {
-            whereClause.Season = season;
+            if (Array.isArray(season)) {  // handles the case of it being an array for multiple seasons
+                if (season.length > 0) {
+                    whereClause.Season = {
+                        [Sequelize.Op.in]: season
+                    };
+                }
+            } else {
+                whereClause.Season = season;
+            }
         }
         if (level) {
             if (Array.isArray(level)) {  // handles the case of it being an array for multiple levels
@@ -182,7 +196,6 @@ exports.getStudentsFiltered = async (req, res) => {
 
         res.status(200).send({ message: "Filtered students are listed", data: students });
     } catch (error) {
-        console.log(error);
         res.status(400).send({ message: "Error filtering students", error: error.message });
     }
 }
@@ -230,7 +243,6 @@ exports.shortlistStudent = async (req, res) => {
 
         res.status(201).send({ message: "Student successfully shortlisted", data: newShortlist });
     } catch (error) {
-        console.log(error);
         res.status(400).send({ message: "Error shortlisting student", error: error.message });
     }
 };
@@ -318,7 +330,6 @@ exports.removeStudentFromBookmark = async (req, res) => {
             whereClause.JobID = jobID;
         }
 
-        console.log(whereClause);
         const deleted = await Bookmark.destroy({
             where: whereClause
         });
