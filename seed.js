@@ -97,8 +97,8 @@ const sampleRecruiters = [
     },
     {
         RecruiterID: 'Yng3AaKdUNWnkFOXmutw9Gw3Amo1',
-        FirstName: 'Daine',
-        LastName: 'Yip',
+        FirstName: 'Leyang',
+        LastName: 'Pan',
         CompanyID: 2,
         EmailID: 'recruiter2@example.com',
         CompanyName: 'Company B',
