@@ -307,7 +307,7 @@ exports.getJobsFiltered = async (req, res) => {
 
 exports.getFullProfile = async (req, res) => {
     try {
-        const { studentID } = req.body;
+        const { studentID } = req.query;
 
         const student = await Student.findByPk(studentID);
 
@@ -323,10 +323,10 @@ exports.getFullProfile = async (req, res) => {
 
 exports.getShortProfile = async (req, res) => {
     try {
-        const { studentID } = req.body;
+        const { studentID } = req.query;
 
         const student = await Student.findByPk(studentID, {
-            attributes: ['StudentID', 'FirstName', 'LastName', 'School', 'AcademicMajor', 'GPA']
+            attributes: ['StudentID', 'FirstName', 'LastName', 'School', 'Email', 'AcademicMajor', 'GPA']
         });
 
         if (student) {

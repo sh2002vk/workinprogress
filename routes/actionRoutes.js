@@ -33,6 +33,7 @@ router.post('/recruiter/createJobPosting', recruiterController.createJob);
 router.put('/recruiter/updateJobPosting', recruiterController.updateJob);
 // router.post('/recruiter/publishJobPosting', recruiterController.publishPosting); TODO: implement and disucess with team
 router.delete('/recruiter/deleteJobPosting', recruiterController.deleteJob);
+router.post('/recruiter/getGCPFiles', recruiterController.getGCPFiles);
 
 // company
 router.get('/company/getRecruiters', companyController.getRecruiters);
