@@ -1,4 +1,4 @@
-const { sequelize, Company, Job, Student, Recruiter, Application, Bookmark } = require('./models'); // Adjust the path as needed
+const { sequelize, Company, Job, Student, Recruiter, Application, Bookmark, Shortlist} = require('./models'); // Adjust the path as needed
 
 
 const sampleCompanies = [
@@ -9,6 +9,7 @@ const sampleCompanies = [
 
 const sampleStudents = [
     {
+        StudentID: 1,
         FirstName: 'John',
         LastName: 'Doe',
         School: 'University of Example',
@@ -18,12 +19,23 @@ const sampleStudents = [
         ResumeLink: 'https://example.com/resume/johndoe',
         AcademicMajor: 'Computer Science',
         GPA: 3.7,
-        WorkExperience: 'Intern at Company X, Freelancer',
-        PersonalStatement: 'Passionate about technology and innovation.',
+        WorkExperience: JSON.stringify([
+            {
+                Company: "Company X",
+                Role: "Role X"
+            }
+        ]),
+        PersonalStatement: 'Driven and goal-oriented.',
+        Skills: JSON.stringify([
+            "Frontend",
+            "Backend"
+        ]),
+        Interest: JSON.stringify(["Software", "Tech"]),
         Experience: 2.5,
         Quota: 3
     },
     {
+        StudentID: 2,
         FirstName: 'Alice',
         LastName: 'Smith',
         School: 'Another University',
@@ -33,79 +45,89 @@ const sampleStudents = [
         ResumeLink: 'https://example.com/resume/alicesmith',
         AcademicMajor: 'Business Administration',
         GPA: 3.5,
-        WorkExperience: 'Marketing Coordinator at Company Y',
+        WorkExperience: JSON.stringify([
+            {
+                Company: "Company X",
+                Role: "Role X"
+            }
+        ]),
         PersonalStatement: 'Driven and goal-oriented.',
+        Skills: JSON.stringify([
+            "Frontend",
+            "Backend"
+        ]),
+        Interest: JSON.stringify(["Software", "Tech"]),
         Experience: 3,
         Quota: 3
     },
-    {
-        FirstName: 'ABC',
-        LastName: 'DEF',
-        School: 'Another University',
-        EmailID: 'ABC@example.com',
-        AcademicYear: 6,
-        Age: 23,
-        ResumeLink: 'https://example.com/resume/alicesmith',
-        AcademicMajor: 'Business Administration',
-        GPA: 3.5,
-        WorkExperience: 'Marketing Coordinator at Company Y',
-        PersonalStatement: 'Driven and goal-oriented.',
-        Experience: 3,
-        Quota: 3,
-        Season: 'W25'
-    },
-    {
-        FirstName: 'AB',
-        LastName: 'DE',
-        School: 'Another University',
-        EmailID: 'Haber@example.com',
-        AcademicYear: 3,
-        Age: 23,
-        ResumeLink: 'https://example.com/resume/alicesmith',
-        AcademicMajor: 'Business Administration',
-        GPA: 3.5,
-        WorkExperience: 'Marketing Coordinator at Company Y',
-        PersonalStatement: 'Driven and goal-oriented.',
-        Experience: 3,
-        Quota: 3,
-        Season: 'W25'
-    },
-    {
-        FirstName: 'XYZ',
-        LastName: 'FRG',
-        School: 'Another University',
-        EmailID: 'XYZ@example.com',
-        AcademicYear: 6,
-        Age: 23,
-        ResumeLink: 'https://example.com/resume/alicesmith',
-        AcademicMajor: 'Business Administration',
-        GPA: 3.5,
-        WorkExperience: 'Marketing Coordinator at Company Y',
-        PersonalStatement: 'Driven and goal-oriented.',
-        Experience: 3,
-        Quota: 3,
-        Season: 'F24',
-        Duration: '4',
-        Preference: 'Hybrid'
-    },
-    {
-        FirstName: 'Gaga',
-        LastName: 'Drake',
-        School: 'Another University',
-        EmailID: 'Gaga@example.com',
-        AcademicYear: 6,
-        Age: 23,
-        ResumeLink: 'https://example.com/resume/alicesmith',
-        AcademicMajor: 'Business Administration',
-        GPA: 3.5,
-        WorkExperience: 'Marketing Coordinator at Company Y',
-        PersonalStatement: 'Driven and goal-oriented.',
-        Experience: 1,
-        Quota: 3,
-        Season: 'F25',
-        Duration: '4',
-        Preference: 'In-person'
-    }
+    // {
+    //     FirstName: 'ABC',
+    //     LastName: 'DEF',
+    //     School: 'Another University',
+    //     EmailID: 'ABC@example.com',
+    //     AcademicYear: 6,
+    //     Age: 23,
+    //     ResumeLink: 'https://example.com/resume/alicesmith',
+    //     AcademicMajor: 'Business Administration',
+    //     GPA: 3.5,
+    //     WorkExperience: 'Marketing Coordinator at Company Y',
+    //     PersonalStatement: 'Driven and goal-oriented.',
+    //     Experience: 3,
+    //     Quota: 3,
+    //     Season: 'W25'
+    // },
+    // {
+    //     FirstName: 'AB',
+    //     LastName: 'DE',
+    //     School: 'Another University',
+    //     EmailID: 'Haber@example.com',
+    //     AcademicYear: 3,
+    //     Age: 23,
+    //     ResumeLink: 'https://example.com/resume/alicesmith',
+    //     AcademicMajor: 'Business Administration',
+    //     GPA: 3.5,
+    //     WorkExperience: 'Marketing Coordinator at Company Y',
+    //     PersonalStatement: 'Driven and goal-oriented.',
+    //     Experience: 3,
+    //     Quota: 3,
+    //     Season: 'W25'
+    // },
+    // {
+    //     FirstName: 'XYZ',
+    //     LastName: 'FRG',
+    //     School: 'Another University',
+    //     EmailID: 'XYZ@example.com',
+    //     AcademicYear: 6,
+    //     Age: 23,
+    //     ResumeLink: 'https://example.com/resume/alicesmith',
+    //     AcademicMajor: 'Business Administration',
+    //     GPA: 3.5,
+    //     WorkExperience: 'Marketing Coordinator at Company Y',
+    //     PersonalStatement: 'Driven and goal-oriented.',
+    //     Experience: 3,
+    //     Quota: 3,
+    //     Season: 'F24',
+    //     Duration: '4',
+    //     Preference: 'Hybrid'
+    // },
+    // {
+    //     FirstName: 'Gaga',
+    //     LastName: 'Drake',
+    //     School: 'Another University',
+    //     EmailID: 'Gaga@example.com',
+    //     AcademicYear: 6,
+    //     Age: 23,
+    //     ResumeLink: 'https://example.com/resume/alicesmith',
+    //     AcademicMajor: 'Business Administration',
+    //     GPA: 3.5,
+    //     WorkExperience: 'Marketing Coordinator at Company Y',
+    //     PersonalStatement: 'Driven and goal-oriented.',
+    //     Experience: 1,
+    //     Quota: 3,
+    //     Season: 'F25',
+    //     Duration: '4',
+    //     Preference: 'In-person'
+    // }
     // Add more student records as needed
 ];
 
@@ -144,7 +166,7 @@ const sampleJobs = [
         Experience: 2.5,
         Pay: 100000,
         Environment: 'In-person',
-        Duration: '4',
+        Duration: "4 months",
         Terms: ['F24'],
         Industry: 'Technology',
         JobDescription: "Doing this, Doing That",
@@ -164,7 +186,7 @@ const sampleJobs = [
         DatePosted: new Date(),
         Experience: 4,
         Pay: 120000,
-        Terms: ['W25', 'S25'],
+        Terms: ['W25'],
         Environment: "Hybrid",
         JobDescription: "Doing this, Doing That",
         JobQualification: "Needs this, Needs that",
@@ -174,8 +196,8 @@ const sampleJobs = [
 ];
 
 const sampleApplications = [
-    { JobID: 1, StudentID: 1, RecruiterID: 1, ApplicationTime: new Date(), Status: 'APPLIED', Resume: "SampleResumeLink" },
-    { JobID: 2, StudentID: 2, RecruiterID: 2, ApplicationTime: new Date(), Status: 'REVIEWED', Resume: "resume.txt", CoverLetter: "COVERLETTER", EnglishSample: "ENGLISHSAMPLE.TXT"},
+    { JobID: 1, StudentID: 1, RecruiterID: 1, ApplicationTime: new Date(), Status: 'APPLIED', Resume: "resume.pdf" },
+    { JobID: 2, StudentID: 2, RecruiterID: 2, ApplicationTime: new Date(), Status: 'REVIEWED', Resume: "resume.pdf", CoverLetter: "coverletter.pdf", EnglishSample: "englishsample.pdf"},
     // Add more application records as needed
 ];
 
@@ -201,6 +223,7 @@ const sampleShortlist = [
         await Student.bulkCreate(sampleStudents, { transaction });
         await Application.bulkCreate(sampleApplications, { transaction });
         await Bookmark.bulkCreate(sampleBookmarks, {transaction});
+        await Shortlist.bulkCreate(sampleShortlist, {transaction});
 
         await transaction.commit();
         console.log('Sample data has been seeded successfully.');

@@ -8,7 +8,7 @@ const { where } = require('sequelize');
 
 exports.createStudent = async (req, res) => {
     try {
-        const { StudentID, FirstName, LastName, School, EmailID, AcademicYear, Age, ResumeLink, AcademicMajor, GPA, WorkExperience, PersonalStatement, Experience, Quota, Preference, Duration, Season} = req.body;
+        const { StudentID, FirstName, LastName, School, EmailID, AcademicYear, Age, ResumeLink, AcademicMajor, GPA, WorkExperience, PersonalStatement, Experience, Quota, Preference, Interest, Skills, Duration, Season} = req.body;
 
         const newStudent = await Student.create({
             StudentID,
@@ -26,6 +26,8 @@ exports.createStudent = async (req, res) => {
             Experience,
             Quota,
             Preference,
+            Interest,
+            Skills,
             Duration,
             Season
         });

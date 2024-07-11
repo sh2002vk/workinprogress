@@ -59,11 +59,13 @@ connection.connect(err => {
             ResumeLink TEXT,
             AcademicMajor VARCHAR(100) NOT NULL,
             GPA DECIMAL(3, 2),
-            WorkExperience TEXT NOT NULL,
+            WorkExperience JSON,
             PersonalStatement TEXT NOT NULL,
             Experience FLOAT NOT NULL,
             Quota INT NOT NULL,
             Preference ENUM('REMOTE', 'INPERSON', 'HYBRID'),
+            Interest JSON,
+            Skills JSON,
             Duration ENUM('4', '8', '12'),
             Season ENUM('F24', 'W25', 'S25', 'F25')
         );`;
