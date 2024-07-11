@@ -260,7 +260,7 @@ describe('API Tests', function () {
 
         it('should get filtered students, 1 result', function (done) {
             request(app)
-                .get('/action/recruiter/getStudents')
+                .post('/action/recruiter/getStudents')
                 .send({ preference: 'REMOTE' }) // example filter
                 .expect(200)
                 .end((err, res) => {
@@ -273,7 +273,7 @@ describe('API Tests', function () {
 
         it('should get no filter all students, 1 result', function (done) {
             request(app)
-                .get('/action/recruiter/getStudents')
+                .post('/action/recruiter/getStudents')
                 .send({}) // example filter
                 .expect(200)
                 .end((err, res) => {
@@ -286,7 +286,7 @@ describe('API Tests', function () {
 
         it('should get filtered students, no result', function (done) {
             request(app)
-                .get('/action/recruiter/getStudents')
+                .post('/action/recruiter/getStudents')
                 .send({ level: 5 }) // example filter
                 .expect(200)
                 .end((err, res) => {
@@ -354,7 +354,7 @@ describe('API Tests', function () {
         it('should bookmark a student', function (done) {
             request(app)
                 .post('/action/recruiter/bookmarkStudent')
-                .send({ recruiterID: createdRecruiterId, studentID: 'stu123', jobID: createdJobId })
+                .send({ recruiterID: createdRecruiterId, studentID: 'stu123', direction: "STUDENT" })
                 .expect(201)
                 .end((err, res) => {
                     if (err) return done(err);

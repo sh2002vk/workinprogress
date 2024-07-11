@@ -11,7 +11,7 @@ const Shortlist = sequelize.define('Shortlist', {
         primaryKey: true
     },
     StudentID: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
         references: {
             model: Student,
@@ -27,7 +27,7 @@ const Shortlist = sequelize.define('Shortlist', {
         }
     },
     RecruiterID: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
         references: {
             model: Recruiter,

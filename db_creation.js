@@ -35,8 +35,8 @@ connection.connect(err => {
             DatePosted DATETIME NOT NULL,
             Experience FLOAT,
             Pay FLOAT,
-            Environment ENUM('In-person', 'Remote', 'Hybrid'),
-            Duration ENUM('4 months', '8 months', '12 months'),
+            Environment ENUM('INPERSON', 'REMOTE', 'HYBRID'),
+            Duration ENUM('4', '8', '12'),
             Terms JSON,
             Industry ENUM('Technology', 'Business'),
             JobDescription TEXT,
@@ -67,7 +67,8 @@ connection.connect(err => {
             Interest JSON,
             Skills JSON,
             Duration ENUM('4', '8', '12'),
-            Season ENUM('F24', 'W25', 'S25', 'F25')
+            Season ENUM('F24', 'W25', 'S25', 'F25'),
+            Location VARCHAR(100)
         );`;
 
     const createRecruiterTable = `
@@ -110,13 +111,17 @@ connection.connect(err => {
 
     const createBookmarkTable = `
         CREATE TABLE IF NOT EXISTS BOOKMARK (
-            BookmarkID INT AUTO_INCREMENT PRIMARY KEY,
-            JobID INT NOT NULL,
+            JobID INT,
             StudentID VARCHAR(255) NOT NULL,
+            RecruiterID VARCHAR(255),
             Direction ENUM('RECRUITER', 'STUDENT') NOT NULL,
+            PRIMARY KEY (StudentID, Direction),
             FOREIGN KEY (JobID) REFERENCES JOB(JobID) ON DELETE CASCADE,
-            FOREIGN KEY (StudentID) REFERENCES STUDENT(StudentID) ON DELETE CASCADE
-        );`;
+            FOREIGN KEY (StudentID) REFERENCES STUDENT(StudentID) ON DELETE CASCADE,
+            FOREIGN KEY (RecruiterID) REFERENCES RECRUITER(RecruiterID) ON DELETE CASCADE
+        );
+    `;
+
 
     const createShortlistTable = `
         CREATE TABLE IF NOT EXISTS SHORTLIST (

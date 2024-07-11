@@ -8,7 +8,8 @@ const { where } = require('sequelize');
 
 exports.createStudent = async (req, res) => {
     try {
-        const { StudentID, FirstName, LastName, School, EmailID, AcademicYear, Age, ResumeLink, AcademicMajor, GPA, WorkExperience, PersonalStatement, Experience, Quota, Preference, Interest, Skills, Duration, Season} = req.body;
+        const { StudentID, FirstName, LastName, School, EmailID, AcademicYear, Age, ResumeLink, AcademicMajor, GPA, WorkExperience, PersonalStatement, Experience, Quota, Preference, Interest, Skills, Duration, Season, Location} = req.body;
+
 
         const newStudent = await Student.create({
             StudentID,
@@ -29,13 +30,14 @@ exports.createStudent = async (req, res) => {
             Interest,
             Skills,
             Duration,
-            Season
+            Season,
+            Location
         });
 
         res.status(201).send(newStudent);
 
     } catch (error) {
-        // console.log(error);
+        console.log(error);
         res.status(400).send({ message: "Error creating new student", error: error.message });
     }
 };
