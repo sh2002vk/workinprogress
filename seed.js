@@ -1,4 +1,4 @@
-const { sequelize, Company, Job, Student, Recruiter, Application, Bookmark } = require('./models'); // Adjust the path as needed
+const { sequelize, Company, Job, Student, Recruiter, Application, Bookmark, Shortlist} = require('./models'); // Adjust the path as needed
 
 
 const sampleCompanies = [
@@ -9,7 +9,7 @@ const sampleCompanies = [
 
 const sampleStudents = [
     {
-        StudentID: 'abc',
+        StudentID: 1,
         FirstName: 'John',
         LastName: 'Doe',
         School: 'University of Example',
@@ -19,14 +19,24 @@ const sampleStudents = [
         ResumeLink: 'https://example.com/resume/johndoe',
         AcademicMajor: 'Computer Science',
         GPA: 3.7,
-        WorkExperience: [{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }],
-        PersonalStatement: 'Passionate about technology and innovation.',
+        WorkExperience: JSON.stringify([
+            {
+                Company: "Company X",
+                Role: "Role X"
+            }
+        ]),
+        PersonalStatement: 'Driven and goal-oriented.',
+        Skills: JSON.stringify([
+            "Frontend",
+            "Backend"
+        ]),
+        Interest: JSON.stringify(["Software", "Tech"]),
         Experience: 2.5,
         Duration: '12',
         Quota: 3
     },
     {
-        StudentID: 'cdf',
+        StudentID: 2,
         FirstName: 'Alice',
         LastName: 'Smith',
         School: 'Another University',
@@ -36,86 +46,166 @@ const sampleStudents = [
         ResumeLink: 'https://example.com/resume/alicesmith',
         AcademicMajor: 'Arts',
         GPA: 3.5,
-        WorkExperience: [{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }],
+        WorkExperience: JSON.stringify([
+            {
+                Company: "Company X",
+                Role: "Role X"
+            }
+        ]),
         PersonalStatement: 'Driven and goal-oriented.',
+        Skills: JSON.stringify([
+            "Frontend",
+            "Backend"
+        ]),
+        Interest: JSON.stringify(["Software", "Tech"]),
         Experience: 3,
         Duration: '4',
         Quota: 3
     },
-    {
-        StudentID: 'ehj',
-        FirstName: 'ABC',
-        LastName: 'DEF',
-        School: 'Another University',
-        EmailID: 'ABC@example.com',
-        AcademicYear: 6,
-        Age: 23,
-        ResumeLink: 'https://example.com/resume/alicesmith',
-        AcademicMajor: 'Statistics',
-        GPA: 3.5,
-        WorkExperience: [{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }],
-        PersonalStatement: 'Driven and goal-oriented.',
-        Experience: 3,
-        Quota: 3,
-        Season: 'W25',
-        Duration: '8',
-    },
-    {
-        StudentID: 'erf',
-        FirstName: 'AB',
-        LastName: 'DE',
-        School: 'Another University',
-        EmailID: 'Haber@example.com',
-        AcademicYear: 3,
-        Age: 23,
-        ResumeLink: 'https://example.com/resume/alicesmith',
-        AcademicMajor: 'Engineering',
-        GPA: 3.5,
-        WorkExperience: [{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }],
-        PersonalStatement: 'Driven and goal-oriented.',
-        Experience: 3,
-        Quota: 3,
-        Season: 'W25',
-        Duration: '12',
-    },
-    {
-        StudentID: 'adwesdbc',
-        FirstName: 'XYZ',
-        LastName: 'FRG',
-        School: 'Another University',
-        EmailID: 'XYZ@example.com',
-        AcademicYear: 6,
-        Age: 23,
-        ResumeLink: 'https://example.com/resume/alicesmith',
-        AcademicMajor: 'Computer Science',
-        GPA: 3.5,
-        WorkExperience: [{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }],
-        PersonalStatement: 'Driven and goal-oriented.',
-        Experience: 3,
-        Quota: 3,
-        Season: 'F24',
-        Duration: '4',
-        Preference: 'HYBRID'
-    },
-    {
-        StudentID: 'adwsdswddedebc',
-        FirstName: 'Gaga',
-        LastName: 'Drake',
-        School: 'Another University',
-        EmailID: 'Gaga@example.com',
-        AcademicYear: 5,
-        Age: 23,
-        ResumeLink: 'https://example.com/resume/alicesmith',
-        AcademicMajor: 'Arts',
-        GPA: 3.5,
-        WorkExperience: [{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }],
-        PersonalStatement: 'Driven and goal-oriented.',
-        Experience: 1,
-        Quota: 3,
-        Season: 'F25',
-        Duration: '4',
-        Preference: 'INPERSON'
-    }
+
+    // {
+    //     FirstName: 'ABC',
+    //     LastName: 'DEF',
+    //     School: 'Another University',
+    //     EmailID: 'ABC@example.com',
+    //     AcademicYear: 6,
+    //     Age: 23,
+    //     ResumeLink: 'https://example.com/resume/alicesmith',
+    //     AcademicMajor: 'Business Administration',
+    //     GPA: 3.5,
+    //     WorkExperience: 'Marketing Coordinator at Company Y',
+    //     PersonalStatement: 'Driven and goal-oriented.',
+    //     Experience: 3,
+    //     Quota: 3,
+    //     Season: 'W25'
+    // },
+    // {
+    //     FirstName: 'AB',
+    //     LastName: 'DE',
+    //     School: 'Another University',
+    //     EmailID: 'Haber@example.com',
+    //     AcademicYear: 3,
+    //     Age: 23,
+    //     ResumeLink: 'https://example.com/resume/alicesmith',
+    //     AcademicMajor: 'Business Administration',
+    //     GPA: 3.5,
+    //     WorkExperience: 'Marketing Coordinator at Company Y',
+    //     PersonalStatement: 'Driven and goal-oriented.',
+    //     Experience: 3,
+    //     Quota: 3,
+    //     Season: 'W25'
+    // },
+    // {
+    //     FirstName: 'XYZ',
+    //     LastName: 'FRG',
+    //     School: 'Another University',
+    //     EmailID: 'XYZ@example.com',
+    //     AcademicYear: 6,
+    //     Age: 23,
+    //     ResumeLink: 'https://example.com/resume/alicesmith',
+    //     AcademicMajor: 'Business Administration',
+    //     GPA: 3.5,
+    //     WorkExperience: 'Marketing Coordinator at Company Y',
+    //     PersonalStatement: 'Driven and goal-oriented.',
+    //     Experience: 3,
+    //     Quota: 3,
+    //     Season: 'F24',
+    //     Duration: '4',
+    //     Preference: 'Hybrid'
+    // },
+    // {
+    //     FirstName: 'Gaga',
+    //     LastName: 'Drake',
+    //     School: 'Another University',
+    //     EmailID: 'Gaga@example.com',
+    //     AcademicYear: 6,
+    //     Age: 23,
+    //     ResumeLink: 'https://example.com/resume/alicesmith',
+    //     AcademicMajor: 'Business Administration',
+    //     GPA: 3.5,
+    //     WorkExperience: 'Marketing Coordinator at Company Y',
+    //     PersonalStatement: 'Driven and goal-oriented.',
+    //     Experience: 1,
+    //     Quota: 3,
+    //     Season: 'F25',
+    //     Duration: '4',
+    //     Preference: 'In-person'
+    // }
+
+//     {
+//         StudentID: 'ehj',
+//         FirstName: 'ABC',
+//         LastName: 'DEF',
+//         School: 'Another University',
+//         EmailID: 'ABC@example.com',
+//         AcademicYear: 6,
+//         Age: 23,
+//         ResumeLink: 'https://example.com/resume/alicesmith',
+//         AcademicMajor: 'Statistics',
+//         GPA: 3.5,
+//         WorkExperience: [{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }],
+//         PersonalStatement: 'Driven and goal-oriented.',
+//         Experience: 3,
+//         Quota: 3,
+//         Season: 'W25',
+//         Duration: '8',
+//     },
+//     {
+//         StudentID: 'erf',
+//         FirstName: 'AB',
+//         LastName: 'DE',
+//         School: 'Another University',
+//         EmailID: 'Haber@example.com',
+//         AcademicYear: 3,
+//         Age: 23,
+//         ResumeLink: 'https://example.com/resume/alicesmith',
+//         AcademicMajor: 'Engineering',
+//         GPA: 3.5,
+//         WorkExperience: [{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }],
+//         PersonalStatement: 'Driven and goal-oriented.',
+//         Experience: 3,
+//         Quota: 3,
+//         Season: 'W25',
+//         Duration: '12',
+//     },
+//     {
+//         StudentID: 'adwesdbc',
+//         FirstName: 'XYZ',
+//         LastName: 'FRG',
+//         School: 'Another University',
+//         EmailID: 'XYZ@example.com',
+//         AcademicYear: 6,
+//         Age: 23,
+//         ResumeLink: 'https://example.com/resume/alicesmith',
+//         AcademicMajor: 'Computer Science',
+//         GPA: 3.5,
+//         WorkExperience: [{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }],
+//         PersonalStatement: 'Driven and goal-oriented.',
+//         Experience: 3,
+//         Quota: 3,
+//         Season: 'F24',
+//         Duration: '4',
+//         Preference: 'HYBRID'
+//     },
+//     {
+//         StudentID: 'adwsdswddedebc',
+//         FirstName: 'Gaga',
+//         LastName: 'Drake',
+//         School: 'Another University',
+//         EmailID: 'Gaga@example.com',
+//         AcademicYear: 5,
+//         Age: 23,
+//         ResumeLink: 'https://example.com/resume/alicesmith',
+//         AcademicMajor: 'Arts',
+//         GPA: 3.5,
+//         WorkExperience: [{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }],
+//         PersonalStatement: 'Driven and goal-oriented.',
+//         Experience: 1,
+//         Quota: 3,
+//         Season: 'F25',
+//         Duration: '4',
+//         Preference: 'INPERSON'
+//     }
     // Add more student records as needed
 ];
 
@@ -183,6 +273,23 @@ const sampleJobs = [
     // Add more job records as needed
 ];
 
+const sampleApplications = [
+    { JobID: 1, StudentID: 1, RecruiterID: 1, ApplicationTime: new Date(), Status: 'APPLIED', Resume: "resume.pdf" },
+    { JobID: 2, StudentID: 2, RecruiterID: 2, ApplicationTime: new Date(), Status: 'REVIEWED', Resume: "resume.pdf", CoverLetter: "coverletter.pdf", EnglishSample: "englishsample.pdf"},
+    // Add more application records as needed
+];
+
+const sampleBookmarks = [
+    { JobID: 1, StudentID: 1, Direction: 'RECRUITER' },
+    { JobID: 1, StudentID: 2, Direction: 'RECRUITER' },
+    // Add more bookmark records as needed
+];
+
+const sampleShortlist = [
+    { StudentID: 1, JobID: 1, RecruiterID: 1},
+    { StudentID: 2, JobID: 2, RecruiterID: 2}
+];
+
 (async () => {
     const transaction = await sequelize.transaction();
     try {
@@ -192,6 +299,9 @@ const sampleJobs = [
         await Recruiter.bulkCreate(sampleRecruiters, { transaction });
         await Job.bulkCreate(sampleJobs, { transaction });
         await Student.bulkCreate(sampleStudents, { transaction });
+        await Application.bulkCreate(sampleApplications, { transaction });
+        await Bookmark.bulkCreate(sampleBookmarks, {transaction});
+        await Shortlist.bulkCreate(sampleShortlist, {transaction});
 
         await transaction.commit();
         console.log('Sample data has been seeded successfully.');

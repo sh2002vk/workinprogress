@@ -49,11 +49,11 @@ const Student = sequelize.define('studentModel', {
   GPA: Sequelize.DECIMAL(3, 2),
   WorkExperience: {
     type: Sequelize.JSON,
-    allowNull: false
+    allowNull: true
   },
   PersonalStatement: {
     type: Sequelize.TEXT,
-    allowNull: false
+    allowNull: true
   },
   Experience: {
     type: Sequelize.FLOAT,
@@ -65,6 +65,14 @@ const Student = sequelize.define('studentModel', {
   },
   Preference: {
     type: Sequelize.ENUM('HYBRID', 'REMOTE', 'INPERSON'),
+    allowNull: true
+  },
+  Interest: {
+    type: Sequelize.JSON,
+    allowNull: true
+  },
+  Skills: {
+    type: Sequelize.JSON,
     allowNull: true
   },
   Duration: {
