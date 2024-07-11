@@ -274,8 +274,8 @@ const sampleJobs = [
 ];
 
 const sampleApplications = [
-    { JobID: 1, StudentID: 1, RecruiterID: 1, ApplicationTime: new Date(), Status: 'APPLIED', Resume: "resume.pdf" },
-    { JobID: 2, StudentID: 2, RecruiterID: 2, ApplicationTime: new Date(), Status: 'REVIEWED', Resume: "resume.pdf", CoverLetter: "coverletter.pdf", EnglishSample: "englishsample.pdf"},
+    { JobID: 1, StudentID: 1, RecruiterID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2', ApplicationTime: new Date(), Status: 'APPLIED', Resume: "resume.pdf" },
+    { JobID: 2, StudentID: 2, RecruiterID: '12dwedw3ds', ApplicationTime: new Date(), Status: 'REVIEWED', Resume: "resume.pdf", CoverLetter: "coverletter.pdf", EnglishSample: "englishsample.pdf"},
     // Add more application records as needed
 ];
 
@@ -286,8 +286,8 @@ const sampleBookmarks = [
 ];
 
 const sampleShortlist = [
-    { StudentID: 1, JobID: 1, RecruiterID: 1},
-    { StudentID: 2, JobID: 2, RecruiterID: 2}
+    { StudentID: 1, JobID: 1, RecruiterID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2'},
+    { StudentID: 2, JobID: 2, RecruiterID: '12dwedw3ds'}
 ];
 
 (async () => {
