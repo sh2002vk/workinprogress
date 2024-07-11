@@ -2,7 +2,7 @@ const Application = require('../models/applicationModel')
 
 exports.getApplication = async (req, res) => {
     try {
-        const {applicationID} = req.body;
+        const {applicationID} = req.query;
 
         const application = await Application.findByPk(applicationID);
 

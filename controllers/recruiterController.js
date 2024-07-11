@@ -1,3 +1,7 @@
+const { Storage } = require('@google-cloud/storage');
+const path = require('path');
+const { promisify } = require('util');
+const { pipeline } = require('stream');
 const Job = require('../models/jobModel');
 const Application = require("../models/applicationModel");
 const Bookmark = require("../models/bookmarkModel");
@@ -5,6 +9,28 @@ const Recruiter = require('../models/recruiterModel');
 const Student = require('../models/studentModel');
 const Shortlist = require('../models/shortlistModel');
 const {Company} = require("../models");
+
+exports.getGCPFiles = async (req, res) => {
+    const { filename } = req.body;
+    const bucketName = 'wip_storage_bucket';
+    const storage = new Storage({
+        keyFilename: path.join(process.cwd(), 'google-key.json'),
+    });
+    const file = storage.bucket(bucketName).file(filename);
+
+    try {
+        const [exists] = await file.exists();
+        if (!exists) {
+            return res.status(404).json({ error: 'File not found' });
+        }
+
+        const streamPipeline = promisify(pipeline);
+        await streamPipeline(file.createReadStream(), res);
+    } catch (error) {
+        console.error('Error fetching file:', error);
+        res.status(500).json({ error: 'Error fetching file' });
+    }
+};
 
 exports.createJob = async (req, res) => {
     //Logic to create a job
@@ -76,14 +102,14 @@ exports.deleteJob = async (req, res) => {
 exports.getApplicants = async (req, res) => {
     //Logic to get applicants of a job
     try {
-        const {jobID} = req.body;
+        const {jobID} = req.query;
 
         const students = [];
         const applications = await Application.findAll({
             where: {JobID: jobID}
         })
         for (let i of applications) {
-            students.push(i.get('StudentID'));
+            students.push(i.get('ApplicationID'));
         }
         res.json(students);
     } catch (error) {
@@ -195,10 +221,10 @@ exports.shortlistStudent = async (req, res) => {
 
 exports.getShortlistedStudents = async (req, res) => {
     try {
-        const { recruiterID } = req.body;
+        const { jobID } = req.query;
 
         const shortlisted = await Shortlist.findAll({
-            where: { RecruiterID: recruiterID },
+            where: { JobID: jobID },
             include: [
                 {
                     model: Student,
