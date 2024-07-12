@@ -134,7 +134,6 @@ exports.addStudentToBookMark = async (req, res) => {
         if (jobID) {
             whereClause.jobID = jobID;
         }
-
         const newBookmark = await Bookmark.create(whereClause);
         res.status(201).send(newBookmark);
     } catch (error) {
