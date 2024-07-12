@@ -20,22 +20,31 @@ describe('API Tests', function () {
 
     const sampleStudent = {
         StudentID: 'stu123',
-        FirstName: 'Jane',
+        FirstName: 'John',
         LastName: 'Doe',
-        School: 'XYZ University',
-        EmailID: 'jane.doe@example.com',
+        School: 'University of Example',
+        EmailID: 'johndoe@example.com',
         AcademicYear: 3,
-        Age: 21,
-        ResumeLink: 'http://example.com/resume',
+        Age: 22,
+        ResumeLink: 'https://example.com/resume/johndoe',
         AcademicMajor: 'Computer Science',
-        GPA: 3.8,
-        WorkExperience: 'Intern at ABC',
-        PersonalStatement: 'Passionate about tech',
-        Experience: 1.5,
-        Preference: 'REMOTE',
-        Quota: 2,
-        Level: 2
-    };
+        GPA: 3.7,
+        WorkExperience: JSON.stringify([
+            {
+                Company: "Company X",
+                Role: "Role X"
+            }
+        ]),
+        PersonalStatement: 'Driven and goal-oriented.',
+        Skills: JSON.stringify([
+            "Frontend",
+            "Backend"
+        ]),
+        Interest: JSON.stringify(["Software", "Tech"]),
+        Experience: 2.5,
+        Duration: '12',
+        Quota: 3
+    }
 
     const sampleCompany = {
         Name: 'Example Corp',
@@ -68,7 +77,7 @@ describe('API Tests', function () {
         ApplicationTime: new Date(),
         Status: 'REVIEWED',
         SubmittedDocuments: {
-            Resume: "resume.txt",
+            Resume: "resume.pdf",
             CoverLetter: "COVERLETTER",
             EnglishSample: "ENGLISHSAMPLE.TXT"
         }
@@ -244,6 +253,7 @@ describe('API Tests', function () {
                         .end((err, res) => {
                             if (err) return done(err);
                             createdRecruiterId = res.body.RecruiterID;
+                            console.log(res.body.RecruiterID)
                             request(app)
                                 .post('/account/student/create')
                                 .send(sampleStudent)
@@ -261,7 +271,7 @@ describe('API Tests', function () {
         it('should get filtered students, 1 result', function (done) {
             request(app)
                 .post('/action/recruiter/getStudents')
-                .send({ preference: 'REMOTE' }) // example filter
+                .send({ Location: 'NY' }) // example filter
                 .expect(200)
                 .end((err, res) => {
                     if (err) return done(err);
@@ -328,8 +338,7 @@ describe('API Tests', function () {
 
         it('should get shortlisted students', function (done) {
             request(app)
-                .get('/action/recruiter/getShortlistedStudents')
-                .send({ recruiterID: createdRecruiterId })
+                .get(`/action/recruiter/getShortlistedStudents?jobID=${createdJobId}`)
                 .expect(200)
                 .end((err, res) => {
                     if (err) return done(err);
@@ -354,11 +363,11 @@ describe('API Tests', function () {
         it('should bookmark a student', function (done) {
             request(app)
                 .post('/action/recruiter/bookmarkStudent')
-                .send({ recruiterID: createdRecruiterId, studentID: 'stu123', direction: "STUDENT" })
+                .send({ recruiterID: createdRecruiterId, studentID: createdStudentId, jobID: createdJobId })
                 .expect(201)
                 .end((err, res) => {
                     if (err) return done(err);
-                    expect(res.body).to.have.property('BookmarkID');
+                    expect(res.body).to.have.property('Direction');
                     done();
                 });
         });

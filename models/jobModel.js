@@ -44,10 +44,10 @@ const Job = sequelize.define('jobModel', {
   },
   Pay: Sequelize.FLOAT,
   Environment: {
-    type: Sequelize.ENUM('INPERSON', 'REMOTE', 'HYBRID')
+    type: Sequelize.ENUM('In-person', 'Remote', 'Hybrid')
   },
   Duration: {
-    type: Sequelize.ENUM('4', '8', '12')
+    type: Sequelize.ENUM('4 months', '8 months', '12 months')
   },
   Terms: {
     type: Sequelize.JSON

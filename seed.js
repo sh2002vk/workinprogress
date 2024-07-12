@@ -1,4 +1,4 @@
-const { sequelize, Company, Job, Student, Recruiter, Application, Bookmark } = require('./models'); // Adjust the path as needed
+const { sequelize, Company, Job, Student, Recruiter, Application, Bookmark, Shortlist} = require('./models'); // Adjust the path as needed
 
 
 const sampleCompanies = [
@@ -9,7 +9,7 @@ const sampleCompanies = [
 
 const sampleStudents = [
     {
-        StudentID: 'abc',
+        StudentID: 1,
         FirstName: 'John',
         LastName: 'Doe',
         School: 'University of Example',
@@ -20,13 +20,18 @@ const sampleStudents = [
         AcademicMajor: 'Computer Science',
         GPA: 3.7,
         WorkExperience: [{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }],
-        PersonalStatement: 'Passionate about technology and innovation.',
+        PersonalStatement: 'Driven and goal-oriented.',
+        Skills: JSON.stringify([
+            "Frontend",
+            "Backend"
+        ]),
+        Interest: JSON.stringify(["Software", "Tech"]),
         Experience: 2.5,
         Duration: '12',
         Quota: 3
     },
     {
-        StudentID: 'cdf',
+        StudentID: 2,
         FirstName: 'Alice',
         LastName: 'Smith',
         School: 'Another University',
@@ -38,6 +43,11 @@ const sampleStudents = [
         GPA: 3.5,
         WorkExperience: [{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }],
         PersonalStatement: 'Driven and goal-oriented.',
+        Skills: JSON.stringify([
+            "Frontend",
+            "Backend"
+        ]),
+        Interest: JSON.stringify(["Software", "Tech"]),
         Experience: 3,
         Duration: '4',
         Quota: 3
@@ -115,15 +125,14 @@ const sampleStudents = [
         Season: 'F25',
         Duration: '4',
         Preference: 'INPERSON'
-    }
-    // Add more student records as needed
+    },
 ];
 
 const sampleRecruiters = [
     {
         RecruiterID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2',
-        FirstName: 'Recruiter',
-        LastName: 'One',
+        FirstName: 'Shubh',
+        LastName: 'Vakde',
         CompanyID: 1,
         EmailID: 'recruiter1@example.com',
         CompanyName: 'Company A',
@@ -136,6 +145,26 @@ const sampleRecruiters = [
         LastName: 'Two',
         CompanyID: 2,
         EmailID: 'recruiter2@example.com',
+        CompanyName: 'Company B',
+        Roles: 'HR Manager',
+        Locations: 'New York',
+    },
+    {
+        RecruiterID: '8KnkvUbusoYnosi0SQP8yQDIrUh2',
+        FirstName: 'Daine',
+        LastName: 'Yip',
+        CompanyID: 2,
+        EmailID: 'recruiter3@example.com',
+        CompanyName: 'Company B',
+        Roles: 'HR Manager',
+        Locations: 'New York',
+    },
+    {
+        RecruiterID: 'Yng3AaKdUNWnkFOXmutw9Gw3Amo1',
+        FirstName: 'Leyang',
+        LastName: 'Pan',
+        CompanyID: 2,
+        EmailID: 'recruiter4@example.com',
         CompanyName: 'Company B',
         Roles: 'HR Manager',
         Locations: 'New York',
@@ -183,6 +212,23 @@ const sampleJobs = [
     // Add more job records as needed
 ];
 
+const sampleApplications = [
+    { JobID: 1, StudentID: 1, RecruiterID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2', ApplicationTime: new Date(), Status: 'APPLIED', Resume: "resume.pdf" },
+    { JobID: 2, StudentID: 2, RecruiterID: '12dwedw3ds', ApplicationTime: new Date(), Status: 'REVIEWED', Resume: "resume.pdf", CoverLetter: "coverletter.pdf", EnglishSample: "englishsample.pdf"},
+    // Add more application records as needed
+];
+
+const sampleBookmarks = [
+    { JobID: 1, StudentID: 1, Direction: 'RECRUITER' },
+    { JobID: 1, StudentID: 2, Direction: 'RECRUITER' },
+    // Add more bookmark records as needed
+];
+
+const sampleShortlist = [
+    { StudentID: 1, JobID: 1, RecruiterID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2'},
+    { StudentID: 2, JobID: 2, RecruiterID: '12dwedw3ds'}
+];
+
 (async () => {
     const transaction = await sequelize.transaction();
     try {
@@ -192,6 +238,9 @@ const sampleJobs = [
         await Recruiter.bulkCreate(sampleRecruiters, { transaction });
         await Job.bulkCreate(sampleJobs, { transaction });
         await Student.bulkCreate(sampleStudents, { transaction });
+        await Application.bulkCreate(sampleApplications, { transaction });
+        await Bookmark.bulkCreate(sampleBookmarks, {transaction});
+        await Shortlist.bulkCreate(sampleShortlist, {transaction});
 
         await transaction.commit();
         console.log('Sample data has been seeded successfully.');

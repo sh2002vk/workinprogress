@@ -22,7 +22,7 @@ router.get('/student/getApplications', studentController.getApplications);
 // recruiter
 router.post('/recruiter/getStudents', recruiterController.getStudentsFiltered);
 router.get('/recruiter/getShortlistedStudents', recruiterController.getShortlistedStudents); 
-// router.get('/recruiter/getApplicants', recruiterController.getApplicants)
+router.get('/recruiter/getApplicants', recruiterController.getApplicants)
 router.post('/recruiter/bookmarkStudent', recruiterController.addStudentToBookMark); 
 router.delete('/recruiter/unbookmarkStudent', recruiterController.removeStudentFromBookmark);
 router.get('/recruiter/getBookmarkedStudents', recruiterController.getBookmarkedStudents); 
@@ -33,6 +33,7 @@ router.post('/recruiter/createJobPosting', recruiterController.createJob);
 router.put('/recruiter/updateJobPosting', recruiterController.updateJob);
 // router.post('/recruiter/publishJobPosting', recruiterController.publishPosting); TODO: implement and disucess with team
 router.delete('/recruiter/deleteJobPosting', recruiterController.deleteJob);
+router.post('/recruiter/getGCPFiles', recruiterController.getGCPFiles);
 
 // company
 router.get('/company/getRecruiters', companyController.getRecruiters);
