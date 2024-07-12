@@ -78,6 +78,8 @@ connection.connect(err => {
             EmailID VARCHAR(255) NOT NULL UNIQUE,
             CompanyName VARCHAR(255) NOT NULL,
             Roles TEXT NOT NULL,
+            PhoneNumber VARCHAR(20),
+            LinkedInProfile VARCHAR(255),
             Locations TEXT,
             FOREIGN KEY (CompanyID) REFERENCES COMPANY(CompanyID) ON DELETE CASCADE
         );`;

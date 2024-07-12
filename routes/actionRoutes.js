@@ -4,7 +4,7 @@ const studentController = require('../controllers/studentController');
 const recruiterController = require('../controllers/recruiterController');
 const companyController = require('../controllers/companyController');
 // const applicationController = require("../controllers/applicationController");
-// const jobController = require("../controllers/jobController");
+const jobController = require("../controllers/jobController");
 
 // student
 router.get('/student/getRecruiterContact', studentController.requestContact);
@@ -39,6 +39,7 @@ router.get('/company/getRecruiters', companyController.getRecruiters);
 
 // job
 // router.get('/job/getJob', jobController.getJob);
+router.get('/job/getJobRoles', jobController.getJobRoles);
 
 // application
 // router.get('/application/getApplication', applicationController.getApplication);

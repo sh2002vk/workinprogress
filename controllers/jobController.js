@@ -19,3 +19,29 @@ exports.getJob = async (req, res) => {
         })
     }
 }
+
+//Get all jobs posted by the recruiter, take out the job titles, put in array and give to frontend
+exports.getJobRoles = async (req, res) => {
+    try {
+        const {recruiterID} = req.query;
+
+        const jobs = await Job.findAll({
+            where: {
+                RecruiterID: recruiterID
+            },
+            attributes: ['Role'] // Only select the Role attribute
+        });
+
+        // Extract the job titles into an array
+        const jobTitles = jobs.map(job => job.Role);
+
+        // Send the job titles array to the frontend
+        res.status(200).send(jobTitles);
+        
+    } catch (error) {
+        res.status(400).send({
+            message: "Error getting job",
+            error: error.message
+        })
+    }
+}

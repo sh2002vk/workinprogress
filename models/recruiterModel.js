@@ -40,6 +40,14 @@ const Recruiter = sequelize.define('recruiterModel', {
   Locations: {
     type: Sequelize.TEXT,
     allowNull: true
+  },
+  PhoneNumber: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  LinkedInProfile: {
+    type: Sequelize.STRING,
+    allowNull: true
   }
 }, {
   timestamps: false,
