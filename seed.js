@@ -208,25 +208,47 @@ const sampleJobs = [
         JobDescription: "Doing this, Doing That",
         JobQualification: "Needs this, Needs that",
         Status: 'COMPLETED'
+    },
+    {
+        CompanyID: 2,
+        Type: 'Contract',
+        Role: 'Product Manager',
+        RecruiterID: '8KnkvUbusoYnosi0SQP8yQDIrUh2',
+        Location: 'Seattle',
+        DatePosted: new Date(),
+        DateClosed: "2024-07-15",
+        Experience: 4,
+        Pay: 120000,
+        Terms: ['W25'],
+        Environment: "Hybrid",
+        JobDescription: "Doing this, Doing That",
+        JobQualification: "Needs this, Needs that",
+        Status: 'COMPLETED'
     }
     // Add more job records as needed
 ];
 
 const sampleApplications = [
-    { JobID: 1, StudentID: 1, RecruiterID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2', ApplicationTime: new Date(), Status: 'APPLIED', Resume: "resume.pdf" },
-    { JobID: 2, StudentID: 2, RecruiterID: '12dwedw3ds', ApplicationTime: new Date(), Status: 'REVIEWED', Resume: "resume.pdf", CoverLetter: "coverletter.pdf", EnglishSample: "englishsample.pdf"},
+    { JobID: 1, StudentID: 1, RecruiterID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2', ApplicationTime: new Date(), Status: 'APPLIED', SubmittedDocuments:{Resume: "resume.pdf" }},
+    { JobID: 2, StudentID: 2, RecruiterID: '12dwedw3ds', ApplicationTime: new Date(), Status: 'REVIEWED', SubmittedDocuments: {Resume: "resume.pdf", CoverLetter: "coverletter.pdf", EnglishSample: "englishsample.pdf"}},
+    { JobID: 3, StudentID: 1, RecruiterID: '8KnkvUbusoYnosi0SQP8yQDIrUh2', ApplicationTime: new Date(), Status: 'APPLIED', SubmittedDocuments: {Resume: "resume.pdf" }},
+    { JobID: 3, StudentID: 2, RecruiterID: '8KnkvUbusoYnosi0SQP8yQDIrUh2', ApplicationTime: new Date(), Status: 'REVIEWED', SubmittedDocuments: {CoverLetter: "coverletter.pdf" }},
+    { JobID: 3, StudentID: 'ehj', RecruiterID: '8KnkvUbusoYnosi0SQP8yQDIrUh2', ApplicationTime: new Date(), Status: 'ACCEPT', SubmittedDocuments: {EnglishSample: "englishsample.pdf" }},
+    { JobID: 3, StudentID: 'erf', RecruiterID: '8KnkvUbusoYnosi0SQP8yQDIrUh2', ApplicationTime: new Date(), Status: 'COMPLETE', SubmittedDocuments: {Resume: "resume.pdf" }},
     // Add more application records as needed
 ];
 
 const sampleBookmarks = [
     { JobID: 1, StudentID: 1, Direction: 'RECRUITER' },
     { JobID: 1, StudentID: 2, Direction: 'RECRUITER' },
+    { JobID: 3, StudentID: 1, Direction: 'STUDENT' }
     // Add more bookmark records as needed
 ];
 
 const sampleShortlist = [
     { StudentID: 1, JobID: 1, RecruiterID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2'},
-    { StudentID: 2, JobID: 2, RecruiterID: '12dwedw3ds'}
+    { StudentID: 2, JobID: 2, RecruiterID: '12dwedw3ds'},
+    { StudentID: 2, JobID: 3, RecruiterID: '8KnkvUbusoYnosi0SQP8yQDIrUh2'},
 ];
 
 (async () => {
