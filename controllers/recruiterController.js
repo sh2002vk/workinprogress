@@ -100,7 +100,30 @@ exports.deleteJob = async (req, res) => {
     }
 }
 
-exports.getApplicants = async (req, res) => {
+exports.getNewApplications = async (req, res) => {
+    //Logic to get applicants of a job
+    try {
+        const {recruiterID} = req.query;
+        const applications = await Application.findAll({
+            where: {RecruiterID: recruiterID, Status: "APPLIED"},
+            include: [
+                {
+                    model: Job,
+                    attributes: ['Role']
+                },
+                {
+                    model: Student,
+                    attributes: ['FirstName', 'School', 'AcademicMajor']
+                }
+            ]
+        })
+        res.status(201).send(applications);
+    } catch (error) {
+        res.status(400).send({message: "Error fetching applicants", error: error.message});
+    }
+}
+
+exports.getJobApplicants = async (req, res) => {
     //Logic to get applicants of a job
     try {
         const {jobID} = req.query;

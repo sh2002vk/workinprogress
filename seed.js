@@ -21,11 +21,11 @@ const sampleStudents = [
         GPA: 3.7,
         WorkExperience: [{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }],
         PersonalStatement: 'Driven and goal-oriented.',
-        Skills: JSON.stringify([
+        Skills: [
             "Frontend",
             "Backend"
-        ]),
-        Interest: JSON.stringify(["Software", "Tech"]),
+        ],
+        Interest: ["Software", "Tech"],
         Experience: 2.5,
         Duration: '12',
         Quota: 3
@@ -43,11 +43,11 @@ const sampleStudents = [
         GPA: 3.5,
         WorkExperience: [{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }],
         PersonalStatement: 'Driven and goal-oriented.',
-        Skills: JSON.stringify([
+        Skills: [
             "Frontend",
             "Backend"
-        ]),
-        Interest: JSON.stringify(["Software", "Tech"]),
+        ],
+        Interest: ["Software", "Tech"],
         Experience: 3,
         Duration: '4',
         Quota: 3
