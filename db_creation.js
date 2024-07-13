@@ -93,7 +93,7 @@ connection.connect(err => {
             StudentID VARCHAR(255) NOT NULL,
             RecruiterID VARCHAR(255),
             ApplicationTime DATETIME NOT NULL,
-            Status ENUM('DRAFT', 'APPLIED', 'REVIEWED', 'INTERVIEW', 'ACCEPT', 'REJECT') NOT NULL, 
+            Status ENUM('DRAFT', 'APPLIED', 'REVIEWED', 'INTERVIEW', 'ACCEPT', 'REJECT', 'COMPLETE') NOT NULL, 
             SubmittedDocuments JSON,
             FOREIGN KEY (JobID) REFERENCES JOB(JobID) ON DELETE CASCADE,
             FOREIGN KEY (StudentID) REFERENCES STUDENT(StudentID) ON DELETE CASCADE,
