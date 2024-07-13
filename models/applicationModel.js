@@ -39,7 +39,7 @@ const Application = sequelize.define('Application', {
     allowNull: false
   },
   Status: {
-    type: Sequelize.ENUM('DRAFT', 'APPLIED', 'REVIEWED', 'INTERVIEW', 'ACCEPT', 'REJECT'),
+    type: Sequelize.ENUM('DRAFT', 'APPLIED', 'REVIEWED', 'INTERVIEW', 'ACCEPT', 'REJECT', 'COMPLETE'),
     allowNull: false
   },
   SubmittedDocuments: {
