@@ -57,6 +57,7 @@ exports.createJob = async (req, res) => {
         });
         res.status(201).send(newJob);
     } catch (error) {
+        console.log(error);
         res.status(400).send({message: "Error creating job", error: error.message});
     }
 }
@@ -223,9 +224,11 @@ exports.addStudentToBookMark = async (req, res) => {
         if (jobID) {
             whereClause.jobID = jobID;
         }
+        console.log(whereClause);
         const newBookmark = await Bookmark.create(whereClause);
         res.status(201).send(newBookmark);
     } catch (error) {
+        console.log(error);
         res.status(400).send({message: "Unable to bookmark student", error: error.message});
     }
 }
@@ -490,4 +493,40 @@ exports.getBookmarkedStudents = async (req, res) => {
         res.status(400).send({ message: "Error getting bookmarked students", error: error.message });
     }
 };
+
+exports.getDraftStatus = async (req, res) => {
+    try {
+        const {recruiterID} = req.body;
+
+        const draftJobs = await Job.findAll({
+            where: {
+                RecruiterID: recruiterID,
+                Status: 'DRAFT'
+            }
+        });
+
+        const fieldsToCheck = [
+            'Type', 'Role', 'Location', 'DatePosted', 'Experience',
+            'Pay', 'Environment', 'Duration', 'Terms', 'Industry',
+            'JobDescription', 'JobQualification', 'Status', 'RequiredDocuments'
+        ];
+
+        let draftData = draftJobs.map(job => {
+            let filledFields = fieldsToCheck.filter(field => job[field] != null).length;
+            let totalFields = fieldsToCheck.length;
+            let completionPercentage = Math.round((filledFields / totalFields) * 100);
+
+            return {
+                JobID: job.JobID,
+                JobTitle: job.Role,
+                CompletionPercentage: completionPercentage
+            };
+        });
+
+        res.status(200).send({ message: "Draft Status", data: draftData });
+    } catch (error) {
+        console.log(error);
+        res.status(400).send({ message: "Error getting draft status", error: error.message });
+    }
+}
 

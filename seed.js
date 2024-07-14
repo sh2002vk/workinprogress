@@ -238,13 +238,6 @@ const sampleApplications = [
     // Add more application records as needed
 ];
 
-const sampleBookmarks = [
-    { JobID: 1, StudentID: 1, Direction: 'RECRUITER' },
-    { JobID: 1, StudentID: 2, Direction: 'RECRUITER' },
-    { JobID: 3, StudentID: 1, Direction: 'STUDENT' }
-    // Add more bookmark records as needed
-];
-
 const sampleShortlist = [
     { StudentID: 1, JobID: 1, RecruiterID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2'},
     { StudentID: 2, JobID: 2, RecruiterID: '12dwedw3ds'},
@@ -261,7 +254,7 @@ const sampleShortlist = [
         await Job.bulkCreate(sampleJobs, { transaction });
         await Student.bulkCreate(sampleStudents, { transaction });
         await Application.bulkCreate(sampleApplications, { transaction });
-        await Bookmark.bulkCreate(sampleBookmarks, {transaction});
+        // await Bookmark.bulkCreate(sampleBookmarks, {transaction});
         await Shortlist.bulkCreate(sampleShortlist, {transaction});
 
         await transaction.commit();
