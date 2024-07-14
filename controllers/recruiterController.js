@@ -101,7 +101,43 @@ exports.deleteJob = async (req, res) => {
     }
 }
 
-exports.getApplicants = async (req, res) => {
+exports.getApplications = async (req, res) => {
+    //Logic to get applicants of a job
+    try {
+        const {recruiterID} = req.query;
+        const applications = await Application.findAll({
+            where: {RecruiterID: recruiterID}
+        })
+        res.status(201).send(applications);
+    } catch (error) {
+        res.status(400).send({message: "Error fetching applicants", error: error.message});
+    }
+}
+
+exports.getNewApplications = async (req, res) => {
+    //Logic to get applicants of a job
+    try {
+        const {recruiterID} = req.query;
+        const applications = await Application.findAll({
+            where: {RecruiterID: recruiterID, Status: "APPLIED"},
+            include: [
+                {
+                    model: Job,
+                    attributes: ['Role']
+                },
+                {
+                    model: Student,
+                    attributes: ['FirstName', 'School', 'AcademicMajor']
+                }
+            ]
+        })
+        res.status(201).send(applications);
+    } catch (error) {
+        res.status(400).send({message: "Error fetching applicants", error: error.message});
+    }
+}
+
+exports.getJobApplicants = async (req, res) => {
     //Logic to get applicants of a job
     try {
         const {jobID} = req.query;
@@ -116,6 +152,59 @@ exports.getApplicants = async (req, res) => {
         res.json(students);
     } catch (error) {
         res.status(400).send({message: "Error fetching applicants", error: error.message});
+    }
+}
+
+exports.getActivePostingInformation = async (req, res) => {
+    try {
+        const {recruiterID} = req.query;
+        const assembledRows = []
+        const jobs = await Job.findAll({
+            where: {RecruiterID: recruiterID, Status: "COMPLETED"}
+        })
+        await Promise.all(jobs.map(async (job) => {
+            const item = {};
+
+            // Fetch all applications for the current job
+            const applications = await Application.findAll({
+                where: {JobID: job.JobID},
+                include: [
+                    {
+                        model: Student,
+                        attributes: ['FirstName']
+                    }
+                ]
+            });
+
+            const interactedCount = await Application.count({
+                where: {
+                    JobID: job.JobID,
+                    Status: {
+                        [Op.ne]: 'Applied'
+                    }
+                }
+            });
+
+            // Count bookmarks for the current job
+            const saves = await Bookmark.count({
+                where: {JobID: job.JobID, Direction: "STUDENT"}
+            });
+
+            const percentage = applications.length > 0 ? (interactedCount / applications.length) * 100 : 0;
+
+            item.job = job;
+            item.applications = applications;
+            item.interactedApplications = interactedCount;
+            item.percentage = percentage;
+            item.saves = saves;
+
+            assembledRows.push(item);
+        }));
+        res.status(201).send(assembledRows);
+    } catch (error) {
+        res.status(400).send({
+            message: error.message
+        })
     }
 }
 

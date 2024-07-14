@@ -21,8 +21,11 @@ router.get('/student/getApplications', studentController.getApplications);
 
 // recruiter
 router.post('/recruiter/getStudents', recruiterController.getStudentsFiltered);
-router.get('/recruiter/getShortlistedStudents', recruiterController.getShortlistedStudents); 
-router.get('/recruiter/getApplicants', recruiterController.getApplicants)
+router.get('/recruiter/getShortlistedStudents', recruiterController.getShortlistedStudents);
+router.get('/recruiter/getApplications', recruiterController.getApplications)
+router.get('/recruiter/getNewApplications', recruiterController.getNewApplications);
+router.get('/recruiter/getJobApplicants', recruiterController.getJobApplicants)
+router.get('/recruiter/getActivePostingInformation', recruiterController.getActivePostingInformation);
 router.post('/recruiter/bookmarkStudent', recruiterController.addStudentToBookMark); 
 router.delete('/recruiter/unbookmarkStudent', recruiterController.removeStudentFromBookmark);
 router.get('/recruiter/getBookmarkedStudents', recruiterController.getBookmarkedStudents); 

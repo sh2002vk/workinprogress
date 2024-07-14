@@ -39,6 +39,9 @@ const Job = sequelize.define('jobModel', {
     type: Sequelize.DATE,
     allowNull: false
   },
+  DateClosed: {
+    type: Sequelize.DATE
+  },
   Experience: {
     type: Sequelize.FLOAT
   },

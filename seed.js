@@ -21,11 +21,11 @@ const sampleStudents = [
         GPA: 3.7,
         WorkExperience: [{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }],
         PersonalStatement: 'Driven and goal-oriented.',
-        Skills: JSON.stringify([
+        Skills: [
             "Frontend",
             "Backend"
-        ]),
-        Interest: JSON.stringify(["Software", "Tech"]),
+        ],
+        Interest: ["Software", "Tech"],
         Experience: 2.5,
         Duration: '12',
         Quota: 3
@@ -43,11 +43,11 @@ const sampleStudents = [
         GPA: 3.5,
         WorkExperience: [{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }],
         PersonalStatement: 'Driven and goal-oriented.',
-        Skills: JSON.stringify([
+        Skills: [
             "Frontend",
             "Backend"
-        ]),
-        Interest: JSON.stringify(["Software", "Tech"]),
+        ],
+        Interest: ["Software", "Tech"],
         Experience: 3,
         Duration: '4',
         Quota: 3
@@ -182,8 +182,8 @@ const sampleJobs = [
         DatePosted: new Date(),
         Experience: 2.5,
         Pay: 100000,
-        Environment: 'INPERSON',
-        Duration: '4',
+        Environment: 'In-person',
+        Duration: '4 months',
         Terms: ['F24'],
         Industry: 'Technology',
         JobDescription: "Doing this, Doing That",
@@ -203,13 +203,45 @@ const sampleJobs = [
         DatePosted: new Date(),
         Experience: 4,
         Pay: 120000,
-        Terms: ['W25', 'S25'],
-        Environment: "HYBRID",
+        Terms: ['W25'],
+        Environment: "Hybrid",
+        JobDescription: "Doing this, Doing That",
+        JobQualification: "Needs this, Needs that",
+        Status: 'COMPLETED'
+    },
+    {
+        CompanyID: 2,
+        Type: 'Contract',
+        Role: 'Product Manager',
+        RecruiterID: '8KnkvUbusoYnosi0SQP8yQDIrUh2',
+        Location: 'Seattle',
+        DatePosted: new Date(),
+        DateClosed: "2024-07-15",
+        Experience: 4,
+        Pay: 120000,
+        Terms: ['W25'],
+        Environment: "Hybrid",
         JobDescription: "Doing this, Doing That",
         JobQualification: "Needs this, Needs that",
         Status: 'COMPLETED'
     }
     // Add more job records as needed
+];
+
+const sampleApplications = [
+    { JobID: 1, StudentID: 1, RecruiterID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2', ApplicationTime: new Date(), Status: 'APPLIED', SubmittedDocuments:{Resume: "resume.pdf" }},
+    { JobID: 2, StudentID: 2, RecruiterID: '12dwedw3ds', ApplicationTime: new Date(), Status: 'REVIEWED', SubmittedDocuments: {Resume: "resume.pdf", CoverLetter: "coverletter.pdf", EnglishSample: "englishsample.pdf"}},
+    { JobID: 3, StudentID: 1, RecruiterID: '8KnkvUbusoYnosi0SQP8yQDIrUh2', ApplicationTime: new Date(), Status: 'APPLIED', SubmittedDocuments: {Resume: "resume.pdf" }},
+    { JobID: 3, StudentID: 2, RecruiterID: '8KnkvUbusoYnosi0SQP8yQDIrUh2', ApplicationTime: new Date(), Status: 'REVIEWED', SubmittedDocuments: {CoverLetter: "coverletter.pdf" }},
+    { JobID: 3, StudentID: 'ehj', RecruiterID: '8KnkvUbusoYnosi0SQP8yQDIrUh2', ApplicationTime: new Date(), Status: 'ACCEPT', SubmittedDocuments: {EnglishSample: "englishsample.pdf" }},
+    { JobID: 3, StudentID: 'erf', RecruiterID: '8KnkvUbusoYnosi0SQP8yQDIrUh2', ApplicationTime: new Date(), Status: 'COMPLETE', SubmittedDocuments: {Resume: "resume.pdf" }},
+    // Add more application records as needed
+];
+
+const sampleShortlist = [
+    { StudentID: 1, JobID: 1, RecruiterID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2'},
+    { StudentID: 2, JobID: 2, RecruiterID: '12dwedw3ds'},
+    { StudentID: 2, JobID: 3, RecruiterID: '8KnkvUbusoYnosi0SQP8yQDIrUh2'},
 ];
 
 (async () => {
@@ -222,7 +254,7 @@ const sampleJobs = [
         await Job.bulkCreate(sampleJobs, { transaction });
         await Student.bulkCreate(sampleStudents, { transaction });
         await Application.bulkCreate(sampleApplications, { transaction });
-        await Bookmark.bulkCreate(sampleBookmarks, {transaction});
+        // await Bookmark.bulkCreate(sampleBookmarks, {transaction});
         await Shortlist.bulkCreate(sampleShortlist, {transaction});
 
         await transaction.commit();
