@@ -212,23 +212,6 @@ const sampleJobs = [
     // Add more job records as needed
 ];
 
-const sampleApplications = [
-    { JobID: 1, StudentID: 1, RecruiterID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2', ApplicationTime: new Date(), Status: 'APPLIED', Resume: "resume.pdf" },
-    { JobID: 2, StudentID: 2, RecruiterID: '12dwedw3ds', ApplicationTime: new Date(), Status: 'REVIEWED', Resume: "resume.pdf", CoverLetter: "coverletter.pdf", EnglishSample: "englishsample.pdf"},
-    // Add more application records as needed
-];
-
-const sampleBookmarks = [
-    { JobID: 1, StudentID: 1, Direction: 'RECRUITER' },
-    { JobID: 1, StudentID: 2, Direction: 'RECRUITER' },
-    // Add more bookmark records as needed
-];
-
-const sampleShortlist = [
-    { StudentID: 1, JobID: 1, RecruiterID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2'},
-    { StudentID: 2, JobID: 2, RecruiterID: '12dwedw3ds'}
-];
-
 (async () => {
     const transaction = await sequelize.transaction();
     try {
