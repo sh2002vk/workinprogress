@@ -47,16 +47,16 @@ const Job = sequelize.define('jobModel', {
   },
   Pay: Sequelize.FLOAT,
   Environment: {
-    type: Sequelize.ENUM('In-person', 'Remote', 'Hybrid')
+    type: Sequelize.ENUM('INPERSON', 'REMOTE', 'HYBRID')
   },
   Duration: {
-    type: Sequelize.ENUM('4 months', '8 months', '12 months')
+    type: Sequelize.ENUM('4', '8', '12')
   },
   Terms: {
     type: Sequelize.JSON
   },
   Industry: {
-    type: Sequelize.ENUM('Technology', 'Business')
+    type: Sequelize.STRING
   },
   JobDescription: {
     type: Sequelize.TEXT
@@ -70,6 +70,10 @@ const Job = sequelize.define('jobModel', {
   },
   RequiredDocuments: {
     type: Sequelize.JSON,
+    allowNull: true
+  },
+  Season: {
+    type: Sequelize.ENUM('F24', 'W25', 'S25', 'F25'),
     allowNull: true
   }
 }, {

@@ -8,9 +8,10 @@ const jobController = require("../controllers/jobController");
 
 // student
 router.get('/student/getRecruiterContact', studentController.requestContact);
-router.get('/student/getJobs', studentController.getJobsFiltered);
+router.post('/student/getJobs', studentController.getJobsFiltered);
 router.post('/student/bookmarkJob', studentController.createBookmark);
 router.delete('/student/unbookmarkJob', studentController.deleteBookmark);
+router.get('/student/getBookmarkedJobs', studentController.getBookmarkedJobs); 
 router.post('/student/createApplication', studentController.createApplication);
 router.put('/student/updateApplication', studentController.updateApplication);
 router.get('/student/checkEligibility', studentController.checkRequiredDocuments);

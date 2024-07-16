@@ -108,9 +108,9 @@ const sampleStudents = [
         Preference: 'HYBRID'
     },
     {
-        StudentID: 'adwsdswddedebc',
-        FirstName: 'Gaga',
-        LastName: 'Drake',
+        StudentID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2',
+        FirstName: 'Shubhankar',
+        LastName: 'Vakde',
         School: 'Another University',
         EmailID: 'Gaga@example.com',
         AcademicYear: 5,
@@ -201,8 +201,8 @@ const sampleJobs = [
         DatePosted: new Date(),
         Experience: 2.5,
         Pay: 100000,
-        Environment: 'In-person',
-        Duration: '4 months',
+        Environment: 'INPERSON',
+        Duration: '4',
         Terms: ['F24'],
         Industry: 'Technology',
         JobDescription: "Doing this, Doing That",
@@ -223,7 +223,7 @@ const sampleJobs = [
         Experience: 4,
         Pay: 120000,
         Terms: ['W25'],
-        Environment: "Hybrid",
+        Environment: "HYBRID",
         JobDescription: "Doing this, Doing That",
         JobQualification: "Needs this, Needs that",
         Status: 'COMPLETED'
@@ -239,7 +239,7 @@ const sampleJobs = [
         Experience: 4,
         Pay: 120000,
         Terms: ['W25'],
-        Environment: "Hybrid",
+        Environment: "HYBRID",
         JobDescription: "Doing this, Doing That",
         JobQualification: "Needs this, Needs that",
         Status: 'COMPLETED'
@@ -257,12 +257,18 @@ const sampleApplications = [
     // Add more application records as needed
 ];
 
+// const sampleBookmarks = [
+//     { JobID: 1, StudentID: 1, RecruiterID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2', Direction: 'RECRUITER' },
+//     { JobID: 1, StudentID: 2, RecruiterID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2', Direction: 'RECRUITER' },
+//     { JobID: 3, StudentID: 1, RecruiterID: '8KnkvUbusoYnosi0SQP8yQDIrUh2', Direction: 'STUDENT' }
+//     // Add more bookmark records as needed
+// ];
+
 const sampleShortlist = [
     { StudentID: 1, JobID: 1, RecruiterID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2'},
     { StudentID: 2, JobID: 2, RecruiterID: '12dwedw3ds'},
     { StudentID: 2, JobID: 3, RecruiterID: '8KnkvUbusoYnosi0SQP8yQDIrUh2'},
 ];
-
 (async () => {
     const transaction = await sequelize.transaction();
     try {

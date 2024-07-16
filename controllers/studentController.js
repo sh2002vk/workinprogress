@@ -8,6 +8,7 @@ const Job = require('../models/jobModel');
 const {Sequelize} = require("sequelize");
 const Student = require('../models/studentModel');
 const Recruiter = require("../models/recruiterModel");
+const { Op, where } = require('sequelize');
 
 exports.createApplication = async (req, res) => {
     // Logic to apply to a job
@@ -201,11 +202,14 @@ exports.requestContact = async (req, res) => {
 
 exports.createBookmark = async (req, res) => {
     try {
-        const {StudentID, JobID} = req.body;
+        const {StudentID, JobID, RecruiterID} = req.body;
+
+        // console.log(req.body);
 
         const bookmark = await Bookmark.create({
             JobID: JobID,
             StudentID: StudentID,
+            RecruiterID: RecruiterID,
             Direction: 'STUDENT'
         });
 
@@ -218,6 +222,7 @@ exports.createBookmark = async (req, res) => {
             res.status(400).send("Bookmark not created")
         }
     } catch (error) {
+        console.log(error);
         res.status(400).send({message: "Error bookmarking job", error: error.message})
     }
 }
@@ -225,6 +230,8 @@ exports.createBookmark = async (req, res) => {
 exports.deleteBookmark = async (req, res) => {
     try {
         const {StudentID, JobID} = req.body;
+
+        // console.log(req.body);
 
         const bookmark = await Bookmark.destroy({
             where: {
@@ -244,6 +251,7 @@ exports.deleteBookmark = async (req, res) => {
             })
         }
     } catch (error) {
+        // console.log(error);
         res.status(400).send({
             message: "Error when removing bookmark",
             error: error.message
@@ -288,8 +296,7 @@ exports.getJobsFiltered = async (req, res) => {
             environment, //work style
             location,
             duration, // length of term
-            startAvailability, // f24, w25, s25, etc
-            endAvailability, // f24, w25, s25, etc
+            season, // f24, w25, s25, etc
             industry
         } = req.body;
 
@@ -299,33 +306,62 @@ exports.getJobsFiltered = async (req, res) => {
             whereClause.Role = role;
         }
         if (environment) {
-            whereClause.Environment = environment;
+            if (Array.isArray(environment)) {  // handles the case of it being an array for multiple preferences
+                if (environment.length > 0) {
+                    whereClause.Environment = {
+                        [Sequelize.Op.in]: environment
+                    };
+                }
+            } else {
+                whereClause.Environment = environment;
+            }
         }
         if (location) {
             whereClause.Location = location;
         }
         if (duration) {
-            whereClause.Duration = duration;
-        }
-        if (startAvailability) {
-            whereClause.StartTime = startAvailability;
-        }
-        if (endAvailability) {
-            whereClause.EndTime = endAvailability;
+            if (Array.isArray(duration)) {  // handles the case of it being an array for multiple durations
+                if (duration.length > 0) {
+                    whereClause.Duration = {
+                        [Sequelize.Op.in]: duration
+                    };
+                }
+            } else {
+                whereClause.Duration = duration;
+            }
         }
         if (industry) {
-            whereClause.Industry = industry;
+            if (Array.isArray(industry)) {  // handles the case of it being an array for multiple programs
+                if (industry.length > 0) {
+                    whereClause.Industry = {
+                        [Sequelize.Op.in]: industry
+                    };
+                }
+            } else {
+                whereClause.Industry = industry;
+            }
+        }
+        if (season) {
+            if (Array.isArray(season)) {  // handles the case of it being an array for multiple seasons
+                if (season.length > 0) {
+                    whereClause.Season = {
+                        [Sequelize.Op.in]: season
+                    };
+                }
+            } else {
+                whereClause.Season = season;
+            }
         }
 
         console.log(whereClause);
 
         let jobs = await Job.findAll({
-            where: whereClause,
-            attributes: ['JobID']
+            where: whereClause
         });
 
         res.status(200).send({ message: "Filtered jobs are listed", data: jobs });
     } catch (error) {
+        console.log(error);
         res.status(400).send({ message: "Error filtering jobs", error: error.message });
     }
 }
@@ -361,5 +397,39 @@ exports.getShortProfile = async (req, res) => {
         }
     } catch (error) {
         res.status(400).send({ message: "Error getting student profile", error: error.message });
+    }
+};
+
+exports.getBookmarkedJobs = async (req, res) => {
+    try {
+        const { studentID } = req.query;
+
+        const bookmarks = await Bookmark.findAll({
+            where: {
+                StudentID: studentID,
+                Direction: "STUDENT"
+            },
+            include: [{
+                model: Job
+            }]
+        });
+
+        if (bookmarks.length === 0) {
+            return res.status(404).send({ message: "No bookmarked jobs found" });
+        }
+
+        const jobIDs = bookmarks.map(bookmark => bookmark.JobID);
+        const jobs = await Job.findAll({
+            where: {
+              JobID: {
+                [Op.in]: jobIDs
+              }
+            }
+        });
+        // console.log('bookmarked jobs found: ', jobs)
+        res.status(200).send({ message: "Bookmarked jobs", data: jobs });
+    } catch (error) {
+        // console.log(error);
+        res.status(400).send({ message: "Error getting bookmarked jobs", error: error.message });
     }
 };

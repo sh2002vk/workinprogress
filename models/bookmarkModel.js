@@ -25,13 +25,13 @@ const Bookmark = sequelize.define('Bookmark', {
   },
   RecruiterID: {
     type: Sequelize.STRING,
-    allowNull: true,
+    allowNull: false,
     references: {
       model: Recruiter, // 'Recruiter' should match the name of your Recruiter model
       key: 'RecruiterID',
     },
     onDelete: 'CASCADE',
-    primaryKey: false,
+    primaryKey: true,
   },
   Direction: {
     type: Sequelize.ENUM('RECRUITER', 'STUDENT'),
