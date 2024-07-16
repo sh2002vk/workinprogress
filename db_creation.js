@@ -116,9 +116,9 @@ connection.connect(err => {
         CREATE TABLE IF NOT EXISTS BOOKMARK (
             JobID INT,
             StudentID VARCHAR(255) NOT NULL,
-            RecruiterID VARCHAR(255),
+            RecruiterID VARCHAR(255) NOT NULL,
             Direction ENUM('RECRUITER', 'STUDENT') NOT NULL,
-            PRIMARY KEY (StudentID, Direction),
+            PRIMARY KEY (StudentID, RecruiterID, Direction),
             FOREIGN KEY (JobID) REFERENCES JOB(JobID) ON DELETE CASCADE,
             FOREIGN KEY (StudentID) REFERENCES STUDENT(StudentID) ON DELETE CASCADE,
             FOREIGN KEY (RecruiterID) REFERENCES RECRUITER(RecruiterID) ON DELETE CASCADE
