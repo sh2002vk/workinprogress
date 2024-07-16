@@ -36,14 +36,15 @@ connection.connect(err => {
             DateClosed DATE,
             Experience FLOAT,
             Pay FLOAT,
-            Environment ENUM('In-person', 'Remote', 'Hybrid'),
-            Duration ENUM('4 months', '8 months', '12 months'),
+            Environment ENUM('INPERSON', 'REMOTE', 'HYBRID'),
+            Duration ENUM('4', '8', '12'),
             Terms JSON,
-            Industry ENUM('Technology', 'Business'),
+            Industry VARCHAR(255),
             JobDescription TEXT,
             JobQualification TEXT,
             Status ENUM('DRAFT', 'COMPLETED') NOT NULL,
             RequiredDocuments JSON,
+            Season ENUM('F24', 'W25', 'S25', 'F25'),
             FOREIGN KEY (CompanyID) REFERENCES COMPANY(CompanyID) ON DELETE CASCADE,
             FOREIGN KEY (RecruiterID) REFERENCES RECRUITER(RecruiterID) ON DELETE CASCADE
         );`;
@@ -116,9 +117,9 @@ connection.connect(err => {
         CREATE TABLE IF NOT EXISTS BOOKMARK (
             JobID INT,
             StudentID VARCHAR(255) NOT NULL,
-            RecruiterID VARCHAR(255),
+            RecruiterID VARCHAR(255) NOT NULL,
             Direction ENUM('RECRUITER', 'STUDENT') NOT NULL,
-            PRIMARY KEY (StudentID, Direction),
+            PRIMARY KEY (StudentID, RecruiterID, Direction),
             FOREIGN KEY (JobID) REFERENCES JOB(JobID) ON DELETE CASCADE,
             FOREIGN KEY (StudentID) REFERENCES STUDENT(StudentID) ON DELETE CASCADE,
             FOREIGN KEY (RecruiterID) REFERENCES RECRUITER(RecruiterID) ON DELETE CASCADE
