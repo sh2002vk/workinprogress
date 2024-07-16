@@ -3,6 +3,7 @@ const Recruiter = require('../models/recruiterModel');
 const Company = require("../models/companyModel");
 const Job = require("../models/jobModel");
 const { where } = require('sequelize');
+const {Bookmark} = require("../models");
 
 // TODO: add gets for all students, recruiters, jobs, companies and applications
 
@@ -235,9 +236,9 @@ exports.deleteCompany = async (req, res) => {
 
 exports.getQuota = async (req, res) => {
     try {
-        const {targetStudentID} = req.body;
+        const {studentID} = req.query;
 
-        const stu = await Student.findByPk(targetStudentID)
+        const stu = await Student.findByPk(studentID)
 
         if (!stu) {
             res.status(404).send({message: "Student not found"});
@@ -247,6 +248,27 @@ exports.getQuota = async (req, res) => {
         }
     } catch (error) {
         res.status(400).send({message: "Error getting student quota"});
+    }
+}
+
+exports.getBookmarkAmount = async (req, res) => {
+    try {
+        const {studentID} = req.query;
+
+        const bookmarksAssociated = await Bookmark.findAll({
+            where: {StudentID: studentID}
+        })
+
+        if (!bookmarksAssociated) {
+            res.status(404).send("Student not found");
+        } else {
+            res.status(201).send(bookmarksAssociated);
+        }
+    } catch (error) {
+        res.status(400).send({
+            message: "Error in getting bookmark amount",
+            error: error.message
+        })
     }
 }
 

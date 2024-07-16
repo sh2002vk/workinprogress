@@ -106,6 +106,31 @@ exports.getApplications = async (req, res) => {
     }
 }
 
+exports.getApplicationInsights = async (req, res) => {
+    try {
+        const {studentID} = req.query;
+
+        const data = await Application.findAll({
+            where: {StudentID: studentID},
+            include: [
+                {
+                    model: Job,
+                    attributes: ['JobID', 'DateClosed', "RequiredDocuments"]
+                }
+            ]
+        });
+        if (!data) {
+            res.status(404).send("Student not found")
+        }
+        res.status(200).send(data);
+    } catch (error) {
+        res.status(400).send({
+            message: "Error in getting application insights",
+            error: error.message
+        })
+    }
+}
+
 exports.checkRequiredDocuments = async (req, res) => {
     try {
         const {JobID, ApplicationID} = req.body;

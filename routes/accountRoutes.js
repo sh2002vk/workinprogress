@@ -11,7 +11,8 @@ router.delete('/recruiter/delete', accountController.deleteRecruiter);
 router.post('/student/create', accountController.createStudent);
 router.put('/student/update', accountController.updateStudent);
 router.delete('/student/delete', accountController.deleteStudent);
-router.get('/student/getQuota', accountController.getQuota); 
+router.get('/student/getQuota', accountController.getQuota);
+router.get('/student/getBookmarkAmount', accountController.getBookmarkAmount);
 
 // Company routes
 router.post('/company/create', accountController.createCompany);

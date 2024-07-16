@@ -17,6 +17,7 @@ router.get('/student/checkEligibility', studentController.checkRequiredDocuments
 // router.post('/student/submitApplication', studentController.submitApplication); // TODO: Implement and disucss with team. is needed
 router.delete('/student/deleteApplication', studentController.deleteApplication);
 router.get('/student/getApplications', studentController.getApplications);
+router.get('/student/getApplicationInsights', studentController.getApplicationInsights);
 
 
 // recruiter

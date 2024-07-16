@@ -126,6 +126,25 @@ const sampleStudents = [
         Duration: '4',
         Preference: 'INPERSON'
     },
+    {
+        StudentID: 't1EkBurvqMS1XNPeIbuYxvtdqUy2',
+        FirstName: 'Daine',
+        LastName: 'Yip',
+        School: 'University of British Columbia',
+        EmailID: 'dainestu@wip.com',
+        AcademicYear: 5,
+        Age: 21,
+        ResumeLink: 'resume.pdf',
+        AcademicMajor: 'Computer Science',
+        GPA: 3.5,
+        WorkExperience: [{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }],
+        PersonalStatement: 'Driven and goal-oriented.',
+        Experience: 1,
+        Quota: 3,
+        Season: 'F25',
+        Duration: '4',
+        Preference: 'INPERSON'
+    },
 ];
 
 const sampleRecruiters = [
