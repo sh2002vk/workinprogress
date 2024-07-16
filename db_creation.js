@@ -36,14 +36,15 @@ connection.connect(err => {
             DateClosed DATE,
             Experience FLOAT,
             Pay FLOAT,
-            Environment ENUM('In-person', 'Remote', 'Hybrid'),
-            Duration ENUM('4 months', '8 months', '12 months'),
+            Environment ENUM('INPERSON', 'REMOTE', 'HYBRID'),
+            Duration ENUM('4', '8', '12'),
             Terms JSON,
-            Industry ENUM('Technology', 'Business'),
+            Industry VARCHAR(255),
             JobDescription TEXT,
             JobQualification TEXT,
             Status ENUM('DRAFT', 'COMPLETED') NOT NULL,
             RequiredDocuments JSON,
+            Season ENUM('F24', 'W25', 'S25', 'F25'),
             FOREIGN KEY (CompanyID) REFERENCES COMPANY(CompanyID) ON DELETE CASCADE,
             FOREIGN KEY (RecruiterID) REFERENCES RECRUITER(RecruiterID) ON DELETE CASCADE
         );`;
