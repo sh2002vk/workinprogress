@@ -9,68 +9,6 @@ At WIP, we're building the future of internship recruiting. Our software is our 
 5. If you know of any problems that aren't urgent but need to be fixed, put them into `GitHub issues`
 6. Use ChatGPT to speed up your development, but know all parts of the code you write 
 
-# Routes 
-
- This will later be moved onto proper documentation. Refer to confluence for detailed information on inputs and outputs.
-
-**/admin**
-  - /currentApplicationQuota 
-
-**/account_handling**
-  - **/student**
-    - /create
-    - /update
-    - /delete
-    - /getQuota
-  - **/recruiter**
-    - /create
-    - /update
-    - /delete
-  - **/company**
-    - /create
-    - /update
-    - /delete
-
-**/profile_handling**
-  - **/student**
-    - /getFullProfile
-    - /getShortProfile
-  - **/recruiter**
-    - /getFullProfile
-  - **/company**
-    - /getFullProfile
-
-**/actions**
-  - **/student**
-    - /getRecruiterContact
-    - /getJobs
-    - /getInterestedJobs
-    - /bookmarkJob
-    - /unbookmarkJob
-    - /createApplication
-    - /updateApplication
-    - /submitApplication
-    - /deleteApplication
-    - /getApplications
-  - **/recruiter**
-    - /getStudents
-    - /getShortlistedStudents
-    - /bookmarkStudent
-    - /shortlistStudent
-    - /getJobPosting
-    - /createJobPosting
-    - /editJobPosting
-    - /submitJobPosting
-    - /deleteJobPosting
-    - /getStudentsThatApplied
-  - **/company**
-    - /onboardRecruiter
-    - /offboardRecruiter
-    - /getRecruiter
-  - **/job**
-      - /getJob
-  - **/application**
-    - /getApplication
 # Project Structure
 
 This project is organized into several directories, each with a specific role in the application's architecture: \
@@ -95,8 +33,6 @@ Project \
 -- db_creation.js (used for creating tables in the DB, run with "node db_creation.js") \
 -- seed.js (used for creating sample data in the DB, run with "node seed.js") \
 -- database.js
-
-.
 
 # API Response Flow
 
