@@ -45,9 +45,12 @@ exports.createStudent = async (req, res) => {
 
 exports.updateStudent = async (req, res) => {
     try {
-        const {studentID, updatedData} = req.body;
+        const { studentID, updatedData } = req.body;
 
-        // TODO: Update the parsing
+        console.log("Received body:", JSON.stringify(req.body, null, 2));
+
+        console.log("Detailed updatedData:", JSON.stringify(updatedData, null, 2));
+
         const [updated] = await Student.update(updatedData, {
             where: { StudentID: studentID }
         });
@@ -56,7 +59,7 @@ exports.updateStudent = async (req, res) => {
             const updatedStudent = await Student.findByPk(studentID);
             res.status(200).send(updatedStudent);
         } else {
-            res.status(404).send({ message: "Student not found" });
+            res.status(404).send({ message: "Student not found or no attributes modified" });
         }
     } catch (error) {
         res.status(400).send({ message: "Error updating student", error: error.message });
