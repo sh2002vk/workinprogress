@@ -9,6 +9,7 @@ const {Sequelize} = require("sequelize");
 const Student = require('../models/studentModel');
 const Recruiter = require("../models/recruiterModel");
 const { Op, where } = require('sequelize');
+const Company = require("../models/companyModel");
 
 exports.createApplication = async (req, res) => {
     // Logic to apply to a job
@@ -80,23 +81,20 @@ exports.deleteApplication = async (req, res) => {
 exports.getApplications = async (req, res) => {
     try {
 
-        const {StudentID} = req.body;
+        const {studentID} = req.query;
 
         const applications = await Application.findAll({
             where: {
-                StudentID: StudentID,
+                StudentID: studentID,
             },
-            attributes: ['ApplicationID']
+            attributes: ['ApplicationID', "JobID"]
         });
 
-        const student = await Student.findByPk(StudentID);
+        const student = await Student.findByPk(studentID);
         if (!student) {
             return res.status(404).send({ message: 'Student not found' });
         } else {
-            res.status(200).send({
-                message: "Applications listed below:",
-                data: applications
-            })
+            res.status(200).send(applications);
         }
 
     } catch (error) {
