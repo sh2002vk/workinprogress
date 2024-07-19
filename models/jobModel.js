@@ -65,7 +65,7 @@ const Job = sequelize.define('jobModel', {
     type: Sequelize.TEXT
   },
   Status: {
-    type: Sequelize.ENUM('DRAFT', 'COMPLETED'),
+    type: Sequelize.ENUM('DRAFT', 'COMPLETED', 'CLOSED'),
     allowNull: false
   },
   RequiredDocuments: {

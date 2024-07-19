@@ -112,11 +112,13 @@ exports.getApplicationInsights = async (req, res) => {
         const {studentID} = req.query;
 
         const data = await Application.findAll({
-            where: {StudentID: studentID},
+            where: {
+                StudentID: studentID
+            },
             include: [
                 {
                     model: Job,
-                    attributes: ['JobID', 'DateClosed', "RequiredDocuments"]
+                    attributes: ['JobID', "Role" ,'DateClosed', "RequiredDocuments", "Status"]
                 }
             ]
         });
@@ -131,6 +133,28 @@ exports.getApplicationInsights = async (req, res) => {
         })
     }
 }
+
+exports.getCompetition = async (req, res) => {
+    try {
+        const { jobID } = req.query;
+
+        const applications = await Application.findAll({
+            where: { JobID: jobID }
+        });
+
+        if (applications.length === 0) {
+            return res.status(404).json({ message: "Job not found or no applications" });
+        }
+
+        const competition = applications.length;
+        res.status(200).json({ competition });
+    } catch (error) {
+        res.status(400).json({
+            message: "Error in getting competition for application",
+            error: error.message
+        });
+    }
+};
 
 exports.checkRequiredDocuments = async (req, res) => {
     try {
