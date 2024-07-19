@@ -19,6 +19,7 @@ router.get('/student/checkEligibility', studentController.checkRequiredDocuments
 router.delete('/student/deleteApplication', studentController.deleteApplication);
 router.get('/student/getApplications', studentController.getApplications);
 router.get('/student/getApplicationInsights', studentController.getApplicationInsights);
+router.get('/student/getCompetition', studentController.getCompetition);
 
 
 // recruiter

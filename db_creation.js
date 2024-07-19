@@ -42,7 +42,7 @@ connection.connect(err => {
             Industry VARCHAR(255),
             JobDescription TEXT,
             JobQualification TEXT,
-            Status ENUM('DRAFT', 'COMPLETED') NOT NULL,
+            Status ENUM('DRAFT', 'COMPLETED', 'CLOSED') NOT NULL,
             RequiredDocuments JSON,
             Season ENUM('F24', 'W25', 'S25', 'F25'),
             FOREIGN KEY (CompanyID) REFERENCES COMPANY(CompanyID) ON DELETE CASCADE,
