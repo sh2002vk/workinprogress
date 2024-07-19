@@ -70,8 +70,10 @@ connection.connect(err => {
             Skills JSON,
             Duration ENUM('4', '8', '12'),
             Season ENUM('F24', 'W25', 'S25', 'F25'),
-            Location VARCHAR(100)
+            Location VARCHAR(100),
+            Photo TEXT
         );`;
+    
 
     const createRecruiterTable = `
         CREATE TABLE IF NOT EXISTS RECRUITER (
