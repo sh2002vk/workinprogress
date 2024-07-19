@@ -3,7 +3,7 @@ const Application = require("../models/applicationModel");
 
 exports.getJob = async (req, res) => {
     try {
-        const {jobID} = req.body;
+        const {jobID} = req.query;
 
         const job = await Job.findByPk(jobID);
 
