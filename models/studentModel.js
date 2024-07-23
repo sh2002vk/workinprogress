@@ -82,7 +82,11 @@ const Student = sequelize.define('studentModel', {
   Season: {
     type: Sequelize.ENUM('F24', 'W25', 'S25', 'F25'),
     allowNull: true
-  }
+  },
+  Photo: {
+    type: Sequelize.TEXT,
+    allowNull: true
+  },
 }, {
   timestamps: false,
   tableName: 'STUDENT'
