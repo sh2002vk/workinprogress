@@ -1,4 +1,6 @@
 const express = require('express');
+const multer = require('multer');
+const upload = multer({ storage: multer.memoryStorage() });
 const router = express.Router();
 const studentController = require('../controllers/studentController');
 const recruiterController = require('../controllers/recruiterController');
@@ -52,5 +54,8 @@ router.get('/job/getJobRoles', jobController.getJobRoles);
 
 // application
 // router.get('/application/getApplication', applicationController.getApplication);
+
+// files
+router.post('/files/uploadFiles', upload.single('file'), recruiterController.uploadGCPFile);
 
 module.exports = router;
