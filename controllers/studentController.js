@@ -44,6 +44,8 @@ exports.updateApplication = async (req, res) => {
     try {
         const {ApplicationID, updatedData} = req.body;
 
+        updatedData.ApplicationTime = new Date();
+
         const [updated] = await Application.update(updatedData, {
             where: { ApplicationID: ApplicationID }
         });
@@ -156,40 +158,66 @@ exports.getCompetition = async (req, res) => {
 
 exports.checkRequiredDocuments = async (req, res) => {
     try {
-        const {JobID, ApplicationID} = req.body;
+        console.log('checking required documents');
+        const {JobID, ApplicationID} = req.query;
+        console.log('getting:', req.query);
 
         const job = await Job.findByPk(JobID);
         const application = await Application.findByPk(ApplicationID);
         const requiredDocuments = job.RequiredDocuments;
+
+        var isEligible_ = true;
 
         Object.keys(requiredDocuments).forEach(key => {
             if (requiredDocuments[key]) {
                 switch (key) {
                     case "Resume":
                         if (!application.SubmittedDocuments.Resume) {
-                            console.log("resume not found")
-                            return res.status(200).send(false);
+                            console.log("resume not found");
+                            isEligible_ = false;
                         }
                         break;
                     case "CoverLetter":
                         if (!application.SubmittedDocuments.CoverLetter) {
-                            return res.status(200).send(false);
+                            console.log("cover letter not found");
+                            isEligible_ = false;
                         }
                         break;
                     case "EnglishSample":
                         if (!application.SubmittedDocuments.EnglishSample) {
-                            return res.status(200).send(false);
+                            console.log("english sample not found");
+                            isEligible_ = false;
+                        }
+                        break;
+                    case "VideoApplication":
+                        if (!application.SubmittedDocuments.VideoApplication) {
+                            console.log("video application not found");
+                            isEligible_ = false;
+                        }
+                        break;
+                    case "CognitiveTest":
+                        if (!application.SubmittedDocuments.CognitiveTest) {
+                            console.log("coginitive test not found");
+                            isEligible_ = false;
+                        }
+                        break;
+                    case "OnlineAssesment":
+                        if (!application.SubmittedDocuments.OnlineAssesment) {
+                            console.log("online assessment not found");
+                            isEligible_ = false;
                         }
                         break;
                 }
             }
         })
-        return res.status(200).send(true);
+        console.log('application isEligible?:', isEligible_);
+        return res.status(200).send({isEligible: isEligible_});
 
     } catch (error) {
         res.status(400).send({
             message: "Error in checking eligibility",
-            error: error.message
+            error: error.message,
+            isEligible: false
         })
     }
 }

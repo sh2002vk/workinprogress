@@ -1,5 +1,6 @@
 const { Storage } = require('@google-cloud/storage');
 const path = require('path');
+const multer  = require('multer');
 const { promisify } = require('util');
 const { pipeline } = require('stream');
 const Job = require('../models/jobModel');
@@ -12,6 +13,8 @@ const Sequelize = require('sequelize');
 const sequelize = require('../database');
 const { Op, where } = require('sequelize');
 const {Company} = require("../models");
+
+const upload = multer({ storage: multer.memoryStorage() });
 
 exports.getGCPFiles = async (req, res) => {
     const { filename } = req.body;
@@ -34,6 +37,47 @@ exports.getGCPFiles = async (req, res) => {
         res.status(500).json({ error: 'Error fetching file' });
     }
 };
+
+exports.uploadGCPFile = async (req, res) => {
+    console.log("UPLOADING FILE ENDPOINT HIT");
+
+    const { originalname, buffer } = req.file;
+    const { documentType, documentName } = req.body;
+
+    console.log("Original name:", originalname);
+    console.log("Buffer size:", buffer.length);
+    console.log("Document type:", documentType);
+    console.log("Document name:", documentName);
+
+    const bucketName = 'wip_storage_bucket';
+    const storage = new Storage({
+        keyFilename: path.join(process.cwd(), 'google-key.json'),
+    });
+    const file = storage.bucket(bucketName).file(documentName);
+
+    try {
+        const stream = file.createWriteStream({
+            resumable: false,
+            gzip: true,
+        });
+
+        stream.on('error', (err) => {
+            console.error('Error uploading file:', err);
+            res.status(500).json({ error: 'Error uploading file' });
+        });
+
+        stream.on('finish', () => {
+            console.log(`File ${documentName} uploaded successfully.`);
+            res.status(200).json({ message: 'File uploaded successfully', filePath: documentName });
+        });
+
+        stream.end(buffer);
+    } catch (error) {
+        console.error('Error uploading file:', error);
+        res.status(500).json({ error: 'Error uploading file' });
+    }
+};
+  
 
 exports.createJob = async (req, res) => {
     //Logic to create a job

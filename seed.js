@@ -210,7 +210,11 @@ const sampleJobs = [
         Status: 'DRAFT',
         RequiredDocuments: {
             'Resume': true,
-            'CoverLetter': true
+            'CoverLetter': true,
+            'VideoApplication': false,
+            'CognitiveTest': false,
+            'EnglishSample': false,
+            'OnlineAssesment': false
         }
     },
     {
@@ -226,7 +230,15 @@ const sampleJobs = [
         Environment: "HYBRID",
         JobDescription: "Doing this, Doing That",
         JobQualification: "Needs this, Needs that",
-        Status: 'COMPLETED'
+        Status: 'COMPLETED',
+        RequiredDocuments: {
+            'Resume': true,
+            'CoverLetter': true,
+            'VideoApplication': false,
+            'CognitiveTest': false,
+            'EnglishSample': false,
+            'OnlineAssesment': false
+        }
     },
     {
         CompanyID: 2,
@@ -242,7 +254,15 @@ const sampleJobs = [
         Environment: "HYBRID",
         JobDescription: "Doing this, Doing That",
         JobQualification: "Needs this, Needs that",
-        Status: 'COMPLETED'
+        Status: 'COMPLETED',
+        RequiredDocuments: {
+            'Resume': true,
+            'CoverLetter': true,
+            'VideoApplication': false,
+            'CognitiveTest': false,
+            'EnglishSample': false,
+            'OnlineAssesment': false
+        }
     }
     // Add more job records as needed
 ];
@@ -252,7 +272,7 @@ const sampleApplications = [
     { JobID: 2, StudentID: 2, RecruiterID: '12dwedw3ds', ApplicationTime: new Date(), Status: 'REVIEWED', SubmittedDocuments: {Resume: "resume.pdf", CoverLetter: "coverletter.pdf", EnglishSample: "englishsample.pdf"}},
     { JobID: 3, StudentID: 1, RecruiterID: '8KnkvUbusoYnosi0SQP8yQDIrUh2', ApplicationTime: new Date(), Status: 'APPLIED', SubmittedDocuments: {Resume: "resume.pdf" }},
     { JobID: 3, StudentID: 2, RecruiterID: '8KnkvUbusoYnosi0SQP8yQDIrUh2', ApplicationTime: new Date(), Status: 'REVIEWED', SubmittedDocuments: {CoverLetter: "coverletter.pdf" }},
-    { JobID: 3, StudentID: 'ehj', RecruiterID: '8KnkvUbusoYnosi0SQP8yQDIrUh2', ApplicationTime: new Date(), Status: 'ACCEPT', SubmittedDocuments: {EnglishSample: "englishsample.pdf" }},
+    { JobID: 3, StudentID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2', RecruiterID: '8KnkvUbusoYnosi0SQP8yQDIrUh2', ApplicationTime: new Date(), Status: 'ACCEPT', SubmittedDocuments: {EnglishSample: "englishsample.pdf" }},
     { JobID: 3, StudentID: 'erf', RecruiterID: '8KnkvUbusoYnosi0SQP8yQDIrUh2', ApplicationTime: new Date(), Status: 'COMPLETE', SubmittedDocuments: {Resume: "resume.pdf" }},
     // Add more application records as needed
 ];
