@@ -420,7 +420,7 @@ exports.getJobPostings = async (req, res) => {
 
         const jobPostings = await Job.findAll({
             where: { RecruiterID: recruiterID },
-            attributes: ['JobID', 'RecruiterID', 'CompanyID', 'Role', 'Location', 'DatePosted', 'Experience', 'Pay', 'Environment', 'Duration', 'Terms', 'Industry', 'JobDescription', 'JobQualification', 'Status', 'Type', 'RequiredDocuments'],
+            attributes: ['JobID', 'RecruiterID', 'CompanyID', 'Role', 'Location', 'DatePosted', 'DateClosed', 'Experience', 'Pay', 'Environment', 'Duration', 'Terms', 'Industry', 'JobDescription', 'JobQualification', 'Status', 'Type', 'RequiredDocuments'],
         });
 
         // if (jobPostings.length === 0) {
