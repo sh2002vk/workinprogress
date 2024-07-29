@@ -5,6 +5,7 @@ const router = express.Router();
 const studentController = require('../controllers/studentController');
 const recruiterController = require('../controllers/recruiterController');
 const companyController = require('../controllers/companyController');
+const verificationController = require('../controllers/verificationController');
 // const applicationController = require("../controllers/applicationController");
 const jobController = require("../controllers/jobController");
 
@@ -56,5 +57,9 @@ router.get('/job/getJobRoles', jobController.getJobRoles);
 
 // files
 router.post('/files/uploadFiles', upload.single('file'), recruiterController.uploadGCPFile);
+
+// verification 
+router.post('/verification/sendCode', verificationController.sendCode);
+router.post('/verification/verifyCode', verificationController.verifyCode);
 
 module.exports = router;
