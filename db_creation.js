@@ -140,6 +140,13 @@ connection.connect(err => {
             FOREIGN KEY (RecruiterID) REFERENCES RECRUITER(RecruiterID) ON DELETE CASCADE
         );`;
 
+    const createVerificationCodesTable = `
+        CREATE TABLE IF NOT EXISTS VERIFICATION_CODES (
+            EmailID VARCHAR(255) PRIMARY KEY,
+            Code VARCHAR(6) NOT NULL,
+            CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );`;
+    
     // Creation execution
     connection.query(createCompanyTable, function (err) {
         if (err) {
@@ -186,10 +193,17 @@ connection.connect(err => {
                             connection.query(createShortlistTable, function (err) {
                                 if (err) {
                                     console.error("Error creating Shortlist table:", err);
-                                } else {
-                                    console.log("SHORTLIST table created or exists already!");
                                 }
-                                connection.end();
+                                console.log("SHORTLIST table created or exists already!");
+                                
+                                connection.query(createVerificationCodesTable, function (err) {
+                                    if (err) {
+                                        console.error("Error creating Verification Codes table:", err);
+                                    } else {
+                                        console.log("VERIFICATION_CODES table created or exists already!");
+                                    }
+                                    connection.end();
+                                });
                             });
                         });
                     });
