@@ -1,4 +1,6 @@
 // emailService.js
+delete require.cache[require.resolve('dotenv/config')];
+require('dotenv').config();
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const Verification = require('../models/verificationModel');
@@ -6,8 +8,8 @@ const Verification = require('../models/verificationModel');
 const transporter = nodemailer.createTransport({
   service: 'Gmail', // or any other email service
   auth: {
-    user: 'sh2002vkyt@gmail.com',
-    pass: '--'
+    user: process.env.VERIFICATION_EMAIL,
+    pass: process.env.VERIFICATION_PASSWORD
   }
 });
 
@@ -28,7 +30,7 @@ exports.sendCode = async (req, res) => {
         // console.log('saved code in database');
 
         const mailOptions = {
-            from: 'sh2002vkyt@gmail.com',
+            from: process.env.VERIFICATION_EMAIL,
             to: email,
             subject: 'WIP - Your Verification Code',
             text: `Your verification code for Work In Progress is: ${code}`
