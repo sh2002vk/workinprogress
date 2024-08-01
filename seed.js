@@ -194,7 +194,7 @@ const sampleRecruiters = [
 const sampleJobs = [
     {
         CompanyID: 1,
-        Type: 'Internship',
+        Type: 'INTERNSHIP',
         Role: 'Software Engineer',
         RecruiterID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2',
         Location: 'San Francisco',
@@ -204,7 +204,7 @@ const sampleJobs = [
         Environment: 'INPERSON',
         Duration: '4',
         Terms: ['F24'],
-        Industry: 'Technology',
+        Industry: 'TECHNOLOGY',
         JobDescription: "Doing this, Doing That",
         JobQualification: "Needs this, Needs that",
         Status: 'DRAFT',
@@ -219,7 +219,7 @@ const sampleJobs = [
     },
     {
         CompanyID: 2,
-        Type: 'Contract',
+        Type: 'CONTRACT',
         Role: 'Product Manager',
         RecruiterID: '12dwedw3ds',
         Location: 'Seattle',
@@ -242,7 +242,7 @@ const sampleJobs = [
     },
     {
         CompanyID: 2,
-        Type: 'Contract',
+        Type: 'CONTRACT',
         Role: 'Product Manager',
         RecruiterID: '8KnkvUbusoYnosi0SQP8yQDIrUh2',
         Location: 'Seattle',
