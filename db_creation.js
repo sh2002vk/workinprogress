@@ -29,7 +29,7 @@ connection.connect(err => {
             JobID INT AUTO_INCREMENT PRIMARY KEY,
             RecruiterID VARCHAR(255) NOT NULL,
             CompanyID INT NOT NULL,
-            Type ENUM('Internship', 'Contract', 'Other'),
+            Type ENUM('INTERNSHIP', 'CONTRACT', 'OTHER'),
             Role VARCHAR(255),
             Location VARCHAR(255),
             DatePosted DATE NOT NULL,

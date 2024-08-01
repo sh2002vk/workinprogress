@@ -27,7 +27,7 @@ const Job = sequelize.define('jobModel', {
     onDelete: 'CASCADE',
   },
   Type: {
-    type: Sequelize.ENUM('Internship', 'Contract', 'Other')
+    type: Sequelize.ENUM('INTERNSHIP', 'CONTRACT', 'OTHER')
   },
   Role: {
     type: Sequelize.STRING
