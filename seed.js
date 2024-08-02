@@ -145,6 +145,25 @@ const sampleStudents = [
         Duration: '4',
         Preference: 'INPERSON'
     },
+    {
+        StudentID: '4l88QGDcOGQm5t4OodrIM5UC9gA3',
+        FirstName: 'Advika',
+        LastName: 'Kumari',
+        School: 'University of British Columbia',
+        EmailID: 'advikak@wip.com',
+        AcademicYear: 3,
+        Age: 21,
+        ResumeLink: 'resume.pdf',
+        AcademicMajor: 'Computer Science',
+        GPA: 3.5,
+        WorkExperience: [{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }],
+        PersonalStatement: 'Driven and goal-oriented.',
+        Experience: 1,
+        Quota: 3,
+        Season: 'F25',
+        Duration: '4',
+        Preference: 'INPERSON'
+    },
 ];
 
 const sampleRecruiters = [
@@ -187,6 +206,16 @@ const sampleRecruiters = [
         CompanyName: 'Company B',
         Roles: 'HR Manager',
         Locations: 'New York',
+    },
+    {
+        RecruiterID: 'ZMhr1i9JMZefX1D7KG4rOcXEI9M2',
+        FirstName: 'Advika',
+        LastName: 'Kumari',
+        CompanyID: 2,
+        EmailID: 'advika@wip.com',
+        CompanyName: 'Company B',
+        Roles: 'HR Manager',
+        Locations: 'Vancouver',
     },
     // Add more recruiter records as needed
 ];
