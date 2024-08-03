@@ -288,6 +288,8 @@ exports.getStudentsFiltered = async (req, res) => {
             program // educational program
         } = req.body;
 
+        console.log("HITTING", req.body);
+
         let whereClause = {};
 
         if (preference) {
@@ -354,6 +356,8 @@ exports.getStudentsFiltered = async (req, res) => {
         let students = await Student.findAll({
             where: whereClause
         });
+
+        console.log('students are: ', students);
 
         res.status(200).send({ message: "Filtered students are listed", data: students });
     } catch (error) {

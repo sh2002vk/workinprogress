@@ -1,99 +1,104 @@
-const Sequelize = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../database');
 
-const Student = sequelize.define('studentModel', {
+class Student extends Model {
+  static associate(models) {
+    // Define associations here
+    Student.hasMany(models.Application, { foreignKey: 'StudentID', onDelete: 'CASCADE' });
+  }
+}
+
+Student.init({
   StudentID: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
     primaryKey: true
   },
   FirstName: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false
   },
   LastName: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false
   },
   School: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false
   },
   EmailID: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
     unique: true
   },
-  AcademicYear: {             // enforced 1-6
-    type: Sequelize.INTEGER,
+  AcademicYear: {
+    type: DataTypes.INTEGER,
     allowNull: false,
     validate: {
       min: 1,
       max: 6,
-      isInt: true,
+      isInt: true
     }
   },
-  Age: Sequelize.INTEGER,
+  Age: DataTypes.INTEGER,
   ResumeLink: {
-    type: Sequelize.TEXT,
+    type: DataTypes.TEXT,
     allowNull: true
   },
   AcademicMajor: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false
   },
   Location: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: true
   },
-  GPA: Sequelize.DECIMAL(3, 2),
+  GPA: DataTypes.DECIMAL(3, 2),
   WorkExperience: {
-    type: Sequelize.JSON,
+    type: DataTypes.JSONB,
     allowNull: true
   },
   PersonalStatement: {
-    type: Sequelize.TEXT,
+    type: DataTypes.TEXT,
     allowNull: true
   },
   Experience: {
-    type: Sequelize.FLOAT,
+    type: DataTypes.FLOAT,
     allowNull: true
   },
   Quota: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: false
   },
   Preference: {
-    type: Sequelize.ENUM('HYBRID', 'REMOTE', 'INPERSON'),
+    type: DataTypes.ENUM('HYBRID', 'REMOTE', 'INPERSON'),
     allowNull: true
   },
   Interest: {
-    type: Sequelize.JSON,
+    type: DataTypes.JSONB,
     allowNull: true
   },
   Skills: {
-    type: Sequelize.JSON,
+    type: DataTypes.JSONB,
     allowNull: true
   },
   Duration: {
-    type: Sequelize.ENUM('4', '8', '12'),
+    type: DataTypes.ENUM('4', '8', '12'),
     allowNull: true
   },
   Season: {
-    type: Sequelize.ENUM('F24', 'W25', 'S25', 'F25'),
+    type: DataTypes.ENUM('F24', 'W25', 'S25', 'F25'),
     allowNull: true
   },
   Photo: {
-    type: Sequelize.TEXT,
+    type: DataTypes.TEXT,
     allowNull: true
-  },
+  }
 }, {
-  timestamps: false,
-  tableName: 'STUDENT'
+  sequelize,
+  modelName: 'Student',
+  tableName: 'student',
+  timestamps: false
 });
-
-Student.associate = (models) => {
-  Student.hasMany(models.Application, { foreignKey: 'StudentID', onDelete: 'CASCADE' });
-};
 
 module.exports = Student;

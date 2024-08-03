@@ -1,51 +1,53 @@
-const Sequelize = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../database');
-const Student = require('./studentModel');
-const Job = require('./jobModel');
-const Recruiter = require('./recruiterModel');
 
-const Shortlist = sequelize.define('Shortlist', {
-    ShortlistID: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
+class Shortlist extends Model {
+  static associate(models) {
+    // Define associations here
+    Shortlist.belongsTo(models.Student, { foreignKey: 'StudentID', onDelete: 'CASCADE' });
+    Shortlist.belongsTo(models.Job, { foreignKey: 'JobID', onDelete: 'CASCADE' });
+    Shortlist.belongsTo(models.Recruiter, { foreignKey: 'RecruiterID', onDelete: 'CASCADE' });
+  }
+}
+
+Shortlist.init({
+  ShortlistID: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  StudentID: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    references: {
+      model: 'Student', // Use the model name as defined in Sequelize
+      key: 'StudentID'
     },
-    StudentID: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        references: {
-            model: Student,
-            key: 'StudentID'
-        }
+    onDelete: 'CASCADE'
+  },
+  JobID: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'Job', // Use the model name as defined in Sequelize
+      key: 'JobID'
     },
-    JobID: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-            model: Job,
-            key: 'JobID'
-        }
+    onDelete: 'CASCADE'
+  },
+  RecruiterID: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    references: {
+      model: 'Recruiter', // Use the model name as defined in Sequelize
+      key: 'RecruiterID'
     },
-    RecruiterID: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        references: {
-            model: Recruiter,
-            key: 'RecruiterID'
-        }
-    }
+    onDelete: 'CASCADE'
+  }
 }, {
-    timestamps: false,
-    tableName: 'SHORTLIST'
+  sequelize,
+  modelName: 'Shortlist',
+  tableName: 'shortlist',
+  timestamps: false
 });
-
-Student.hasMany(Shortlist, { foreignKey: 'StudentID' });
-Shortlist.belongsTo(Student, { foreignKey: 'StudentID' });
-
-Job.hasMany(Shortlist, { foreignKey: 'JobID' });
-Shortlist.belongsTo(Job, { foreignKey: 'JobID' });
-
-Recruiter.hasMany(Shortlist, { foreignKey: 'RecruiterID' });
-Shortlist.belongsTo(Recruiter, { foreignKey: 'RecruiterID' });
 
 module.exports = Shortlist;

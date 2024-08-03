@@ -1,24 +1,28 @@
-const Sequelize = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../database');
 
-const Verification = sequelize.define('verificationModel', {
+class Verification extends Model {}
+
+Verification.init({
   EmailID: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
     primaryKey: true
   },
   Code: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false
   },
   CreatedAt: {
-    type: Sequelize.DATE,
+    type: DataTypes.DATE,
     allowNull: false,
-    defaultValue: Sequelize.NOW
+    defaultValue: DataTypes.NOW
   }
 }, {
-  timestamps: false,
-  tableName: 'VERIFICATION'
+  sequelize,
+  modelName: 'Verification',
+  tableName: 'verification',
+  timestamps: false
 });
 
 module.exports = Verification;
