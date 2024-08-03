@@ -1,10 +1,11 @@
 delete require.cache[require.resolve('dotenv/config')];
 require('dotenv').config();
+
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('wipTest', process.env.DB_USER, process.env.DB_PASSWORD, {
+const sequelize = new Sequelize('wiptest', process.env.DB_USER, process.env.DB_PASSWORD, {
   host: process.env.DB_HOST,
-  dialect: 'mysql',
+  dialect: 'postgres',  // Change dialect to 'postgres'
   logging: false,
 });
 

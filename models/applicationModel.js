@@ -1,15 +1,24 @@
-const Sequelize = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../database');
 
-const Application = sequelize.define('Application', {
+class Application extends Model {
+  static associate(models) {
+    // Define associations here
+    Application.belongsTo(models.Job, { foreignKey: 'JobID', onDelete: 'CASCADE' });
+    Application.belongsTo(models.Student, { foreignKey: 'StudentID', onDelete: 'CASCADE' });
+    Application.belongsTo(models.Recruiter, { foreignKey: 'RecruiterID', onDelete: 'SET NULL' });
+  }
+}
+
+Application.init({
   ApplicationID: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: false,
     autoIncrement: true,
     primaryKey: true
   },
   JobID: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: false,
     references: {
       model: 'Job',
@@ -18,7 +27,7 @@ const Application = sequelize.define('Application', {
     onDelete: 'CASCADE'
   },
   StudentID: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
     references: {
       model: 'Student',
@@ -27,34 +36,30 @@ const Application = sequelize.define('Application', {
     onDelete: 'CASCADE'
   },
   RecruiterID: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     references: {
       model: 'Recruiter',
       key: 'RecruiterID',
     },
-    onDelete: 'CASCADE'
+    onDelete: 'SET NULL'
   },
   ApplicationTime: {
-    type: Sequelize.DATE,
+    type: DataTypes.DATE,
     allowNull: false
   },
   Status: {
-    type: Sequelize.ENUM('DRAFT', 'APPLIED', 'REVIEWED', 'INTERVIEW', 'ACCEPT', 'REJECT', 'COMPLETE'),
+    type: DataTypes.ENUM('DRAFT', 'APPLIED', 'REVIEWED', 'INTERVIEW', 'ACCEPT', 'REJECT', 'COMPLETE'),
     allowNull: false
   },
   SubmittedDocuments: {
-    type: Sequelize.JSON,
+    type: DataTypes.JSONB,  // JSONB is recommended for PostgreSQL
     allowNull: true
   }
 }, {
-  timestamps: false,
-  tableName: 'APPLICATION'
+  sequelize,
+  modelName: 'Application',
+  tableName: 'application',
+  timestamps: false
 });
-
-Application.associate = (models) => {
-  Application.belongsTo(models.Job, { foreignKey: 'JobID', onDelete: 'CASCADE' });
-  Application.belongsTo(models.Student, { foreignKey: 'StudentID', onDelete: 'CASCADE' });
-  Application.belongsTo(models.Recruiter, { foreignKey: 'RecruiterID', onDelete: 'SET NULL' });
-};
 
 module.exports = Application;

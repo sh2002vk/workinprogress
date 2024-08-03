@@ -1,33 +1,38 @@
-const Sequelize = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../database');
 
-const Company = sequelize.define('companyModel', {
+class Company extends Model {
+  static associate(models) {
+    // Define associations here
+    Company.hasMany(models.Recruiter, { foreignKey: 'CompanyID', onDelete: 'CASCADE' });
+    Company.hasMany(models.Job, { foreignKey: 'CompanyID', onDelete: 'CASCADE' });
+  }
+}
+
+Company.init({
   CompanyID: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true
   },
   Name: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false
   },
   Industry: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false
   },
   ContactEmail: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     unique: true
   }
 }, {
-  timestamps: false,
-  tableName: 'COMPANY'
+  sequelize,
+  modelName: 'Company',
+  tableName: 'company',
+  timestamps: false
 });
-
-Company.associate = (models) => {
-  Company.hasMany(models.Recruiter, { foreignKey: 'CompanyID', onDelete: 'CASCADE' });
-  Company.hasMany(models.Job, { foreignKey: 'CompanyID', onDelete: 'CASCADE' });
-};
 
 module.exports = Company;
