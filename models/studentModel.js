@@ -59,6 +59,10 @@ const Student = sequelize.define('studentModel', {
     type: Sequelize.FLOAT,
     allowNull: true
   },
+  MaxQuota: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
   Quota: {
     type: Sequelize.INTEGER,
     allowNull: false
@@ -73,6 +77,10 @@ const Student = sequelize.define('studentModel', {
   },
   Skills: {
     type: Sequelize.JSON,
+    allowNull: true
+  },
+  StartAvailability: {
+    type: Sequelize.ENUM('F24', 'W25', 'S25', 'F25'),
     allowNull: true
   },
   Duration: {
