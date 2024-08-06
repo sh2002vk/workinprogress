@@ -68,10 +68,12 @@ client.connect(err => {
       "WorkExperience" JSONB,
       "PersonalStatement" TEXT,
       "Experience" FLOAT,
+      "MaxQuota" INT NOT NULL,
       "Quota" INT NOT NULL,
       "Preference" TEXT,  -- Use TEXT for ENUM equivalent
       "Interest" JSONB,
       "Skills" JSONB,
+      "StartAvailability" TEXT,
       "Duration" TEXT,    -- Use TEXT for ENUM equivalent
       "Season" TEXT,      -- Use TEXT for ENUM equivalent
       "Location" VARCHAR(100),
