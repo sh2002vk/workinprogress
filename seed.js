@@ -18,11 +18,12 @@ const sampleStudents = [
     ResumeLink: 'https://example.com/resume/johndoe',
     AcademicMajor: 'Computer Science',
     GPA: 3.7,
-    WorkExperience: JSON.stringify([{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }]),
+    WorkExperience: JSON.stringify([{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', title: 'Hardware Engineering Intern' }]),
     PersonalStatement: 'Driven and goal-oriented.',
     Skills: JSON.stringify(["Frontend", "Backend"]),
     Interest: JSON.stringify(["Software", "Tech"]),
     Experience: 2.5,
+    MaxQuota: 3,
     Duration: '12',
     Quota: 3
   },
@@ -37,12 +38,13 @@ const sampleStudents = [
     ResumeLink: 'https://example.com/resume/alicesmith',
     AcademicMajor: 'Arts',
     GPA: 3.5,
-    WorkExperience: JSON.stringify([{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }]),
+    WorkExperience: JSON.stringify([{ company: 'Google', title: 'Software Engineering Intern' }, { company: 'Apple', title: 'Hardware Engineering Intern' }]),
     PersonalStatement: 'Driven and goal-oriented.',
     Skills: JSON.stringify(["Frontend", "Backend"]),
     Interest: JSON.stringify(["Software", "Tech"]),
     Experience: 3,
     Duration: '4',
+    MaxQuota: 3,
     Quota: 3
   },
   {
@@ -56,12 +58,13 @@ const sampleStudents = [
     ResumeLink: 'https://example.com/resume/alicesmith',
     AcademicMajor: 'Statistics',
     GPA: 3.5,
-    WorkExperience: JSON.stringify([{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }]),
+    WorkExperience: JSON.stringify([{ company: 'Google', title: 'Software Engineering Intern' }, { company: 'Apple', title: 'Hardware Engineering Intern' }]),
     PersonalStatement: 'Driven and goal-oriented.',
     Experience: 3,
     Quota: 3,
     Season: 'W25',
     Duration: '8',
+    MaxQuota: 3
   },
   {
     StudentID: 'erf',
@@ -74,12 +77,13 @@ const sampleStudents = [
     ResumeLink: 'https://example.com/resume/alicesmith',
     AcademicMajor: 'Engineering',
     GPA: 3.5,
-    WorkExperience: JSON.stringify([{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }]),
+    WorkExperience: JSON.stringify([{ company: 'Google', title: 'Software Engineering Intern' }, { company: 'Apple', title: 'Hardware Engineering Intern' }]),
     PersonalStatement: 'Driven and goal-oriented.',
     Experience: 3,
     Quota: 3,
     Season: 'W25',
     Duration: '12',
+    MaxQuota: 3
   },
   {
     StudentID: 'adwesdbc',
@@ -92,13 +96,14 @@ const sampleStudents = [
     ResumeLink: 'https://example.com/resume/alicesmith',
     AcademicMajor: 'Computer Science',
     GPA: 3.5,
-    WorkExperience: JSON.stringify([{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }]),
+    WorkExperience: JSON.stringify([{ company: 'Google', title: 'Software Engineering Intern' }, { company: 'Apple', title: 'Hardware Engineering Intern' }]),
     PersonalStatement: 'Driven and goal-oriented.',
     Experience: 3,
     Quota: 3,
     Season: 'F24',
     Duration: '4',
-    Preference: 'HYBRID'
+    Preference: 'HYBRID',
+    MaxQuota: 3
   },
   {
     StudentID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2',
@@ -111,13 +116,14 @@ const sampleStudents = [
     ResumeLink: 'https://example.com/resume/alicesmith',
     AcademicMajor: 'Arts',
     GPA: 3.5,
-    WorkExperience: JSON.stringify([{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }]),
+    WorkExperience: JSON.stringify([{ company: 'Google', title: 'Software Engineering Intern' }, { company: 'Apple', title: 'Hardware Engineering Intern' }]),
     PersonalStatement: 'Driven and goal-oriented.',
     Experience: 1,
     Quota: 3,
     Season: 'F25',
     Duration: '4',
-    Preference: 'INPERSON'
+    Preference: 'INPERSON',
+    MaxQuota: 3
   },
   {
     StudentID: 't1EkBurvqMS1XNPeIbuYxvtdqUy2',
@@ -130,13 +136,14 @@ const sampleStudents = [
     ResumeLink: 'resume.pdf',
     AcademicMajor: 'Computer Science',
     GPA: 3.5,
-    WorkExperience: JSON.stringify([{ company: 'Google', position: 'Software Engineering Intern' }, { company: 'Apple', position: 'Hardware Engineering Intern' }]),
+    WorkExperience: JSON.stringify([{ company: 'Google', title: 'Software Engineering Intern' }, { company: 'Apple', title: 'Hardware Engineering Intern' }]),
     PersonalStatement: 'Driven and goal-oriented.',
     Experience: 1,
     Quota: 3,
     Season: 'F25',
     Duration: '4',
-    Preference: 'INPERSON'
+    Preference: 'INPERSON',
+    MaxQuota: 3
   },
 ];
 

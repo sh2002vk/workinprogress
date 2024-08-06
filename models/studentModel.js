@@ -93,7 +93,15 @@ Student.init({
   Photo: {
     type: DataTypes.TEXT,
     allowNull: true
-  }
+  },
+  MaxQuota: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  StartAvailability: {
+    type: DataTypes.ENUM('F24', 'W25', 'S25', 'F25'),
+    allowNull: true
+  },
 }, {
   sequelize,
   modelName: 'Student',
