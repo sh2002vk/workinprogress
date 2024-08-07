@@ -9,7 +9,7 @@ const {Bookmark} = require("../models");
 
 exports.createStudent = async (req, res) => {
     try {
-        const { StudentID, FirstName, LastName, School, EmailID, AcademicYear, Age, ResumeLink, AcademicMajor, GPA, WorkExperience, PersonalStatement, Experience, Quota, Preference, Interest, Skills, Duration, Season, Location} = req.body;
+        const { StudentID, FirstName, LastName, School, EmailID, AcademicYear, Age, ResumeLink, AcademicMajor, GPA, WorkExperience, PersonalStatement, Experience, MaxQuota, Quota, Preference, Interest, Skills, StartAvailability, Duration, Season, Location} = req.body;
 
 
         const newStudent = await Student.create({
@@ -26,10 +26,12 @@ exports.createStudent = async (req, res) => {
             WorkExperience,
             PersonalStatement,
             Experience,
+            MaxQuota,
             Quota,
             Preference,
             Interest,
             Skills,
+            StartAvailability,
             Duration,
             Season,
             Location
