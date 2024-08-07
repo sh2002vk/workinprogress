@@ -1,63 +1,68 @@
-const Sequelize = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../database');
 
-const Recruiter = sequelize.define('recruiterModel', {
+class Recruiter extends Model {
+  static associate(models) {
+    // Define associations here
+    Recruiter.belongsTo(models.Company, { foreignKey: 'CompanyID', onDelete: 'CASCADE' });
+    Recruiter.hasMany(models.Job, { foreignKey: 'RecruiterID', onDelete: 'CASCADE' });
+    Recruiter.hasMany(models.Application, { foreignKey: 'RecruiterID', onDelete: 'CASCADE' });
+  }
+}
+
+Recruiter.init({
   RecruiterID: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
     primaryKey: true
   },
   FirstName: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false
   },
   LastName: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false
   },
   CompanyID: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'company',
+      model: 'Company', // Use the model name as defined in Sequelize
       key: 'CompanyID',
     },
     onDelete: 'CASCADE'
   },
   EmailID: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
     unique: true
   },
   CompanyName: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false
   },
   Roles: {
-    type: Sequelize.TEXT,
+    type: DataTypes.TEXT,
     allowNull: false
   },
   Locations: {
-    type: Sequelize.TEXT,
+    type: DataTypes.TEXT,
     allowNull: true
   },
   PhoneNumber: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: true
   },
   LinkedInProfile: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: true
   }
 }, {
-  timestamps: false,
-  tableName: 'RECRUITER'
+  sequelize,
+  modelName: 'Recruiter',
+  tableName: 'recruiter',
+  timestamps: false
 });
-
-Recruiter.associate = (models) => {
-  Recruiter.belongsTo(models.Company, { foreignKey: 'CompanyID', onDelete: 'CASCADE' });
-  Recruiter.hasMany(models.Job, { foreignKey: 'RecruiterID', onDelete: 'CASCADE' });
-  Recruiter.hasMany(models.Application, { foreignKey: 'RecruiterID', onDelete: 'CASCADE' });
-};
 
 module.exports = Recruiter;

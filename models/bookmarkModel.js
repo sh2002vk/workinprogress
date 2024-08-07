@@ -1,46 +1,56 @@
-const Sequelize = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../database');
-const { Student, Recruiter, Job } = require("./index"); // Adjust the path as needed
 
-const Bookmark = sequelize.define('Bookmark', {
+class Bookmark extends Model {
+  static associate(models) {
+    // Define associations here
+    Bookmark.belongsTo(models.Job, { foreignKey: 'JobID', onDelete: 'CASCADE' });
+    Bookmark.belongsTo(models.Student, { foreignKey: 'StudentID', onDelete: 'CASCADE' });
+    Bookmark.belongsTo(models.Recruiter, { foreignKey: 'RecruiterID', onDelete: 'CASCADE' });
+  }
+}
+
+Bookmark.init({
   JobID: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: true,
     references: {
-      model: Job, // 'Job' should match the name of your Job model
+      model: 'Job', // Use the model name as defined in Sequelize
       key: 'JobID',
     },
     onDelete: 'CASCADE',
     primaryKey: false,
   },
   StudentID: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
     references: {
-      model: Student, // 'Student' should match the name of your Student model
+      model: 'Student', // Use the model name as defined in Sequelize
       key: 'StudentID',
     },
     onDelete: 'CASCADE',
     primaryKey: true,
   },
   RecruiterID: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
     references: {
-      model: Recruiter, // 'Recruiter' should match the name of your Recruiter model
+      model: 'Recruiter', // Use the model name as defined in Sequelize
       key: 'RecruiterID',
     },
     onDelete: 'CASCADE',
     primaryKey: true,
   },
   Direction: {
-    type: Sequelize.ENUM('RECRUITER', 'STUDENT'),
+    type: DataTypes.ENUM('RECRUITER', 'STUDENT'),
     allowNull: false,
     primaryKey: true,
   }
 }, {
-  timestamps: false,
-  tableName: 'BOOKMARK',
+  sequelize,
+  modelName: 'Bookmark',
+  tableName: 'bookmark',
+  timestamps: false
 });
 
 module.exports = Bookmark;

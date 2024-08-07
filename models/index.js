@@ -1,4 +1,7 @@
-const sequelize = require('../database'); // The sequelize instance
+const Sequelize = require('sequelize');
+const sequelize = require('../database');
+
+// Import models
 const Company = require('./companyModel');
 const Job = require('./jobModel');
 const Student = require('./studentModel');
@@ -6,44 +9,26 @@ const Recruiter = require('./recruiterModel');
 const Application = require('./applicationModel');
 const Shortlist = require('./shortlistModel');
 const Bookmark = require('./bookmarkModel');
+const Verification = require('./verificationModel');
 
-// A Company has many Jobs
-Company.hasMany(Job, { foreignKey: 'CompanyID' });
-// A Job belongs to one Company
-Job.belongsTo(Company, { foreignKey: 'CompanyID' });
+// Initialize associations
+Company.associate({ Job, Recruiter });
+Job.associate({ Company, Application, Bookmark, Shortlist, Recruiter });
+Student.associate({ Application, Bookmark, Shortlist });
+Recruiter.associate({ Company, Application, Job, Bookmark, Shortlist });
+Application.associate({ Job, Student, Recruiter });
+Bookmark.associate({ Job, Student, Recruiter });
+Shortlist.associate({ Job, Student, Recruiter });
 
-// A Student has many Applications
-Student.hasMany(Application, { foreignKey: 'StudentID' });
-// An Application belongs to one Student
-Application.belongsTo(Student, { foreignKey: 'StudentID' });
-
-// A Recruiter has many Applications
-Recruiter.hasMany(Application, { foreignKey: 'RecruiterID' });
-// An Application belongs to one Recruiter, but it can be null
-Application.belongsTo(Recruiter, { foreignKey: 'RecruiterID', allowNull: true });
-
-// A Job has many Applications
-Job.hasMany(Application, { foreignKey: 'JobID' });
-// An Application belongs to one Job
-Application.belongsTo(Job, { foreignKey: 'JobID' });
-
-Bookmark.belongsTo(Job, { foreignKey: 'JobID', onDelete: 'CASCADE' });
-Bookmark.belongsTo(Student, { foreignKey: 'StudentID', onDelete: 'CASCADE' });
-
-Job.hasMany(Bookmark, { foreignKey: 'JobID', onDelete: 'CASCADE' });
-Recruiter.hasMany(Bookmark, { foreignKey: 'RecruiterID', onDelete: 'CASCADE' });
-
-// Sync all models with the database
-sequelize.sync();
-
+// Export models
 module.exports = {
   sequelize,
   Company,
   Job,
   Student,
   Recruiter,
-  Application, // Add shortlist table in as well
+  Application,
   Shortlist,
-  Bookmark
+  Bookmark,
+  Verification
 };
-

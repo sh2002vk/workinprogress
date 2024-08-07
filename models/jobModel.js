@@ -1,90 +1,95 @@
-const Sequelize = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../database');
 
-const Job = sequelize.define('jobModel', {
+class Job extends Model {
+  static associate(models) {
+    // Define associations here
+    Job.belongsTo(models.Company, { foreignKey: 'CompanyID', onDelete: 'CASCADE' });
+    Job.belongsTo(models.Recruiter, { foreignKey: 'RecruiterID', onDelete: 'CASCADE' });
+    Job.hasMany(models.Application, { foreignKey: 'JobID', onDelete: 'CASCADE' });
+  }
+}
+
+Job.init({
   JobID: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true
   },
   CompanyID: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'company', // This is a reference to another model
+      model: 'Company', // Use the model name as defined in Sequelize
       key: 'CompanyID', // This is the column name of the referenced model
     },
     onDelete: 'CASCADE'
   },
   RecruiterID: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
     references: {
-      model: 'recruiter',
+      model: 'Recruiter',
       key: 'RecruiterID',
     },
     onDelete: 'CASCADE',
   },
   Type: {
-    type: Sequelize.ENUM('INTERNSHIP', 'CONTRACT', 'OTHER')
+    type: DataTypes.ENUM('Internship', 'Contract', 'Other')
   },
   Role: {
-    type: Sequelize.STRING
+    type: DataTypes.STRING
   },
   Location: {
-    type: Sequelize.STRING
+    type: DataTypes.STRING
   },
   DatePosted: {
-    type: Sequelize.DATE,
+    type: DataTypes.DATE,
     allowNull: false
   },
   DateClosed: {
-    type: Sequelize.DATE
+    type: DataTypes.DATE
   },
   Experience: {
-    type: Sequelize.FLOAT
+    type: DataTypes.FLOAT
   },
-  Pay: Sequelize.FLOAT,
+  Pay: DataTypes.FLOAT,
   Environment: {
-    type: Sequelize.ENUM('INPERSON', 'REMOTE', 'HYBRID')
+    type: DataTypes.ENUM('INPERSON', 'REMOTE', 'HYBRID')
   },
   Duration: {
-    type: Sequelize.ENUM('4', '8', '12')
+    type: DataTypes.ENUM('4', '8', '12')
   },
   Terms: {
-    type: Sequelize.JSON
+    type: DataTypes.JSONB
   },
   Industry: {
-    type: Sequelize.STRING
+    type: DataTypes.STRING
   },
   JobDescription: {
-    type: Sequelize.TEXT
+    type: DataTypes.TEXT
   },
   JobQualification: {
-    type: Sequelize.TEXT
+    type: DataTypes.TEXT
   },
   Status: {
-    type: Sequelize.ENUM('DRAFT', 'COMPLETED', 'CLOSED'),
+    type: DataTypes.ENUM('DRAFT', 'COMPLETED', 'CLOSED'),
     allowNull: false
   },
   RequiredDocuments: {
-    type: Sequelize.JSON,
+    type: DataTypes.JSONB,
     allowNull: true
   },
   Season: {
-    type: Sequelize.ENUM('F24', 'W25', 'S25', 'F25'),
+    type: DataTypes.ENUM('F24', 'W25', 'S25', 'F25'),
     allowNull: true
   }
 }, {
-  timestamps: false,
-  tableName: 'JOB'
+  sequelize,
+  modelName: 'Job',
+  tableName: 'job',
+  timestamps: false
 });
-
-Job.associate = (models) => {
-  Job.belongsTo(models.Company, { foreignKey: 'CompanyID', onDelete: 'CASCADE' });
-  Job.belongsTo(models.Recruiter, { foreignKey: 'RecruiterID', onDelete: 'CASCADE' });
-  Job.hasMany(models.Application, { foreignKey: 'JobID', onDelete: 'CASCADE' });
-};
 
 module.exports = Job;

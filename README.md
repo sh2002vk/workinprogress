@@ -45,6 +45,15 @@ The flow of a request through the API is as follows:
 
 # Local SQL Database Setup
 
+POSTGRES
+1. ```brew install postgresql@15``` to install postgres
+2. log into pg cli with ```psql postgres```
+3. set up username and password with ```CREATE USER username WITH PASSWORD 'password';```
+4. create table "wiptest" with ```CREATE DATABASE wiptest;```
+5. grant privileges with ```GRANT ALL PRIVILEGES ON DATABASE wiptest TO username;```
+6. remember to update your env variables with the postgres credenetials, if your username and password are not the same as mysql
+
+MYSQL
 1. Install MySQL on your machine.
 2. Create a new database called "wipTest".
 3. Set up your config vars in the ` .env ` file.
