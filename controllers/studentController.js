@@ -89,7 +89,7 @@ exports.getApplications = async (req, res) => {
             where: {
                 StudentID: studentID,
             },
-            attributes: ['ApplicationID', "JobID"]
+            attributes: ['ApplicationID', "JobID", "Status"]
         });
 
         const student = await Student.findByPk(studentID);
