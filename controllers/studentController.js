@@ -390,6 +390,8 @@ exports.getJobsFiltered = async (req, res) => {
             season, // f24, w25, s25, etc
             industry,
             keyword, //keyword to filter based on titles
+            interested,
+            studentID,
         } = req.body;
 
         let whereClause = {};
@@ -445,8 +447,8 @@ exports.getJobsFiltered = async (req, res) => {
             }
         }
         if (keyword) {
-            console.log(keyword);
-            console.log(typeof(keyword));
+            // console.log(keyword);
+            // console.log(typeof(keyword));
             if (typeof(keyword) === "string") {
                 whereClause.Role = {
                     [Sequelize.Op.iLike]: `%${keyword}%`
@@ -454,10 +456,28 @@ exports.getJobsFiltered = async (req, res) => {
             }
         }
 
-        console.log(whereClause);
+        // If interested is true, filter jobs that the student is interested in
+        if (interested && studentID) {
+            // Find all JobID values in the Interest table for the given student
+            const interestEntries = await Interest.findAll({
+                attributes: ['JobID'],
+                where: { StudentID: studentID }
+            });
+
+            const jobIDs = interestEntries.map(entry => entry.JobID);
+
+            if (jobIDs.length > 0) {
+                whereClause.JobID = { [Op.in]: jobIDs };
+            } else {
+                // If there are no matching interests, return an empty result set
+                return res.status(200).send({ message: "No jobs found for the given filters", data: [] });
+            }
+        }
+
+        // console.log(whereClause);
 
         let jobs = await Job.findAll({
-            where: whereClause
+            where: whereClause,
         });
 
         res.status(200).send({ message: "Filtered jobs are listed", data: jobs });
