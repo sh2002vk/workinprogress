@@ -8,6 +8,7 @@ require('dotenv').config();
 const accountRoutes = require('./routes/accountRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 const actionRoutes = require('./routes/actionRoutes');
+const photoRoutes = require('./routes/photoRoutes');
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/account', accountRoutes);
 app.use('/profile', profileRoutes);
 app.use('/action', actionRoutes);
+app.use('/photo', photoRoutes)
 
 
 const PORT = process.env.PORT || 4000;
