@@ -347,7 +347,8 @@ exports.getJobsFiltered = async (req, res) => {
             location,
             duration, // length of term
             season, // f24, w25, s25, etc
-            industry
+            industry,
+            keyword, //keyword to filter based on titles
         } = req.body;
 
         let whereClause = {};
@@ -400,6 +401,15 @@ exports.getJobsFiltered = async (req, res) => {
                 }
             } else {
                 whereClause.Season = season;
+            }
+        }
+        if (keyword) {
+            console.log(keyword);
+            console.log(typeof(keyword));
+            if (typeof(keyword) === "string") {
+                whereClause.Role = {
+                    [Sequelize.Op.iLike]: `%${keyword}%`
+                };
             }
         }
 
