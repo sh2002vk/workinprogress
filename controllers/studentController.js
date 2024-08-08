@@ -10,6 +10,7 @@ const Student = require('../models/studentModel');
 const Recruiter = require("../models/recruiterModel");
 const { Op, where } = require('sequelize');
 const Company = require("../models/companyModel");
+const Interest = require("../models/interestModel");
 
 exports.createApplication = async (req, res) => {
     // Logic to apply to a job
@@ -31,10 +32,34 @@ exports.createApplication = async (req, res) => {
             SubmittedDocuments
         });
 
-        res.status(201).send({
-            message: "Application successfully created",
-            data: newApplication
-        });
+        try {
+            // Add a tuple to the INTEREST table to show interest
+            const newInterest = await Interest.create({
+                JobID,
+                StudentID,
+                Direction: 'STUDENT'  // Assuming 'STUDENT' indicates the student showing interest
+            });
+
+            res.status(201).send({
+                message: "Application successfully created and interest shown",
+                data: {
+                    application: newApplication,
+                    interest: newInterest
+                }
+            });
+        } catch (interestError) {
+            // If there is an error creating the interest record, log the error but still respond with the application
+            console.error("Error creating interest record:", interestError);
+            res.status(201).send({
+                message: "Application successfully created, but failed to show interest",
+                data: newApplication,
+                interestError: interestError.message
+            });
+        }
+        // res.status(201).send({
+        //     message: "Application successfully created",
+        //     data: newApplication
+        // });
     } catch (error) {
         res.status(400).send({message: "Error creating application", error: error.message});
     }
@@ -66,14 +91,30 @@ exports.deleteApplication = async (req, res) => {
     try {
         const {deleteID} = req.body;
 
+        const application = await Application.findOne({
+            where: { ApplicationID: deleteID }
+        });
+
+        if (!application) {
+            return res.status(404).send({ message: "Application not found" });
+        }
+
         const deleted = await Application.destroy({
             where: {ApplicationID: deleteID}
         });
 
         if (deleted) {
-            res.status(200).send({message: "Successfully deleted application"})
+            // Also delete the related interest
+            await Interest.destroy({
+                where: {
+                    JobID: application.JobID,
+                    StudentID: application.StudentID
+                }
+            });
+
+            res.status(200).send({ message: "Successfully deleted application and related interest" });
         } else {
-            res.status(404).send({message: "Application not found"})
+            res.status(404).send({ message: "Application not found" });
         }
     } catch (error) {
         res.status(400).send({message: "Error deleting application", error: error.message});

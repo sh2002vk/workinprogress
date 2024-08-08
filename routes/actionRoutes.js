@@ -8,6 +8,7 @@ const companyController = require('../controllers/companyController');
 const verificationController = require('../controllers/verificationController');
 // const applicationController = require("../controllers/applicationController");
 const jobController = require("../controllers/jobController");
+const interestController = require("../controllers/interestController");
 
 // student
 router.get('/student/getRecruiterContact', studentController.requestContact);
@@ -23,6 +24,8 @@ router.delete('/student/deleteApplication', studentController.deleteApplication)
 router.get('/student/getApplications', studentController.getApplications);
 router.get('/student/getApplicationInsights', studentController.getApplicationInsights);
 router.get('/student/getCompetition', studentController.getCompetition);
+router.get('/student/checkIfApplied', interestController.checkIfApplied);
+
 
 
 // recruiter

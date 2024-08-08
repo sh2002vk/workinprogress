@@ -139,6 +139,16 @@ client.connect(err => {
       "CreatedAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );`;
 
+  const createInterestTable = `
+    CREATE TABLE IF NOT EXISTS INTEREST (
+      "JobID" INT NOT NULL,
+      "StudentID" VARCHAR(255) NOT NULL,
+      "Direction" TEXT NOT NULL,  -- Use TEXT for ENUM equivalent
+      PRIMARY KEY ("JobID", "StudentID"),
+      FOREIGN KEY ("JobID") REFERENCES JOB("JobID") ON DELETE CASCADE,
+      FOREIGN KEY ("StudentID") REFERENCES STUDENT("StudentID") ON DELETE CASCADE
+    );`;
+
   // Table creation execution
   client.query(createCompanyTable, (err) => {
     if (err) {
@@ -192,10 +202,18 @@ client.connect(err => {
                 client.query(createVerificationCodesTable, (err) => {
                   if (err) {
                     console.error("Error creating Verification table:", err);
-                  } else {
-                    console.log("VERIFICATION table created or exists already!");
+                    return client.end();
                   }
-                  client.end();
+                  console.log("VERIFICATION table created or exists already!");
+
+                  client.query(createInterestTable, (err) => {
+                    if (err) {
+                      console.error("Error creating INTEREST table:", err);
+                    } else {
+                      console.log("INTEREST table created or exists already!");
+                    }
+                    client.end();
+                  });
                 });
               });
             });
