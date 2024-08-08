@@ -126,7 +126,7 @@ const sampleStudents = [
     MaxQuota: 3
   },
   {
-    StudentID: 't1EkBurvqMS1XNPeIbuYxvtdqUy2',
+    StudentID: 'wC4JxLzWPFOiowTFuYsY7qEyKXF2',
     FirstName: 'Daine',
     LastName: 'Yip',
     School: 'University of British Columbia',
@@ -169,7 +169,7 @@ const sampleRecruiters = [
     Locations: 'New York',
   },
   {
-    RecruiterID: '8KnkvUbusoYnosi0SQP8yQDIrUh2',
+    RecruiterID: 'S9XEE2ZVlXfwPVV9Y9rXutwNLUs2',
     FirstName: 'Daine',
     LastName: 'Yip',
     CompanyID: 2,
@@ -244,7 +244,7 @@ const sampleJobs = [
     CompanyID: 2,
     Type: 'Contract',
     Role: 'Product Manager',
-    RecruiterID: '8KnkvUbusoYnosi0SQP8yQDIrUh2',
+    RecruiterID: 'S9XEE2ZVlXfwPVV9Y9rXutwNLUs2',
     Location: 'Seattle',
     DatePosted: new Date(),
     DateClosed: "2024-07-15",
@@ -270,17 +270,17 @@ const sampleJobs = [
 const sampleApplications = [
   { JobID: 1, StudentID: '1', RecruiterID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2', ApplicationTime: new Date(), Status: 'APPLIED', SubmittedDocuments: JSON.stringify({ Resume: "resume.pdf" }) },
   { JobID: 2, StudentID: '2', RecruiterID: '12dwedw3ds', ApplicationTime: new Date(), Status: 'REVIEWED', SubmittedDocuments: JSON.stringify({ Resume: "resume.pdf", CoverLetter: "coverletter.pdf", EnglishSample: "englishsample.pdf" }) },
-  { JobID: 3, StudentID: '1', RecruiterID: '8KnkvUbusoYnosi0SQP8yQDIrUh2', ApplicationTime: new Date(), Status: 'APPLIED', SubmittedDocuments: JSON.stringify({ Resume: "resume.pdf" }) },
-  { JobID: 3, StudentID: '2', RecruiterID: '8KnkvUbusoYnosi0SQP8yQDIrUh2', ApplicationTime: new Date(), Status: 'REVIEWED', SubmittedDocuments: JSON.stringify({ CoverLetter: "coverletter.pdf" }) },
-  { JobID: 3, StudentID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2', RecruiterID: '8KnkvUbusoYnosi0SQP8yQDIrUh2', ApplicationTime: new Date(), Status: 'ACCEPT', SubmittedDocuments: JSON.stringify({ EnglishSample: "englishsample.pdf" }) },
-  { JobID: 3, StudentID: 'erf', RecruiterID: '8KnkvUbusoYnosi0SQP8yQDIrUh2', ApplicationTime: new Date(), Status: 'COMPLETE', SubmittedDocuments: JSON.stringify({ Resume: "resume.pdf" }) },
+  { JobID: 3, StudentID: '1', RecruiterID: 'S9XEE2ZVlXfwPVV9Y9rXutwNLUs2', ApplicationTime: new Date(), Status: 'APPLIED', SubmittedDocuments: JSON.stringify({ Resume: "resume.pdf" }) },
+  { JobID: 3, StudentID: '2', RecruiterID: 'S9XEE2ZVlXfwPVV9Y9rXutwNLUs2', ApplicationTime: new Date(), Status: 'REVIEWED', SubmittedDocuments: JSON.stringify({ CoverLetter: "coverletter.pdf" }) },
+  { JobID: 3, StudentID: 'wC4JxLzWPFOiowTFuYsY7qEyKXF2', RecruiterID: 'S9XEE2ZVlXfwPVV9Y9rXutwNLUs2', ApplicationTime: new Date(), Status: 'ACCEPT', SubmittedDocuments: JSON.stringify({ EnglishSample: "englishsample.pdf" }) },
+  { JobID: 3, StudentID: 'erf', RecruiterID: 'S9XEE2ZVlXfwPVV9Y9rXutwNLUs2', ApplicationTime: new Date(), Status: 'COMPLETE', SubmittedDocuments: JSON.stringify({ Resume: "resume.pdf" }) },
   // Add more application records as needed
 ];
 
 const sampleShortlist = [
   { StudentID: '1', JobID: 1, RecruiterID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2' },
   { StudentID: '2', JobID: 2, RecruiterID: '12dwedw3ds' },
-  { StudentID: '2', JobID: 3, RecruiterID: '8KnkvUbusoYnosi0SQP8yQDIrUh2' },
+  { StudentID: '2', JobID: 3, RecruiterID: 'S9XEE2ZVlXfwPVV9Y9rXutwNLUs2' },
 ];
 
 (async () => {
