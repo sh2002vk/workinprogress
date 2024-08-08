@@ -106,11 +106,11 @@ const sampleStudents = [
     MaxQuota: 3
   },
   {
-    StudentID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2',
+    StudentID: '8nWsv1MWV3bveey3DCBUD3ANmCm1',
     FirstName: 'Shubhankar',
     LastName: 'Vakde',
     School: 'Another University',
-    EmailID: 'Gaga@example.com',
+    EmailID: 'sh2002vk@gmail.com',
     AcademicYear: 5,
     Age: 23,
     ResumeLink: 'https://example.com/resume/alicesmith',
@@ -149,11 +149,11 @@ const sampleStudents = [
 
 const sampleRecruiters = [
   {
-    RecruiterID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2',
+    RecruiterID: 'DEcomfwvxVf6d6KvbBEpm9ztEm73',
     FirstName: 'Shubh',
     LastName: 'Vakde',
     CompanyID: 1,
-    EmailID: 'recruiter1@example.com',
+    EmailID: 'sh2002vkyt@gmail.com',
     CompanyName: 'Company A',
     Roles: 'Technical Recruiter',
     Locations: 'San Francisco, Seattle',
@@ -196,7 +196,7 @@ const sampleJobs = [
     CompanyID: 1,
     Type: 'Internship',
     Role: 'Software Engineer',
-    RecruiterID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2',
+    RecruiterID: 'DEcomfwvxVf6d6KvbBEpm9ztEm73',
     Location: 'San Francisco',
     DatePosted: new Date(),
     Experience: 2.5,
@@ -268,7 +268,7 @@ const sampleJobs = [
 ];
 
 const sampleApplications = [
-  { JobID: 1, StudentID: '1', RecruiterID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2', ApplicationTime: new Date(), Status: 'APPLIED', SubmittedDocuments: JSON.stringify({ Resume: "resume.pdf" }) },
+  { JobID: 1, StudentID: '1', RecruiterID: 'DEcomfwvxVf6d6KvbBEpm9ztEm73', ApplicationTime: new Date(), Status: 'APPLIED', SubmittedDocuments: JSON.stringify({ Resume: "resume.pdf" }) },
   { JobID: 2, StudentID: '2', RecruiterID: '12dwedw3ds', ApplicationTime: new Date(), Status: 'REVIEWED', SubmittedDocuments: JSON.stringify({ Resume: "resume.pdf", CoverLetter: "coverletter.pdf", EnglishSample: "englishsample.pdf" }) },
   { JobID: 3, StudentID: '1', RecruiterID: 'S9XEE2ZVlXfwPVV9Y9rXutwNLUs2', ApplicationTime: new Date(), Status: 'APPLIED', SubmittedDocuments: JSON.stringify({ Resume: "resume.pdf" }) },
   { JobID: 3, StudentID: '2', RecruiterID: 'S9XEE2ZVlXfwPVV9Y9rXutwNLUs2', ApplicationTime: new Date(), Status: 'REVIEWED', SubmittedDocuments: JSON.stringify({ CoverLetter: "coverletter.pdf" }) },
@@ -278,7 +278,7 @@ const sampleApplications = [
 ];
 
 const sampleShortlist = [
-  { StudentID: '1', JobID: 1, RecruiterID: 'oDNcwmuEt7XabxdBUHwtmSiG12T2' },
+  { StudentID: '1', JobID: 1, RecruiterID: 'DEcomfwvxVf6d6KvbBEpm9ztEm73' },
   { StudentID: '2', JobID: 2, RecruiterID: '12dwedw3ds' },
   { StudentID: '2', JobID: 3, RecruiterID: 'S9XEE2ZVlXfwPVV9Y9rXutwNLUs2' },
 ];

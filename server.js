@@ -13,7 +13,7 @@ const photoRoutes = require('./routes/photoRoutes');
 const app = express();
 
 const corsOptions = {
-    origin: 'http://localhost:3000', // Specify the allowed origin
+    origin: ['https://wip-website.onrender.com', 'http://localhost:3000'], // Specify the allowed origin
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Specify the allowed methods
     allowedHeaders: 'Content-Type,Authorization', // Specify the allowed headers
     credentials: true,
