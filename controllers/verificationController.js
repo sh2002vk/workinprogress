@@ -49,12 +49,13 @@ exports.sendCode = async (req, res) => {
 
 exports.verifyCode = async (req, res) => {
     try {
+        // console.log("hitting verify code endpoint");
         const { email, code } = req.body;
 
         const record = await Verification.findOne({ where: { EmailID: email } });
 
         if (record && record.Code === code) {
-            res.status(400).json({ success: true, message: 'Code is valid' });
+            res.status(200).json({ success: true, message: 'Code is valid' });
         } else {
             res.status(400).json({ success: false, message: 'Invalid verification code' });
         }
