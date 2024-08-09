@@ -10,6 +10,7 @@ const Student = require('../models/studentModel');
 const Recruiter = require("../models/recruiterModel");
 const { Op, where } = require('sequelize');
 const Company = require("../models/companyModel");
+const Interest = require("../models/interestModel");
 
 exports.createApplication = async (req, res) => {
     // Logic to apply to a job
@@ -31,10 +32,34 @@ exports.createApplication = async (req, res) => {
             SubmittedDocuments
         });
 
-        res.status(201).send({
-            message: "Application successfully created",
-            data: newApplication
-        });
+        try {
+            // Add a tuple to the INTEREST table to show interest
+            const newInterest = await Interest.create({
+                JobID,
+                StudentID,
+                Direction: 'STUDENT'  // Assuming 'STUDENT' indicates the student showing interest
+            });
+
+            res.status(201).send({
+                message: "Application successfully created and interest shown",
+                data: {
+                    application: newApplication,
+                    interest: newInterest
+                }
+            });
+        } catch (interestError) {
+            // If there is an error creating the interest record, log the error but still respond with the application
+            console.error("Error creating interest record:", interestError);
+            res.status(201).send({
+                message: "Application successfully created, but failed to show interest",
+                data: newApplication,
+                interestError: interestError.message
+            });
+        }
+        // res.status(201).send({
+        //     message: "Application successfully created",
+        //     data: newApplication
+        // });
     } catch (error) {
         res.status(400).send({message: "Error creating application", error: error.message});
     }
@@ -66,14 +91,30 @@ exports.deleteApplication = async (req, res) => {
     try {
         const {deleteID} = req.body;
 
+        const application = await Application.findOne({
+            where: { ApplicationID: deleteID }
+        });
+
+        if (!application) {
+            return res.status(404).send({ message: "Application not found" });
+        }
+
         const deleted = await Application.destroy({
             where: {ApplicationID: deleteID}
         });
 
         if (deleted) {
-            res.status(200).send({message: "Successfully deleted application"})
+            // Also delete the related interest
+            await Interest.destroy({
+                where: {
+                    JobID: application.JobID,
+                    StudentID: application.StudentID
+                }
+            });
+
+            res.status(200).send({ message: "Successfully deleted application and related interest" });
         } else {
-            res.status(404).send({message: "Application not found"})
+            res.status(404).send({ message: "Application not found" });
         }
     } catch (error) {
         res.status(400).send({message: "Error deleting application", error: error.message});
@@ -347,7 +388,10 @@ exports.getJobsFiltered = async (req, res) => {
             location,
             duration, // length of term
             season, // f24, w25, s25, etc
-            industry
+            industry,
+            keyword, //keyword to filter based on titles
+            interested,
+            studentID,
         } = req.body;
 
         let whereClause = {};
@@ -402,11 +446,38 @@ exports.getJobsFiltered = async (req, res) => {
                 whereClause.Season = season;
             }
         }
+        if (keyword) {
+            // console.log(keyword);
+            // console.log(typeof(keyword));
+            if (typeof(keyword) === "string") {
+                whereClause.Role = {
+                    [Sequelize.Op.iLike]: `%${keyword}%`
+                };
+            }
+        }
 
-        console.log(whereClause);
+        // If interested is true, filter jobs that the student is interested in
+        if (interested && studentID) {
+            // Find all JobID values in the Interest table for the given student
+            const interestEntries = await Interest.findAll({
+                attributes: ['JobID'],
+                where: { StudentID: studentID }
+            });
+
+            const jobIDs = interestEntries.map(entry => entry.JobID);
+
+            if (jobIDs.length > 0) {
+                whereClause.JobID = { [Op.in]: jobIDs };
+            } else {
+                // If there are no matching interests, return an empty result set
+                return res.status(200).send({ message: "No jobs found for the given filters", data: [] });
+            }
+        }
+
+        // console.log(whereClause);
 
         let jobs = await Job.findAll({
-            where: whereClause
+            where: whereClause,
         });
 
         res.status(200).send({ message: "Filtered jobs are listed", data: jobs });
